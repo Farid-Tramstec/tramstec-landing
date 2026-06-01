@@ -1,0 +1,75 @@
+# TramsTec — robots.txt
+# We want to be discoverable. Allow all major search and AI crawlers.
+# Disallow only operational paths that should never be indexed.
+
+# ----- general -----
+User-agent: *
+Allow: /
+Disallow: /success.html
+Disallow: /cancel.html
+Disallow: /en/success.html
+Disallow: /en/cancel.html
+
+# ----- AI / LLM crawlers (allow explicitly) -----
+# Anthropic
+User-agent: ClaudeBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: Claude-Web
+Allow: /
+
+# OpenAI
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+
+# Google (Gemini / AI Overviews)
+User-agent: Google-Extended
+Allow: /
+User-agent: GoogleOther
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
+# Common Crawl (used by many AI training pipelines)
+User-agent: CCBot
+Allow: /
+
+# Bytedance / TikTok / Doubao
+User-agent: Bytespider
+Allow: /
+
+# Meta / Llama
+User-agent: FacebookBot
+Allow: /
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# xAI / Grok
+User-agent: Grok
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
+# Mistral
+User-agent: MistralAI-User
+Allow: /
+
+# ----- sitemap + llms.txt -----
+Sitemap: https://tramstec.com/sitemap.xml

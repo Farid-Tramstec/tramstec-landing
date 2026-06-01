@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TramsTec — MCP de WhatsApp para agentes de IA · México</title>
+    <meta
+      name="description"
+      content="Servidor MCP (Model Context Protocol) que conecta tu agente de IA — Claude, ChatGPT, Gemini, n8n — a WhatsApp Business. Vende, cobra y atiende. Pagos en SPEI, OXXO y tarjeta. Hecho en México."
+    />
+    <meta
+      name="keywords"
+      content="MCP WhatsApp, servidor MCP, WhatsApp Business IA, agente IA WhatsApp, MCP México, WhatsApp commerce, Claude WhatsApp, ChatGPT WhatsApp, n8n WhatsApp, SPEI WhatsApp, automatización WhatsApp"
+    />
+    <meta name="theme-color" content="#0f3a3a" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="author" content="TramsTec" />
+
+    <link rel="canonical" href="https://tramstec.com/" />
+    <link rel="alternate" hreflang="es-mx" href="https://tramstec.com/" />
+    <link rel="alternate" hreflang="en" href="https://tramstec.com/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://tramstec.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="TramsTec — MCP de WhatsApp para agentes de IA" />
+    <meta property="og:description" content="Conecta Claude, ChatGPT, Gemini o tu agente propio a WhatsApp Business. Vende, cobra y atiende. Hecho en México." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:url" content="https://tramstec.com/" />
+    <meta property="og:site_name" content="TramsTec" />
+    <meta property="og:image" content="https://tramstec.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="TramsTec — MCP de WhatsApp para agentes de IA" />
+    <meta name="twitter:description" content="Conecta tu IA a WhatsApp Business en minutos. Vende, cobra y atiende desde un agente." />
+    <meta name="twitter:image" content="https://tramstec.com/og-image.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+    <link rel="stylesheet" href="styles.css" />
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230f3a3a'/><path d='M8 11h16M16 11v14' stroke='%23e7d8b8' stroke-width='3' stroke-linecap='square' fill='none'/></svg>"
+    />
+
+    <!-- Discovery for AI/LLM crawlers -->
+    <link rel="alternate" type="text/markdown" href="llms.txt" title="llms.txt — site summary for AI crawlers" />
+    <link rel="alternate" type="application/json" href="mcp-manifest.json" title="MCP server manifest" />
+
+    <!-- JSON-LD: SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": ["SoftwareApplication", "WebAPI"],
+      "name": "TramsTec",
+      "alternateName": ["TramsTec MCP", "WhatsApp Commerce MCP"],
+      "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "MCP server",
+      "operatingSystem": "Web, MCP-compatible clients (Claude Desktop, ChatGPT, Gemini, n8n, custom)",
+      "url": "https://tramstec.com/",
+      "description": "MCP (Model Context Protocol) server that connects AI agents to WhatsApp Business for sales, support, and Mexican payment rails (SPEI, OXXO, Stripe, Mercado Pago).",
+      "keywords": "WhatsApp MCP, MCP server, WhatsApp Business AI agent, Claude WhatsApp, OpenAI WhatsApp, Gemini WhatsApp, n8n WhatsApp, SPEI, OXXO, Mexico AI infrastructure",
+      "inLanguage": ["es-MX", "en"],
+      "audience": { "@type": "Audience", "audienceType": "Developers, AI builders, agencies, SaaS products" },
+      "offers": [
+        { "@type": "Offer", "name": "Starter",    "price": "6000",  "priceCurrency": "MXN", "description": "Setup MXN $8,000 one-time + MXN $6,000/month · 500 included conversations" },
+        { "@type": "Offer", "name": "Growth",     "price": "12000", "priceCurrency": "MXN", "description": "Setup MXN $25,000 one-time + MXN $12,000/month · 2,000 included conversations" },
+        { "@type": "Offer", "name": "Scale",      "price": "35000", "priceCurrency": "MXN", "description": "Setup MXN $50,000 one-time + MXN $35,000/month · 10,000 included conversations" },
+        { "@type": "Offer", "name": "Enterprise", "priceCurrency": "MXN", "description": "Custom pricing for banking, fintech, healthcare and large corporates" }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "TramsTec",
+        "url": "https://tramstec.com",
+        "logo": "https://tramstec.com/og-image.png",
+        "areaServed": ["MX", "Latin America"],
+        "contactPoint": { "@type": "ContactPoint", "email": "support@tramstec.com", "contactType": "customer support" }
+      }
+    }
+    </script>
+
+    <!-- JSON-LD: FAQ (so search engines and LLMs see Q&A directly) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿TramsTec incluye la IA?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. TramsTec es el puente entre tu agente de IA y WhatsApp. Tú traes tu agente — Claude, ChatGPT, Gemini, n8n o uno propio. Nosotros le damos las herramientas (tools MCP) para operar WhatsApp Business." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Es un servidor MCP?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Sí. TramsTec implementa el Model Context Protocol (MCP) sobre HTTP/SSE y stdio. Cualquier cliente MCP-compatible se conecta con una API key." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué herramientas MCP expone?",
+          "acceptedAnswer": { "@type": "Answer", "text": "13 tools: whatsapp_send_message, whatsapp_send_template, customer_lookup, product_search, inventory_check, order_create_draft, order_confirm, payment_link_create, spei_instructions_generate, payment_status_check, handoff_to_human, conversation_summarize, consent_update." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuánto cuesta?",
+          "acceptedAnswer": { "@type": "Answer", "text": "En MXN sin IVA: Starter $6,000/mes + $8,000 setup (500 conversaciones). Growth $12,000/mes + $25,000 setup (2,000 conversaciones). Scale $35,000/mes + $50,000 setup (10,000 conversaciones). Enterprise a la medida. WhatsApp/Meta y comisiones de pasarela se cobran al costo." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Funciona con Claude / ChatGPT / Gemini / n8n?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Sí. Hablamos el protocolo estándar de MCP. Soporta Claude Desktop, Claude Code, OpenAI Agents, ChatGPT (GPTs/Actions), Google Gemini, n8n, Make.com, Zapier, y cualquier agente propio que pueda hablar MCP o HTTP." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué métodos de pago acepta para clientes finales?",
+          "acceptedAnswer": { "@type": "Answer", "text": "SPEI, OXXO, tarjeta de crédito/débito, vía Stripe MX, Mercado Pago, Conekta u Openpay. CFDI 4.0 disponible para facturación." }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Es seguro? ¿Quién puede marcar pagos como recibidos?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Ninguna tool MCP puede marcar un pago como confirmado. Sólo un webhook firmado del procesador de pago o un operador humano autenticado pueden hacerlo. Cada acción del agente queda auditada." }
+        }
+      ]
+    }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Saltar al contenido</a>
+
+    <!-- HEADER -->
+    <header class="site-header" role="banner">
+      <div class="container header-inner">
+        <a class="brand" href="#top" aria-label="TramsTec, inicio">
+          <svg class="brand-mark" viewBox="0 0 40 40" width="32" height="32" aria-hidden="true" fill="none">
+            <rect x="2" y="2" width="36" height="36" rx="6" fill="currentColor" class="brand-mark-bg" />
+            <path d="M10 13h20M20 13v15" stroke="var(--color-bg)" stroke-width="3" stroke-linecap="square" />
+            <path d="M10 28h6" stroke="var(--color-primary-highlight)" stroke-width="3" stroke-linecap="square" />
+          </svg>
+          <span class="brand-name">TramsTec</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Navegación">
+          <a href="#que-hace">Qué hace</a>
+          <a href="#como-funciona">Cómo funciona</a>
+          <a href="#precios">Precios</a>
+          <a href="#comprar" class="nav-cta">Empezar</a>
+          <div class="lang-switcher" role="group" aria-label="Idioma">
+            <span class="lang-current" aria-current="true" lang="es">Esp</span>
+            <a href="en/" class="lang-link" hreflang="en" lang="en" aria-label="Switch to English">Ing</a>
+          </div>
+          <button class="theme-toggle" data-theme-toggle type="button" aria-label="Cambiar modo"></button>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- HERO -->
+      <section class="hero" id="top">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <div class="eyebrow">
+              <span class="dot" aria-hidden="true"></span>
+              El puente entre tu IA y WhatsApp · México
+            </div>
+            <h1 class="hero-title">
+              Conecta tu <em>IA</em> a WhatsApp.
+            </h1>
+            <p class="hero-lede">
+              Tú traes tu agente — Claude, ChatGPT, n8n, el tuyo. Nosotros le damos las herramientas para vender, cobrar y atender por WhatsApp.
+            </p>
+            <div class="hero-cta">
+              <a class="btn btn-primary" href="#comprar">Empezar</a>
+              <a class="btn btn-ghost" href="#como-funciona">Ver cómo funciona</a>
+            </div>
+            <ul class="hero-meta" role="list">
+              <li><strong>Trae tu IA</strong>, no la incluimos</li>
+              <li><strong>SPEI</strong>, OXXO y tarjeta</li>
+              <li><strong>Sin contratos</strong> largos</li>
+            </ul>
+          </div>
+
+          <aside class="hero-platform" aria-label="Conversación de ejemplo">
+            <div class="platform-top">
+              <span>WhatsApp · ejemplo</span>
+              <strong>Vivo</strong>
+            </div>
+            <div class="metric-row" aria-label="Métricas de ejemplo">
+              <div><span>Pedidos hoy</span><strong>47</strong></div>
+              <div><span>Auto-resueltos</span><strong>88%</strong></div>
+              <div><span>Pagos</span><strong>SPEI</strong></div>
+            </div>
+            <div class="flow-card">
+              <div class="flow-line">
+                <span>Cliente</span><i></i><span>IA</span><i></i><span>Pago</span>
+              </div>
+            </div>
+            <div class="hero-console" aria-label="Vista esquemática de conversación">
+              <div class="console-bar">
+                <span class="console-dot"></span>
+                <span class="console-dot"></span>
+                <span class="console-dot"></span>
+                <span class="console-title">Pedido #A-2041</span>
+              </div>
+              <pre class="console-body"><code><span class="c-key">cliente:</span>  <span class="c-str">"quiero 2 kg de tortillas"</span>
+<span class="c-key">ia:</span>       <span class="c-str">"$50. ¿Confirmas?"</span>
+<span class="c-key">cliente:</span>  <span class="c-str">"sí"</span>
+<span class="c-ok">✓</span> Pedido creado
+<span class="c-ok">✓</span> Link de pago enviado
+<span class="c-ok">✓</span> Pago recibido (SPEI)</code></pre>
+            </div>
+            <div class="platform-footer">
+              <span>Pedido</span>
+              <span>Pago</span>
+              <span>Entrega</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="proof-strip" aria-label="Cómo se reparte el trabajo">
+        <div class="container proof-grid">
+          <div>
+            <strong>Tú traes</strong>
+            <span>Tu agente de IA (Claude, ChatGPT, Gemini, n8n o uno propio) y tu número de WhatsApp Business.</span>
+          </div>
+          <div>
+            <strong>Nosotros traemos</strong>
+            <span>Las herramientas para que tu IA mande mensajes, tome pedidos, cobre y escale a tu equipo.</span>
+          </div>
+          <div>
+            <strong>Juntos</strong>
+            <span>Tu IA opera WhatsApp en segundos, sin que tú escribas integración.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- WHAT IT DOES -->
+      <section class="section" id="que-hace">
+        <div class="container">
+          <div class="section-kicker">Qué le damos a tu IA</div>
+          <h2 class="section-title">Tres herramientas, bien hechas.</h2>
+          <p class="section-lede">
+            TramsTec no es la IA — es lo que tu IA usa para operar WhatsApp.
+          </p>
+
+          <div class="cap-grid">
+            <article class="cap">
+              <span class="cap-tag">mensajería</span>
+              <h3>Hablar por WhatsApp</h3>
+              <p>Tu IA manda y recibe mensajes con tus clientes en tu número de WhatsApp Business.</p>
+            </article>
+            <article class="cap">
+              <span class="cap-tag">cobro</span>
+              <h3>Cobrar</h3>
+              <p>Genera links de pago, SPEI u OXXO. Confirmamos el pago y avisamos a tu IA.</p>
+            </article>
+            <article class="cap">
+              <span class="cap-tag">handoff</span>
+              <h3>Pasar a tu equipo</h3>
+              <p>Si hay duda, queja o monto alto, tu IA pasa la conversación a una persona.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOW IT WORKS -->
+      <section class="section section-band" id="como-funciona">
+        <div class="container">
+          <h2 class="section-title">Cómo funciona</h2>
+          <p class="section-lede">
+            Sin agendar demo. Sin instaladores. Pagas y operas.
+          </p>
+
+          <ol class="how-list" role="list">
+            <li>
+              <span class="how-num">01</span>
+              <div><h3>Eliges plan y pagas</h3><p>Pago seguro con Stripe (tarjeta, SPEI u OXXO).</p></div>
+            </li>
+            <li>
+              <span class="how-num">02</span>
+              <div><h3>Te mandamos las llaves</h3><p>Por correo: acceso al panel y la conexión para tu IA.</p></div>
+            </li>
+            <li>
+              <span class="how-num">03</span>
+              <div><h3>Pegas la conexión en tu IA</h3><p>En Claude Desktop, n8n, tu app — donde sea que viva tu agente. Un copy-paste.</p></div>
+            </li>
+            <li>
+              <span class="how-num">04</span>
+              <div><h3>Conectas tu WhatsApp Business</h3><p>Vinculas tu número desde el panel y tu IA empieza a atender.</p></div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- COMPATIBLE WITH -->
+      <section class="section section-band">
+        <div class="container">
+          <div class="band-grid">
+            <div>
+              <h2 class="section-title">Funciona con tu IA.</h2>
+              <p class="section-lede">
+                Hablamos el protocolo estándar de los agentes (MCP). Tu IA se conecta con un copy-paste.
+              </p>
+            </div>
+            <ul class="region-list" role="list">
+              <li><strong>Claude</strong> · Desktop, Code, API</li>
+              <li><strong>ChatGPT / OpenAI</strong> · Agents, GPTs</li>
+              <li><strong>Gemini</strong> · Google AI Studio</li>
+              <li><strong>n8n · Make · Zapier</strong> · vía HTTP</li>
+              <li><strong>Tu agente propio</strong> · cualquier cliente MCP o HTTP</li>
+            </ul>
+          </div>
+          <p class="fineprint" style="margin-top: var(--space-6);">
+            ¿No tienes IA propia? Empieza con Claude Desktop (gratis) y te ayudamos a configurarlo en el primer login.
+          </p>
+        </div>
+      </section>
+
+      <!-- MEXICO / LATAM -->
+      <section class="section">
+        <div class="container">
+          <div class="band-grid">
+            <div>
+              <h2 class="section-title">Hecho en México.</h2>
+              <p class="section-lede">
+                Habla como tus clientes. Cobra como pagan en México.
+              </p>
+            </div>
+            <ul class="region-list" role="list">
+              <li><strong>SPEI · OXXO · tarjeta</strong></li>
+              <li><strong>Factura CFDI</strong> con tu RFC</li>
+              <li><strong>Español de México</strong>, no traducido</li>
+              <li><strong>Aviso LFPDPPP</strong> y derechos ARCO</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRICING — Simple, glanceable -->
+      <section class="section" id="precios">
+        <div class="container">
+          <div class="section-kicker">Precios</div>
+          <h2 class="section-title">Un precio claro. Sin sorpresas.</h2>
+          <p class="section-lede">
+            Pesos mexicanos, sin IVA. WhatsApp y la comisión de la pasarela se cobran al costo.
+          </p>
+
+          <div class="pricing-cards" aria-label="Planes">
+            <article class="pricing-card">
+              <div>
+                <span class="plan-label">Starter</span>
+                <h3>$6,000<small>/mes</small></h3>
+                <p>+ $8,000 una sola vez · 500 conversaciones</p>
+              </div>
+              <ul role="list">
+                <li>Para probar</li>
+                <li>1 número de WhatsApp</li>
+                <li>Panel básico</li>
+              </ul>
+              <button class="btn btn-ghost add-plan" type="button" data-plan="starter">Elegir</button>
+            </article>
+
+            <article class="pricing-card pricing-card-featured">
+              <div>
+                <span class="plan-label">Growth · recomendado</span>
+                <h3>$12,000<small>/mes</small></h3>
+                <p>+ $25,000 una sola vez · 2,000 conversaciones</p>
+              </div>
+              <ul role="list">
+                <li>Para vender en serio</li>
+                <li>Pagos y handoff a tu equipo</li>
+                <li>$3 por conversación extra</li>
+              </ul>
+              <button class="btn btn-primary add-plan" type="button" data-plan="growth">Elegir</button>
+            </article>
+
+            <article class="pricing-card">
+              <div>
+                <span class="plan-label">Scale</span>
+                <h3>$35,000<small>/mes</small></h3>
+                <p>+ $50,000 una sola vez · 10,000 conversaciones</p>
+              </div>
+              <ul role="list">
+                <li>Para alto volumen</li>
+                <li>Varias sucursales</li>
+                <li>Integración con tu ERP/CRM</li>
+              </ul>
+              <button class="btn btn-ghost add-plan" type="button" data-plan="scale">Elegir</button>
+            </article>
+
+            <article class="pricing-card">
+              <div>
+                <span class="plan-label">Enterprise</span>
+                <h3>A la medida</h3>
+                <p>Banca, fintech, salud, corporativos</p>
+              </div>
+              <ul role="list">
+                <li>Volumen y SLA custom</li>
+                <li>Tus datos en tu nube</li>
+                <li>Contrato y soporte dedicado</li>
+              </ul>
+              <a class="btn btn-ghost" href="mailto:ventas@tramstec.com?subject=Cotizaci%C3%B3n%20Enterprise">Hablar con ventas</a>
+            </article>
+          </div>
+
+          <p class="fineprint">
+            Pago con Stripe — no guardamos datos de tarjeta. Cancelas cuando quieras desde el panel.
+          </p>
+        </div>
+      </section>
+
+      <!-- CHECKOUT -->
+      <section class="section section-offset" id="comprar">
+        <div class="container checkout-grid">
+          <div>
+            <div class="section-kicker">Empezar</div>
+            <h2 class="section-title">Pagas → te llegan las llaves → conectas tu IA.</h2>
+            <p class="section-lede">
+              En tu correo recibes acceso al panel y la conexión para tu agente. Lo pegas en Claude, ChatGPT o donde viva tu IA. En menos de 3 minutos.
+            </p>
+            <div class="addon-grid" aria-label="Extras">
+              <label class="addon-card">
+                <input type="checkbox" data-addon="payments" />
+                <span>
+                  <strong>Más opciones de pago</strong>
+                  <small>Mercado Pago, Conekta, Openpay · $5,000/mes</small>
+                </span>
+              </label>
+              <label class="addon-card">
+                <input type="checkbox" data-addon="erp" />
+                <span>
+                  <strong>Conectar tu sistema</strong>
+                  <small>Hojas de cálculo, HubSpot, Shopify · $8,000/mes</small>
+                </span>
+              </label>
+              <label class="addon-card">
+                <input type="checkbox" data-addon="priority" />
+                <span>
+                  <strong>Soporte prioritario</strong>
+                  <small>Respuesta en horas, no días · $6,000/mes</small>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <aside class="cart-panel" aria-label="Tu pedido">
+            <div class="cart-head">
+              <span>Tu pedido</span>
+              <strong data-cart-plan>Growth</strong>
+            </div>
+            <div class="cart-lines" data-cart-lines></div>
+            <div class="cart-total">
+              <span>Pago hoy</span>
+              <strong data-cart-total>MXN $37,000</strong>
+            </div>
+            <form class="checkout-form" data-checkout-form>
+              <label>
+                Tu correo
+                <input name="email" type="email" placeholder="tu@empresa.com" autocomplete="email" required />
+              </label>
+              <label>
+                Nombre del negocio o equipo
+                <input name="workspace" type="text" placeholder="Tortillería La Esperanza" required />
+              </label>
+              <label>
+                ¿Qué IA usas?
+                <select name="framework" required>
+                  <option value="">Selecciona</option>
+                  <option value="claude">Claude</option>
+                  <option value="openai">ChatGPT / OpenAI</option>
+                  <option value="gemini">Gemini</option>
+                  <option value="n8n">n8n</option>
+                  <option value="custom">Otra / la mía</option>
+                </select>
+              </label>
+              <details class="fiscal-details">
+                <summary>Datos para factura (opcional)</summary>
+                <label>Razón social
+                  <input name="fiscal_business_name" type="text" placeholder="Mi Empresa SA de CV" />
+                </label>
+                <label>RFC
+                  <input name="fiscal_rfc" type="text" maxlength="13" placeholder="ABC123456XYZ" />
+                </label>
+                <label>Código postal
+                  <input name="fiscal_postal_code" type="text" maxlength="5" placeholder="06700" inputmode="numeric" />
+                </label>
+              </details>
+              <label class="terms-row">
+                <input name="terms" type="checkbox" required />
+                <span>
+                  Acepto los <a href="terminos.html" target="_blank" rel="noopener">términos</a> y el <a href="aviso-privacidad.html" target="_blank" rel="noopener">aviso de privacidad</a>.
+                </span>
+              </label>
+              <button class="btn btn-primary btn-lg" type="submit" data-checkout-submit>Pagar</button>
+              <p class="checkout-note">
+                Pago seguro con Stripe. Te enviamos las credenciales por correo.
+              </p>
+              <div class="checkout-status" data-checkout-status role="status" aria-live="polite"></div>
+            </form>
+          </aside>
+        </div>
+      </section>
+
+      <!-- TRUST -->
+      <section class="section">
+        <div class="container">
+          <h2 class="section-title">Sin sorpresas, sin candados.</h2>
+          <div class="trust-grid">
+            <article class="trust">
+              <h3>Tú mandas</h3>
+              <p>Decides qué puede hacer la IA y cuándo te avisa. Tomas el control cuando quieras.</p>
+            </article>
+            <article class="trust">
+              <h3>Todo queda registrado</h3>
+              <p>Cada acción de la IA queda en bitácora. La puedes ver, exportar o auditar.</p>
+            </article>
+            <article class="trust">
+              <h3>Tus datos son tuyos</h3>
+              <p>Los descargas o cancelas cuando quieras. Sin contratos largos ni candados.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="section section-cta">
+        <div class="container cta-inner">
+          <h2 class="cta-title">Conecta tu IA a WhatsApp hoy.</h2>
+          <p class="cta-lede">Pagas, te llegan las llaves, las pegas en tu agente y opera.</p>
+          <div class="cta-actions">
+            <a class="btn btn-primary btn-lg" href="#comprar">Empezar</a>
+            <a class="btn btn-ghost btn-lg" href="#como-funciona">Ver cómo funciona</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <svg class="brand-mark" viewBox="0 0 40 40" width="28" height="28" aria-hidden="true" fill="none">
+            <rect x="2" y="2" width="36" height="36" rx="6" fill="currentColor" />
+            <path d="M10 13h20M20 13v15" stroke="var(--color-bg)" stroke-width="3" stroke-linecap="square" />
+            <path d="M10 28h6" stroke="var(--color-primary-highlight)" stroke-width="3" stroke-linecap="square" />
+          </svg>
+          <div>
+            <div class="footer-name">TramsTec</div>
+            <div class="footer-tag">WhatsApp + IA · Hecho en México</div>
+          </div>
+        </div>
+        <nav class="footer-nav" aria-label="Pie de página">
+          <a href="#que-hace">Qué hace</a>
+          <a href="#precios">Precios</a>
+          <a href="#comprar">Empezar</a>
+          <a href="terminos.html">Términos</a>
+          <a href="aviso-privacidad.html">Privacidad</a>
+        </nav>
+        <small class="footer-meta">
+          © <span id="year"></span> TramsTec · Precios en MXN, sin IVA.
+        </small>
+      </div>
+    </footer>
+
+    <script>window.WCM_LANG = "es";</script>
+    <script src="config.js"></script>
+    <script src="script.js" defer></script>
+  </body>
+</html>

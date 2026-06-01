@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Preparing your account — TramsTec</title>
+    <meta name="robots" content="noindex" />
+    <link rel="alternate" hreflang="es-mx" href="https://tramstec.com/success.html" />
+    <link rel="alternate" hreflang="en" href="https://tramstec.com/en/success.html" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <main id="main" class="section">
+      <div class="container" style="max-width: 560px; text-align: center;">
+        <h1 class="section-title" id="title">Preparing your account…</h1>
+        <p class="section-lede" id="lede">
+          We got your payment. In a few minutes you'll receive an email with everything you need to get started.
+        </p>
+
+        <div class="cart-panel" style="text-align: left; max-width: 420px; margin: 32px auto;">
+          <div class="cart-lines">
+            <div class="cart-line"><span>Payment</span><strong id="row-pay">…</strong></div>
+            <div class="cart-line"><span>Account</span><strong id="row-prov">…</strong></div>
+            <div class="cart-line"><span>Email sent</span><strong id="row-email">…</strong></div>
+          </div>
+        </div>
+
+        <p style="font-size: 14px; color: var(--color-text-muted);">
+          Didn't get the email? Check spam or write to
+          <a href="mailto:support@tramstec.com">support@tramstec.com</a> with id
+          <code id="signup-id-text">—</code>.
+        </p>
+        <p><a class="btn btn-ghost" href="index.html">Back to home</a></p>
+      </div>
+    </main>
+
+    <script>
+      (function () {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("signup");
+        const apiBase = window.WCM_API_BASE || "http://localhost:3001";
+        const idEl = document.getElementById("signup-id-text");
+        if (id) idEl.textContent = id;
+        if (!id) {
+          document.getElementById("title").textContent = "Missing information";
+          document.getElementById("lede").textContent = "If you got here from a payment, please write to us.";
+          return;
+        }
+        const rowPay = document.getElementById("row-pay");
+        const rowProv = document.getElementById("row-prov");
+        const rowEmail = document.getElementById("row-email");
+        function paint(s) {
+          switch (s.status) {
+            case "pending":     rowPay.textContent = "pending";   rowProv.textContent = "—";          rowEmail.textContent = "—"; break;
+            case "paid":        rowPay.textContent = "✓";         rowProv.textContent = "preparing…"; rowEmail.textContent = "—"; break;
+            case "provisioning":rowPay.textContent = "✓";         rowProv.textContent = "preparing…"; rowEmail.textContent = "—"; break;
+            case "provisioned":
+              rowPay.textContent = "✓"; rowProv.textContent = "✓"; rowEmail.textContent = "✓";
+              document.getElementById("title").textContent = "Done! Check your email.";
+              document.getElementById("lede").textContent = "We sent credentials to " + (s.email || "your email") + ".";
+              break;
+            case "failed":
+              document.getElementById("title").textContent = "Something went wrong";
+              document.getElementById("lede").textContent = "Payment went through but provisioning failed. Email us with your id.";
+              rowPay.textContent = "✓"; rowProv.textContent = "✗"; rowEmail.textContent = "—"; break;
+            case "refunded":
+              document.getElementById("title").textContent = "Payment refunded";
+              document.getElementById("lede").textContent = "Your payment was refunded and access was disabled."; break;
+            case "not_found":
+              document.getElementById("title").textContent = "Order not found";
+              document.getElementById("lede").textContent = "Check the id or write to us."; break;
+          }
+        }
+        let attempts = 0;
+        const MAX = 90;
+        function poll() {
+          attempts++;
+          fetch(`${apiBase}/public/checkout/status/${encodeURIComponent(id)}`)
+            .then((r) => r.json())
+            .then((s) => { paint(s); if (["provisioned","failed","refunded","not_found"].includes(s.status)) return; if (attempts < MAX) setTimeout(poll, 3000); })
+            .catch(() => { if (attempts < MAX) setTimeout(poll, 5000); });
+        }
+        poll();
+      })();
+    </script>
+  </body>
+</html>

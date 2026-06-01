@@ -1,0 +1,14 @@
+{
+  "name": "@wcm/landing",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TramsTec public landing — sales page + Stripe Checkout entry point.",
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "dev": "npx serve . -l 5173",
+    "build": "echo 'static site — no build step'",
+    "start": "npx serve . -l 5173"
+  }
+}

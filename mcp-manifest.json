@@ -1,0 +1,90 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schemas/mcp-manifest.json",
+  "name": "tramstec",
+  "displayName": "TramsTec — WhatsApp Commerce MCP",
+  "version": "0.1.0",
+  "description": "MCP server connecting AI agents to WhatsApp Business for sales, support, and payments. Mexico-first with SPEI, OXXO, and CFDI invoicing. Bring your own AI (Claude, ChatGPT, Gemini, n8n, custom).",
+  "vendor": {
+    "name": "TramsTec",
+    "url": "https://tramstec.com",
+    "contact": "support@tramstec.com"
+  },
+  "categories": ["commerce", "messaging", "payments", "customer-support"],
+  "regions": ["MX", "LATAM"],
+  "languages": ["es-MX", "en"],
+  "license": "Commercial / BSL — see tramstec.com/terms",
+  "documentation": "https://tramstec.com/",
+  "pricing": {
+    "model": "subscription + one-time setup",
+    "currency": "MXN",
+    "tiers": [
+      { "name": "Starter",    "setup_cents":  800000, "monthly_cents":  600000, "included_conversations":   500 },
+      { "name": "Growth",     "setup_cents": 2500000, "monthly_cents": 1200000, "included_conversations":  2000 },
+      { "name": "Scale",      "setup_cents": 5000000, "monthly_cents": 3500000, "included_conversations": 10000 },
+      { "name": "Enterprise", "setup_cents":       0, "monthly_cents":       0, "included_conversations":  null  }
+    ]
+  },
+  "transports": [
+    {
+      "kind": "http_sse",
+      "url": "https://mcp.tramstec.com/sse",
+      "auth": "bearer_api_key",
+      "notes": "Multi-tenant. API key issued after self-serve checkout."
+    },
+    {
+      "kind": "stdio",
+      "command": "wcm-mcp",
+      "env": ["WCM_ORG_ID", "DATABASE_URL"],
+      "notes": "Single-tenant local development."
+    }
+  ],
+  "capabilities": {
+    "tools": true,
+    "resources": true,
+    "prompts": true
+  },
+  "tools": [
+    { "name": "whatsapp_send_message",        "description": "Send a text WhatsApp message in an existing conversation. Respects opt-out and human-approval gates." },
+    { "name": "whatsapp_send_template",       "description": "Send a Meta-approved WhatsApp template. Requires opt-in." },
+    { "name": "customer_lookup",              "description": "Find a contact by phone or id. Returns recent orders and open conversation." },
+    { "name": "product_search",               "description": "Catalog search by name, SKU, or description." },
+    { "name": "inventory_check",              "description": "Verify product availability before quoting." },
+    { "name": "order_create_draft",           "description": "Create an order in draft status. Does not auto-confirm." },
+    { "name": "order_confirm",                "description": "Confirm a draft order with explicit customer evidence." },
+    { "name": "payment_link_create",          "description": "Generate a checkout link via Mercado Pago, Stripe, or mock provider." },
+    { "name": "spei_instructions_generate",   "description": "Generate Mexican SPEI bank-transfer instructions with a unique reference." },
+    { "name": "payment_status_check",         "description": "Read-only payment status lookup." },
+    { "name": "handoff_to_human",             "description": "Escalate conversation to a human operator with structured reason, urgency, and summary." },
+    { "name": "conversation_summarize",       "description": "Produce a structured digest of the recent conversation thread." },
+    { "name": "consent_update",               "description": "Apply opt-in or opt-out with auditable evidence." }
+  ],
+  "resources": [
+    { "uriTemplate": "business://profile",       "description": "Organization metadata." },
+    { "uriTemplate": "business://policies",      "description": "Returns, shipping, payment policies." },
+    { "uriTemplate": "business://catalog",       "description": "Active product catalog." },
+    { "uriTemplate": "business://faq",           "description": "Frequently asked questions." },
+    { "uriTemplate": "customer://{customer_id}", "description": "Customer profile and recent activity." },
+    { "uriTemplate": "conversation://{id}",      "description": "Conversation thread and metadata." },
+    { "uriTemplate": "order://{order_id}",       "description": "Order detail, items, payments." }
+  ],
+  "prompts": [
+    { "name": "sales_agent_es_mx",        "description": "Spanish-Mexico sales agent prompt." },
+    { "name": "support_agent_es_mx",      "description": "Spanish-Mexico customer support prompt." },
+    { "name": "order_taking_agent_es_mx", "description": "Spanish-Mexico order-taking prompt." },
+    { "name": "collections_agent_es_mx",  "description": "Spanish-Mexico collections prompt." },
+    { "name": "human_handoff_summary",    "description": "Conversation summarization for human operators." },
+    { "name": "template_suggestion_agent","description": "Suggests Meta-approved templates for proactive messages." }
+  ],
+  "compliance": [
+    "WhatsApp Business Policy",
+    "Mexican LFPDPPP (data protection)",
+    "PCI DSS pass-through via Stripe (we never store card data)"
+  ],
+  "compatibility": [
+    "Claude Desktop", "Claude Code", "Claude API",
+    "OpenAI Agents", "ChatGPT (GPTs / Actions)",
+    "Google Gemini",
+    "n8n", "Make.com", "Zapier",
+    "Any MCP-compatible client (stdio or HTTP/SSE)"
+  ]
+}

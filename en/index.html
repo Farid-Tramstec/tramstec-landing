@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TramsTec — WhatsApp MCP server for AI agents · Mexico</title>
+    <meta
+      name="description"
+      content="Model Context Protocol server that connects your AI agent — Claude, ChatGPT, Gemini, n8n — to WhatsApp Business. Sell, charge and support customers. Mexican payment rails (SPEI, OXXO, Stripe, Mercado Pago)."
+    />
+    <meta
+      name="keywords"
+      content="WhatsApp MCP, MCP server, WhatsApp Business AI, AI agent WhatsApp, Claude WhatsApp, ChatGPT WhatsApp, Gemini WhatsApp, n8n WhatsApp, SPEI, OXXO, Mexico AI infrastructure, LATAM AI"
+    />
+    <meta name="theme-color" content="#0f3a3a" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="author" content="TramsTec" />
+
+    <link rel="canonical" href="https://tramstec.com/en/" />
+    <link rel="alternate" hreflang="es-mx" href="https://tramstec.com/" />
+    <link rel="alternate" hreflang="en" href="https://tramstec.com/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://tramstec.com/" />
+
+    <meta property="og:title" content="TramsTec — WhatsApp MCP server for AI agents" />
+    <meta property="og:description" content="Connect Claude, ChatGPT, Gemini, or your own AI agent to WhatsApp Business in minutes. Bring your AI. We bring the tools." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="es_MX" />
+    <meta property="og:url" content="https://tramstec.com/en/" />
+    <meta property="og:site_name" content="TramsTec" />
+    <meta property="og:image" content="https://tramstec.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="TramsTec — WhatsApp MCP server for AI agents" />
+    <meta name="twitter:description" content="Plug your AI agent into WhatsApp Business. Bring your own LLM." />
+    <meta name="twitter:image" content="https://tramstec.com/og-image.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230f3a3a'/><path d='M8 11h16M16 11v14' stroke='%23e7d8b8' stroke-width='3' stroke-linecap='square' fill='none'/></svg>"
+    />
+
+    <link rel="alternate" type="text/markdown" href="../llms.txt" title="llms.txt — site summary for AI crawlers" />
+    <link rel="alternate" type="application/json" href="../mcp-manifest.json" title="MCP server manifest" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": ["SoftwareApplication", "WebAPI"],
+      "name": "TramsTec",
+      "alternateName": ["TramsTec MCP", "WhatsApp Commerce MCP"],
+      "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "MCP server",
+      "operatingSystem": "Web, MCP-compatible clients (Claude Desktop, ChatGPT, Gemini, n8n, custom)",
+      "url": "https://tramstec.com/en/",
+      "description": "MCP (Model Context Protocol) server that connects AI agents to WhatsApp Business for sales, support, and Mexican payment rails (SPEI, OXXO, Stripe, Mercado Pago).",
+      "keywords": "WhatsApp MCP, MCP server, WhatsApp Business AI agent, Claude WhatsApp, OpenAI WhatsApp, Gemini WhatsApp, n8n WhatsApp, SPEI, OXXO, Mexico AI infrastructure",
+      "inLanguage": ["en", "es-MX"],
+      "audience": { "@type": "Audience", "audienceType": "Developers, AI builders, agencies, SaaS products" },
+      "offers": [
+        { "@type": "Offer", "name": "Starter",    "price": "6000",  "priceCurrency": "MXN", "description": "MXN 8,000 one-time setup + MXN 6,000/month · 500 conversations" },
+        { "@type": "Offer", "name": "Growth",     "price": "12000", "priceCurrency": "MXN", "description": "MXN 25,000 one-time setup + MXN 12,000/month · 2,000 conversations" },
+        { "@type": "Offer", "name": "Scale",      "price": "35000", "priceCurrency": "MXN", "description": "MXN 50,000 one-time setup + MXN 35,000/month · 10,000 conversations" },
+        { "@type": "Offer", "name": "Enterprise", "priceCurrency": "MXN", "description": "Custom pricing for banking, fintech, healthcare, large corporates" }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "TramsTec",
+        "url": "https://tramstec.com",
+        "logo": "https://tramstec.com/og-image.png",
+        "areaServed": ["MX", "Latin America"],
+        "contactPoint": { "@type": "ContactPoint", "email": "support@tramstec.com", "contactType": "customer support" }
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does TramsTec include the AI?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. TramsTec is the bridge between your AI agent and WhatsApp. You bring the AI — Claude, ChatGPT, Gemini, n8n, or your own. We give it the tools (MCP) to operate WhatsApp Business." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this an MCP server?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. TramsTec implements the Model Context Protocol (MCP) over HTTP/SSE and stdio. Any MCP-compatible client connects with an API key." }
+        },
+        {
+          "@type": "Question",
+          "name": "What MCP tools does it expose?",
+          "acceptedAnswer": { "@type": "Answer", "text": "13 tools: whatsapp_send_message, whatsapp_send_template, customer_lookup, product_search, inventory_check, order_create_draft, order_confirm, payment_link_create, spei_instructions_generate, payment_status_check, handoff_to_human, conversation_summarize, consent_update." }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does it cost?",
+          "acceptedAnswer": { "@type": "Answer", "text": "In MXN (excl. tax): Starter $6,000/month + $8,000 setup (500 conversations). Growth $12,000/month + $25,000 setup (2,000 conversations). Scale $35,000/month + $50,000 setup (10,000 conversations). Enterprise custom. WhatsApp/Meta and payment processor fees are pass-through at cost." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it work with Claude / ChatGPT / Gemini / n8n?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. We speak the standard MCP protocol. Compatible with Claude Desktop, Claude Code, OpenAI Agents, ChatGPT (GPTs/Actions), Google Gemini, n8n, Make.com, Zapier, and any custom agent that speaks MCP or HTTP." }
+        },
+        {
+          "@type": "Question",
+          "name": "What payment methods can my customers use?",
+          "acceptedAnswer": { "@type": "Answer", "text": "SPEI (Mexican bank transfer), OXXO (cash at convenience stores), credit/debit card, via Stripe MX, Mercado Pago, Conekta, or Openpay. Mexican CFDI 4.0 invoices supported." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it secure? Who can mark payments as received?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No MCP tool can mark a payment as paid. Only a verified payment processor webhook or an authenticated human operator can. Every agent action is audited." }
+        }
+      ]
+    }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" role="banner">
+      <div class="container header-inner">
+        <a class="brand" href="#top" aria-label="TramsTec, home">
+          <svg class="brand-mark" viewBox="0 0 40 40" width="32" height="32" aria-hidden="true" fill="none">
+            <rect x="2" y="2" width="36" height="36" rx="6" fill="currentColor" class="brand-mark-bg" />
+            <path d="M10 13h20M20 13v15" stroke="var(--color-bg)" stroke-width="3" stroke-linecap="square" />
+            <path d="M10 28h6" stroke="var(--color-primary-highlight)" stroke-width="3" stroke-linecap="square" />
+          </svg>
+          <span class="brand-name">TramsTec</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="#what-it-does">What it does</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#start" class="nav-cta">Get started</a>
+          <div class="lang-switcher" role="group" aria-label="Language">
+            <a href="../" class="lang-link" hreflang="es-mx" lang="es" aria-label="Cambiar a español">Esp</a>
+            <span class="lang-current" aria-current="true" lang="en">Ing</span>
+          </div>
+          <button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle theme"></button>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <div class="eyebrow">
+              <span class="dot" aria-hidden="true"></span>
+              The bridge between your AI and WhatsApp · Mexico
+            </div>
+            <h1 class="hero-title">
+              Connect your <em>AI</em> to WhatsApp.
+            </h1>
+            <p class="hero-lede">
+              You bring the agent — Claude, ChatGPT, n8n, your own. We give it the tools to sell, charge and support customers on WhatsApp Business.
+            </p>
+            <div class="hero-cta">
+              <a class="btn btn-primary" href="#start">Get started</a>
+              <a class="btn btn-ghost" href="#how-it-works">How it works</a>
+            </div>
+            <ul class="hero-meta" role="list">
+              <li><strong>Bring your AI</strong>, we don't include it</li>
+              <li><strong>SPEI</strong>, OXXO, card</li>
+              <li><strong>No long-term</strong> contracts</li>
+            </ul>
+          </div>
+
+          <aside class="hero-platform" aria-label="Sample conversation">
+            <div class="platform-top">
+              <span>WhatsApp · example</span>
+              <strong>Live</strong>
+            </div>
+            <div class="metric-row" aria-label="Sample metrics">
+              <div><span>Orders today</span><strong>47</strong></div>
+              <div><span>Auto-resolved</span><strong>88%</strong></div>
+              <div><span>Payments</span><strong>SPEI</strong></div>
+            </div>
+            <div class="flow-card">
+              <div class="flow-line">
+                <span>Customer</span><i></i><span>AI</span><i></i><span>Payment</span>
+              </div>
+            </div>
+            <div class="hero-console" aria-label="Schematic conversation">
+              <div class="console-bar">
+                <span class="console-dot"></span>
+                <span class="console-dot"></span>
+                <span class="console-dot"></span>
+                <span class="console-title">Order #A-2041</span>
+              </div>
+              <pre class="console-body"><code><span class="c-key">customer:</span>  <span class="c-str">"I want 2 kg of tortillas"</span>
+<span class="c-key">ai:</span>        <span class="c-str">"$50. Confirm?"</span>
+<span class="c-key">customer:</span>  <span class="c-str">"yes"</span>
+<span class="c-ok">✓</span> Order created
+<span class="c-ok">✓</span> Payment link sent
+<span class="c-ok">✓</span> Payment received (SPEI)</code></pre>
+            </div>
+            <div class="platform-footer">
+              <span>Order</span>
+              <span>Payment</span>
+              <span>Delivery</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="proof-strip" aria-label="Who brings what">
+        <div class="container proof-grid">
+          <div>
+            <strong>You bring</strong>
+            <span>Your AI agent (Claude, ChatGPT, Gemini, n8n or custom) and your WhatsApp Business number.</span>
+          </div>
+          <div>
+            <strong>We bring</strong>
+            <span>The tools your AI needs to send messages, take orders, charge, and hand off to your team.</span>
+          </div>
+          <div>
+            <strong>Together</strong>
+            <span>Your AI operates WhatsApp in seconds, no integration code on your side.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="what-it-does">
+        <div class="container">
+          <div class="section-kicker">What we give your AI</div>
+          <h2 class="section-title">Three tools, done well.</h2>
+          <p class="section-lede">
+            TramsTec is not the AI — it's what your AI uses to run WhatsApp.
+          </p>
+
+          <div class="cap-grid">
+            <article class="cap">
+              <span class="cap-tag">messaging</span>
+              <h3>Talk on WhatsApp</h3>
+              <p>Your AI sends and receives messages with your customers on your WhatsApp Business number.</p>
+            </article>
+            <article class="cap">
+              <span class="cap-tag">payments</span>
+              <h3>Charge</h3>
+              <p>Generate payment links, SPEI, or OXXO instructions. We confirm payment and notify your AI.</p>
+            </article>
+            <article class="cap">
+              <span class="cap-tag">handoff</span>
+              <h3>Hand off to your team</h3>
+              <p>On doubt, complaints, or high-value cases, your AI escalates the conversation to a human.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-band" id="how-it-works">
+        <div class="container">
+          <h2 class="section-title">How it works</h2>
+          <p class="section-lede">
+            No demo calls. No installers. You pay and operate.
+          </p>
+
+          <ol class="how-list" role="list">
+            <li>
+              <span class="how-num">01</span>
+              <div><h3>Pick a plan and pay</h3><p>Secure payment via Stripe (card, SPEI, or OXXO).</p></div>
+            </li>
+            <li>
+              <span class="how-num">02</span>
+              <div><h3>We email your keys</h3><p>Admin panel access and the connection details for your AI.</p></div>
+            </li>
+            <li>
+              <span class="how-num">03</span>
+              <div><h3>Paste the connection into your AI</h3><p>Claude Desktop, n8n, your app — wherever your agent lives. One copy-paste.</p></div>
+            </li>
+            <li>
+              <span class="how-num">04</span>
+              <div><h3>Connect your WhatsApp Business</h3><p>Link your number from the panel and your AI starts handling chats.</p></div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="band-grid">
+            <div>
+              <h2 class="section-title">Works with your AI.</h2>
+              <p class="section-lede">
+                We speak the standard agent protocol (MCP). Your AI connects with a copy-paste.
+              </p>
+            </div>
+            <ul class="region-list" role="list">
+              <li><strong>Claude</strong> · Desktop, Code, API</li>
+              <li><strong>ChatGPT / OpenAI</strong> · Agents, GPTs</li>
+              <li><strong>Gemini</strong> · Google AI Studio</li>
+              <li><strong>n8n · Make · Zapier</strong> · via HTTP</li>
+              <li><strong>Your own agent</strong> · any MCP or HTTP client</li>
+            </ul>
+          </div>
+          <p class="fineprint" style="margin-top: var(--space-6);">
+            No AI of your own? Start with Claude Desktop (free) — we help you set it up on first login.
+          </p>
+        </div>
+      </section>
+
+      <section class="section section-band">
+        <div class="container">
+          <div class="band-grid">
+            <div>
+              <h2 class="section-title">Made for Mexico.</h2>
+              <p class="section-lede">
+                Speak like your customers. Charge how they pay in Mexico.
+              </p>
+            </div>
+            <ul class="region-list" role="list">
+              <li><strong>SPEI · OXXO · card</strong></li>
+              <li><strong>CFDI invoicing</strong> with your RFC</li>
+              <li><strong>Mexican Spanish</strong>, not translated</li>
+              <li><strong>LFPDPPP notice</strong> and ARCO rights</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="pricing">
+        <div class="container">
+          <div class="section-kicker">Pricing</div>
+          <h2 class="section-title">Clear pricing. No surprises.</h2>
+          <p class="section-lede">
+            Mexican pesos, tax not included. WhatsApp and payment-processor fees billed at cost.
+          </p>
+
+          <div class="pricing-cards" aria-label="Plans">
+            <article class="pricing-card">
+              <div>
+                <span class="plan-label">Starter</span>
+                <h3>$6,000<small>/mo</small></h3>
+                <p>+ $8,000 one-time · 500 conversations</p>
+              </div>
+              <ul role="list">
+                <li>For trying it out</li>
+                <li>1 WhatsApp number</li>
+                <li>Basic dashboard</li>
+              </ul>
+              <button class="btn btn-ghost add-plan" type="button" data-plan="starter">Pick</button>
+            </article>
+
+            <article class="pricing-card pricing-card-featured">
+              <div>
+                <span class="plan-label">Growth · recommended</span>
+                <h3>$12,000<small>/mo</small></h3>
+                <p>+ $25,000 one-time · 2,000 conversations</p>
+              </div>
+              <ul role="list">
+                <li>For real sales</li>
+                <li>Payments and team handoff</li>
+                <li>$3 per extra conversation</li>
+              </ul>
+              <button class="btn btn-primary add-plan" type="button" data-plan="growth">Pick</button>
+            </article>
+
+            <article class="pricing-card">
+              <div>
+                <span class="plan-label">Scale</span>
+                <h3>$35,000<small>/mo</small></h3>
+                <p>+ $50,000 one-time · 10,000 conversations</p>
+              </div>
+              <ul role="list">
+                <li>For high volume</li>
+                <li>Multi-location</li>
+                <li>ERP/CRM integration</li>
+              </ul>
+              <button class="btn btn-ghost add-plan" type="button" data-plan="scale">Pick</button>
+            </article>
+
+            <article class="pricing-card">
+              <div>
+                <span class="plan-label">Enterprise</span>
+                <h3>Custom</h3>
+                <p>Banking, fintech, healthcare, corporates</p>
+              </div>
+              <ul role="list">
+                <li>Custom volume and SLA</li>
+                <li>Data in your cloud</li>
+                <li>Contract and dedicated support</li>
+              </ul>
+              <a class="btn btn-ghost" href="mailto:sales@tramstec.com?subject=Enterprise%20quote">Contact sales</a>
+            </article>
+          </div>
+
+          <p class="fineprint">
+            Payment via Stripe — we don't store card data. Cancel anytime from the panel.
+          </p>
+        </div>
+      </section>
+
+      <section class="section section-offset" id="start">
+        <div class="container checkout-grid">
+          <div>
+            <div class="section-kicker">Get started</div>
+            <h2 class="section-title">Pay → get keys → connect your AI.</h2>
+            <p class="section-lede">
+              After payment you receive panel access and the connection for your agent. Paste it into Claude, ChatGPT or wherever your AI lives. Under 3 minutes.
+            </p>
+            <div class="addon-grid" aria-label="Add-ons">
+              <label class="addon-card">
+                <input type="checkbox" data-addon="payments" />
+                <span>
+                  <strong>More payment options</strong>
+                  <small>Mercado Pago, Conekta, Openpay · $5,000/mo</small>
+                </span>
+              </label>
+              <label class="addon-card">
+                <input type="checkbox" data-addon="erp" />
+                <span>
+                  <strong>Connect your system</strong>
+                  <small>Sheets, HubSpot, Shopify · $8,000/mo</small>
+                </span>
+              </label>
+              <label class="addon-card">
+                <input type="checkbox" data-addon="priority" />
+                <span>
+                  <strong>Priority support</strong>
+                  <small>Answers in hours, not days · $6,000/mo</small>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <aside class="cart-panel" aria-label="Your order">
+            <div class="cart-head">
+              <span>Your order</span>
+              <strong data-cart-plan>Growth</strong>
+            </div>
+            <div class="cart-lines" data-cart-lines></div>
+            <div class="cart-total">
+              <span>Pay today</span>
+              <strong data-cart-total>MXN $37,000</strong>
+            </div>
+            <form class="checkout-form" data-checkout-form>
+              <label>
+                Your email
+                <input name="email" type="email" placeholder="you@company.com" autocomplete="email" required />
+              </label>
+              <label>
+                Business or team name
+                <input name="workspace" type="text" placeholder="Acme Inc." required />
+              </label>
+              <label>
+                Which AI are you using?
+                <select name="framework" required>
+                  <option value="">Select</option>
+                  <option value="claude">Claude</option>
+                  <option value="openai">ChatGPT / OpenAI</option>
+                  <option value="gemini">Gemini</option>
+                  <option value="n8n">n8n</option>
+                  <option value="custom">Other / my own</option>
+                </select>
+              </label>
+              <details class="fiscal-details">
+                <summary>Mexican invoicing data (optional)</summary>
+                <label>Legal name
+                  <input name="fiscal_business_name" type="text" placeholder="My Company SA de CV" />
+                </label>
+                <label>RFC
+                  <input name="fiscal_rfc" type="text" maxlength="13" placeholder="ABC123456XYZ" />
+                </label>
+                <label>ZIP code
+                  <input name="fiscal_postal_code" type="text" maxlength="5" placeholder="06700" inputmode="numeric" />
+                </label>
+              </details>
+              <label class="terms-row">
+                <input name="terms" type="checkbox" required />
+                <span>
+                  I accept the <a href="terms.html" target="_blank" rel="noopener">terms</a> and <a href="privacy.html" target="_blank" rel="noopener">privacy notice</a>.
+                </span>
+              </label>
+              <button class="btn btn-primary btn-lg" type="submit" data-checkout-submit>Pay</button>
+              <p class="checkout-note">
+                Secure payment via Stripe. We'll email your credentials.
+              </p>
+              <div class="checkout-status" data-checkout-status role="status" aria-live="polite"></div>
+            </form>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <h2 class="section-title">No surprises, no lock-in.</h2>
+          <div class="trust-grid">
+            <article class="trust">
+              <h3>You're in control</h3>
+              <p>You decide what the AI can do and when it alerts you. Take over anytime.</p>
+            </article>
+            <article class="trust">
+              <h3>Everything is logged</h3>
+              <p>Every AI action is recorded. View, export, or audit at any time.</p>
+            </article>
+            <article class="trust">
+              <h3>Your data is yours</h3>
+              <p>Export or cancel anytime. No long contracts, no lock-in.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-cta">
+        <div class="container cta-inner">
+          <h2 class="cta-title">Connect your AI to WhatsApp today.</h2>
+          <p class="cta-lede">Pay, get keys, paste them in your agent and it operates.</p>
+          <div class="cta-actions">
+            <a class="btn btn-primary btn-lg" href="#start">Get started</a>
+            <a class="btn btn-ghost btn-lg" href="#how-it-works">How it works</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <svg class="brand-mark" viewBox="0 0 40 40" width="28" height="28" aria-hidden="true" fill="none">
+            <rect x="2" y="2" width="36" height="36" rx="6" fill="currentColor" />
+            <path d="M10 13h20M20 13v15" stroke="var(--color-bg)" stroke-width="3" stroke-linecap="square" />
+            <path d="M10 28h6" stroke="var(--color-primary-highlight)" stroke-width="3" stroke-linecap="square" />
+          </svg>
+          <div>
+            <div class="footer-name">TramsTec</div>
+            <div class="footer-tag">WhatsApp + AI · Made in Mexico</div>
+          </div>
+        </div>
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="#what-it-does">What it does</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#start">Get started</a>
+          <a href="terms.html">Terms</a>
+          <a href="privacy.html">Privacy</a>
+        </nav>
+        <small class="footer-meta">
+          © <span id="year"></span> TramsTec · Prices in MXN, tax not included.
+        </small>
+      </div>
+    </footer>
+
+    <script>window.WCM_LANG = "en";</script>
+    <script src="../config.js"></script>
+    <script src="../script.js" defer></script>
+  </body>
+</html>
