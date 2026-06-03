@@ -16,7 +16,8 @@
   const I18N = {
     es: {
       locale: "es-MX",
-      addedToCart: (label) => `${label} agregado al carrito.`,
+      currency: "MXN",
+      addedToCart: (label) => `Plan ${label} seleccionado.`,
       enterpriseSalesLed: "Enterprise se cotiza con ventas. Escríbenos a ventas@tramstec.com.",
       acceptTerms: "Debes aceptar los términos para continuar.",
       preparingPayment: "Generando sesión de pago segura…",
@@ -24,9 +25,12 @@
       payButton: "Pagar",
       paymentError: (msg) => `No pudimos iniciar el pago: ${msg}`,
       backendInvalid: "Respuesta inválida del servidor.",
-      setupLine: (label, amount) => `<div class="cart-line"><span>Setup ${label}</span><strong>${amount}</strong></div>`,
-      monthlyLine: (label, amount) => `<div class="cart-line"><span>Primer mes ${label}</span><strong>${amount}</strong></div>`,
-      includedLine: (n) => `<div class="cart-line"><span>${n} conversaciones IA</span><strong>Incluido</strong></div>`,
+      monthlyLine: (label, amount) => `<div class="cart-line"><span>Plan ${label}</span><strong>${amount}/mes</strong></div>`,
+      toolCallsLine: (n) => `<div class="cart-line"><span>${n} tool calls/mes</span><strong>Incluido</strong></div>`,
+      memoryOpsLine: (n) => `<div class="cart-line"><span>${n} memory ops/mes</span><strong>Incluido</strong></div>`,
+      conversationsLine: (n) => `<div class="cart-line"><span>${n} conversaciones/mes</span><strong>Incluido</strong></div>`,
+      freeForever: "Gratis · siempre",
+      customPricing: "A la medida",
       // Waitlist mode (backend API aún no en vivo)
       waitlistButton: "Apartar mi lugar",
       waitlistSubmitting: "Registrando…",
@@ -35,7 +39,8 @@
     },
     en: {
       locale: "en-US",
-      addedToCart: (label) => `${label} added to cart.`,
+      currency: "USD",
+      addedToCart: (label) => `${label} plan selected.`,
       enterpriseSalesLed: "Enterprise is sales-led. Email us at sales@tramstec.com.",
       acceptTerms: "You must accept the terms to continue.",
       preparingPayment: "Creating a secure payment session…",
@@ -43,9 +48,12 @@
       payButton: "Pay",
       paymentError: (msg) => `Couldn't start the payment: ${msg}`,
       backendInvalid: "Invalid response from the server.",
-      setupLine: (label, amount) => `<div class="cart-line"><span>${label} setup</span><strong>${amount}</strong></div>`,
-      monthlyLine: (label, amount) => `<div class="cart-line"><span>${label} first month</span><strong>${amount}</strong></div>`,
-      includedLine: (n) => `<div class="cart-line"><span>${n} AI conversations</span><strong>Included</strong></div>`,
+      monthlyLine: (label, amount) => `<div class="cart-line"><span>${label} plan</span><strong>${amount}/mo</strong></div>`,
+      toolCallsLine: (n) => `<div class="cart-line"><span>${n} tool calls/mo</span><strong>Included</strong></div>`,
+      memoryOpsLine: (n) => `<div class="cart-line"><span>${n} memory ops/mo</span><strong>Included</strong></div>`,
+      conversationsLine: (n) => `<div class="cart-line"><span>${n} conversations/mo</span><strong>Included</strong></div>`,
+      freeForever: "Free · forever",
+      customPricing: "Custom",
       // Waitlist mode (backend not live yet)
       waitlistButton: "Reserve my spot",
       waitlistSubmitting: "Saving…",
@@ -75,23 +83,44 @@
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
   // -----------------------------------------------------------------
-  // Pricing data — fallback. Will be overwritten if /public/plans responds.
-  // Cents (centavos). Keep in sync with packages/db/src/seed.ts.
+  // Pricing data — repositioned for "WhatsApp Memory Infrastructure".
+  // Five tiers: Developer (free) / Builder / Agency / Platform / Enterprise.
+  // Prices in MINOR units (cents/centavos). Two currency tables per locale.
   // -----------------------------------------------------------------
-  const fallback = {
-    plans: {
-      starter:    { label: "Starter",    setup_cents:  800000, monthly_cents:  600000, included_conversations:   500 },
-      growth:     { label: "Growth",     setup_cents: 2500000, monthly_cents: 1200000, included_conversations:  2000 },
-      scale:      { label: "Scale",      setup_cents: 5000000, monthly_cents: 3500000, included_conversations: 10000 },
-      enterprise: { label: "Enterprise", setup_cents:       0, monthly_cents:       0, included_conversations:  null  },
+  const PRICING = {
+    es: {
+      currency: "MXN",
+      plans: {
+        developer:  { label: "Developer",  monthly_cents:       0, tool_calls:   10000, memory_ops:   5000, conversations:    100, customLabel: "Gratis · siempre" },
+        builder:    { label: "Builder",    monthly_cents:   49900, tool_calls:  100000, memory_ops:  50000, conversations:   1000 },
+        agency:     { label: "Agency",     monthly_cents:  249900, tool_calls:  500000, memory_ops: 250000, conversations:   5000 },
+        platform:   { label: "Platform",   monthly_cents:  999900, tool_calls: 5000000, memory_ops:1000000, conversations:  25000 },
+        enterprise: { label: "Enterprise", monthly_cents:       0, tool_calls:       0, memory_ops:      0, conversations:      0, customLabel: "A la medida" },
+      },
+      addons: {
+        payments: { label: "Pagos LATAM extendidos", monthly_cents: 500000 },
+        erp:      { label: "Conectores de negocio",  monthly_cents: 800000 },
+        priority: { label: "AI Ops prioritario",     monthly_cents: 600000 },
+      },
     },
-    addons: {
-      payments: { label: "Pagos LatAm",         monthly_cents: 500000 },
-      erp:      { label: "ERP / CRM connector", monthly_cents: 800000 },
-      priority: { label: "AI Ops prioritario",  monthly_cents: 600000 },
+    en: {
+      currency: "USD",
+      plans: {
+        developer:  { label: "Developer",  monthly_cents:      0, tool_calls:   10000, memory_ops:   5000, conversations:    100, customLabel: "Free · forever" },
+        builder:    { label: "Builder",    monthly_cents:   2900, tool_calls:  100000, memory_ops:  50000, conversations:   1000 },
+        agency:     { label: "Agency",     monthly_cents:  12900, tool_calls:  500000, memory_ops: 250000, conversations:   5000 },
+        platform:   { label: "Platform",   monthly_cents:  49900, tool_calls: 5000000, memory_ops:1000000, conversations:  25000 },
+        enterprise: { label: "Enterprise", monthly_cents:      0, tool_calls:       0, memory_ops:      0, conversations:      0, customLabel: "Custom" },
+      },
+      addons: {
+        payments: { label: "Extended LATAM payments", monthly_cents: 30000 },
+        erp:      { label: "Business connectors",     monthly_cents: 50000 },
+        priority: { label: "Priority AI Ops",         monthly_cents: 40000 },
+      },
     },
   };
 
+  const fallback = PRICING[LANG] || PRICING.es;
   let plans = fallback.plans;
   let addons = fallback.addons;
 
@@ -104,14 +133,17 @@
     if (submitEarly) submitEarly.textContent = T.waitlistButton;
   }
 
-  // Hydrate from backend; ignore failure (fallback is fine).
-  // In waitlist mode the backend isn't live — skip the fetch entirely.
+  // Hydrate from backend if available. In waitlist mode the backend
+  // isn't live — skip the fetch entirely and use the baked-in tiers.
   if (!WAITLIST_MODE) fetch(`${API_BASE}/public/plans`, { credentials: "omit" })
     .then((r) => (r.ok ? r.json() : null))
     .then((data) => {
       if (!data) return;
-      plans = Object.fromEntries((data.plans || []).map((p) => [p.slug, p]));
-      addons = Object.fromEntries((data.addons || []).map((a) => [a.slug, a]));
+      // Backend response shape: { plans: [{slug, label, monthly_cents, ...}], addons: [...] }
+      const byPlan = Object.fromEntries((data.plans || []).map((p) => [p.slug, p]));
+      const byAddon = Object.fromEntries((data.addons || []).map((a) => [a.slug, a]));
+      if (Object.keys(byPlan).length) plans = byPlan;
+      if (Object.keys(byAddon).length) addons = byAddon;
       renderCart();
     })
     .catch(() => { /* fallback already rendered */ });
@@ -119,8 +151,10 @@
   // -----------------------------------------------------------------
   // Cart state + render
   // -----------------------------------------------------------------
-  const money = new Intl.NumberFormat(T.locale, { style: "currency", currency: "MXN", maximumFractionDigits: 0 });
-  const cart = { plan: "growth", addons: new Set() };
+  const money = new Intl.NumberFormat(T.locale, { style: "currency", currency: T.currency, maximumFractionDigits: 0 });
+  const numFmt = new Intl.NumberFormat(T.locale);
+  // Default selection is Agency (the "recommended" tier in the new pricing).
+  const cart = { plan: "agency", addons: new Set() };
 
   const planLabel = document.querySelector("[data-cart-plan]");
   const cartLines = document.querySelector("[data-cart-lines]");
@@ -128,7 +162,7 @@
   const status = document.querySelector("[data-checkout-status]");
 
   function selectedPlan() {
-    return plans[cart.plan] || plans.growth;
+    return plans[cart.plan] || plans.agency || plans.developer;
   }
 
   function renderCart() {
@@ -136,16 +170,19 @@
     const p = selectedPlan();
     const addonItems = Array.from(cart.addons).map((k) => addons[k]).filter(Boolean);
     const addonMonthly = addonItems.reduce((s, a) => s + (a.monthly_cents || 0), 0);
-    const first = (p.setup_cents || 0) + (p.monthly_cents || 0) + addonMonthly;
+    const monthlyTotal = (p.monthly_cents || 0) + addonMonthly;
+    const isEnterprise = cart.plan === "enterprise";
+    const isFree = (p.monthly_cents || 0) === 0 && !isEnterprise;
 
     planLabel.textContent = p.label;
     cartLines.innerHTML = [
-      T.setupLine(p.label, money.format((p.setup_cents || 0) / 100)),
-      T.monthlyLine(p.label, money.format((p.monthly_cents || 0) / 100)),
-      p.included_conversations ? T.includedLine(p.included_conversations.toLocaleString(T.locale)) : "",
+      T.monthlyLine(p.label, isEnterprise ? T.customPricing : (isFree ? T.freeForever : money.format((p.monthly_cents || 0) / 100))),
+      p.tool_calls ? T.toolCallsLine(numFmt.format(p.tool_calls)) : "",
+      p.memory_ops ? T.memoryOpsLine(numFmt.format(p.memory_ops)) : "",
+      p.conversations ? T.conversationsLine(numFmt.format(p.conversations)) : "",
       ...addonItems.map((a) => `<div class="cart-line"><span>${a.label}</span><strong>${money.format((a.monthly_cents || 0) / 100)}</strong></div>`),
     ].filter(Boolean).join("");
-    cartTotal.textContent = money.format(first / 100);
+    cartTotal.textContent = isEnterprise ? T.customPricing : (monthlyTotal === 0 ? T.freeForever : money.format(monthlyTotal / 100));
   }
 
   document.querySelectorAll("[data-plan]").forEach((btn) => {

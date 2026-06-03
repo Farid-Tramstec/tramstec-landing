@@ -1,18 +1,16 @@
 <!doctype html>
-<!-- TramsTec landing — auto-deployed via GitHub → Vercel pipeline. -->
+<!-- TramsTec — WhatsApp Memory & Business Context Infrastructure for LATAM.
+     Dual-layer landing: humans see cards/diagrams/workflows, AI agents and
+     LLM crawlers see schema.org microdata, JSON-LD with ItemList of capabilities,
+     and explicit machine-readable artifacts at /llms.txt, /mcp-manifest.json,
+     /.well-known/mcp.json, /.well-known/ai-plugin.json. -->
 <html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TramsTec — MCP de WhatsApp para agentes de IA · México</title>
-    <meta
-      name="description"
-      content="Servidor MCP (Model Context Protocol) que conecta tu agente de IA — Claude, ChatGPT, Gemini, n8n — a WhatsApp Business. Vende, cobra y atiende. Pagos en SPEI, OXXO y tarjeta. Hecho en México."
-    />
-    <meta
-      name="keywords"
-      content="MCP WhatsApp, servidor MCP, WhatsApp Business IA, agente IA WhatsApp, MCP México, WhatsApp commerce, Claude WhatsApp, ChatGPT WhatsApp, n8n WhatsApp, SPEI WhatsApp, automatización WhatsApp"
-    />
+    <title>TramsTec — Memoria conversacional para agentes de IA en WhatsApp · LATAM</title>
+    <meta name="description" content="Infraestructura de memoria y contexto de negocio para agentes de IA en WhatsApp · LATAM. 6 categorías de capacidades MCP: messaging, memory, CRM intelligence, operations, payments, human handoff. Workflows nativos para retail, ventas, cobranza y logística." />
+    <meta name="keywords" content="WhatsApp memory infrastructure, MCP server, AI agent infrastructure LATAM, conversational memory, semantic business search, CRM AI WhatsApp, order extraction WhatsApp, Claude WhatsApp, OpenAI Agents WhatsApp, LangChain WhatsApp, n8n WhatsApp, SAT, CFDI, SPEI, OXXO, México" />
     <meta name="theme-color" content="#0f3a3a" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="author" content="TramsTec" />
@@ -22,9 +20,8 @@
     <link rel="alternate" hreflang="en" href="https://tramstec.com/en/" />
     <link rel="alternate" hreflang="x-default" href="https://tramstec.com/" />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="TramsTec — MCP de WhatsApp para agentes de IA" />
-    <meta property="og:description" content="Conecta Claude, ChatGPT, Gemini o tu agente propio a WhatsApp Business. Vende, cobra y atiende. Hecho en México." />
+    <meta property="og:title" content="TramsTec — Memoria conversacional para agentes de IA en WhatsApp · LATAM" />
+    <meta property="og:description" content="La capa de memoria persistente que permite a agentes de IA entender y operar negocios LATAM en WhatsApp." />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_MX" />
     <meta property="og:locale:alternate" content="en_US" />
@@ -34,110 +31,136 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
-    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="TramsTec — MCP de WhatsApp para agentes de IA" />
-    <meta name="twitter:description" content="Conecta tu IA a WhatsApp Business en minutos. Vende, cobra y atiende desde un agente." />
+    <meta name="twitter:title" content="TramsTec — WhatsApp memory infrastructure for AI agents · LATAM" />
+    <meta name="twitter:description" content="Persistent memory, business context, AI-native tools. For Claude, OpenAI Agents, LangChain, Cursor, n8n." />
     <meta name="twitter:image" content="https://tramstec.com/og-image.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="repo.css" />
+    <link rel="stylesheet" href="elite.css" />
 
-    <link
-      rel="icon"
-      href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230f3a3a'/><path d='M8 11h16M16 11v14' stroke='%23e7d8b8' stroke-width='3' stroke-linecap='square' fill='none'/></svg>"
-    />
+    <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230f3a3a'/><path d='M8 11h16M16 11v14' stroke='%23e7d8b8' stroke-width='3' stroke-linecap='square' fill='none'/></svg>" />
 
-    <!-- Discovery for AI/LLM crawlers -->
+    <!-- AI / LLM discovery artifacts: declared explicitly so crawlers and agents
+         can fetch the machine-readable representations of this site. -->
     <link rel="alternate" type="text/markdown" href="llms.txt" title="llms.txt — site summary for AI crawlers" />
-    <link rel="alternate" type="application/json" href="mcp-manifest.json" title="MCP server manifest" />
+    <link rel="alternate" type="application/json" href="mcp-manifest.json" title="MCP server manifest (tools + transports + pricing)" />
+    <link rel="alternate" type="application/json" href=".well-known/mcp.json" title="MCP discovery (capabilities + workflows)" />
+    <link rel="alternate" type="application/json" href=".well-known/ai-plugin.json" title="OpenAI plugin manifest" />
 
-    <!-- JSON-LD: SoftwareApplication -->
+    <!-- ===== JSON-LD #1: Organization + SoftwareApplication ===== -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": ["SoftwareApplication", "WebAPI"],
+      "@id": "https://tramstec.com/#software",
       "name": "TramsTec",
-      "alternateName": ["TramsTec MCP", "WhatsApp Commerce MCP"],
-      "applicationCategory": "BusinessApplication",
-      "applicationSubCategory": "MCP server",
-      "operatingSystem": "Web, MCP-compatible clients (Claude Desktop, ChatGPT, Gemini, n8n, custom)",
+      "alternateName": ["TramsTec MCP", "TramsTec Memory Layer", "WhatsApp Business Context Infrastructure"],
+      "applicationCategory": "DeveloperApplication",
+      "applicationSubCategory": "AI Infrastructure · MCP server · Conversational memory layer",
+      "operatingSystem": "Web, MCP-compatible clients (Claude, OpenAI Agents, LangChain, Cursor, n8n, custom)",
       "url": "https://tramstec.com/",
-      "description": "MCP (Model Context Protocol) server that connects AI agents to WhatsApp Business for sales, support, and Mexican payment rails (SPEI, OXXO, Stripe, Mercado Pago).",
-      "keywords": "WhatsApp MCP, MCP server, WhatsApp Business AI agent, Claude WhatsApp, OpenAI WhatsApp, Gemini WhatsApp, n8n WhatsApp, SPEI, OXXO, Mexico AI infrastructure",
+      "description": "WhatsApp memory and business-context infrastructure for Latin America. Six capability categories (Messaging, Memory, CRM Intelligence, Operations, Payments, Human Handoff) exposed as MCP tools and REST endpoints.",
       "inLanguage": ["es-MX", "en"],
-      "audience": { "@type": "Audience", "audienceType": "Developers, AI builders, agencies, SaaS products" },
+      "featureList": [
+        "Messaging (WhatsApp Cloud API with template auto-switch)",
+        "Memory & Context (persistent semantic memory, pgvector)",
+        "CRM Intelligence (lead scoring, customer value, relationship summary)",
+        "Operations (order/commitment extraction, logistics follow-up)",
+        "Payments (SPEI, OXXO, PIX, MercadoPago, CFDI 4.0)",
+        "Human Handoff (escalation, ownership, internal notes)"
+      ],
+      "audience": { "@type": "Audience", "audienceType": "AI engineers, agent builders, AI-native SaaS, vertical AI companies, agencies, LATAM developers" },
       "offers": [
-        { "@type": "Offer", "name": "Starter",    "price": "6000",  "priceCurrency": "MXN", "description": "Setup MXN $8,000 one-time + MXN $6,000/month · 500 included conversations" },
-        { "@type": "Offer", "name": "Growth",     "price": "12000", "priceCurrency": "MXN", "description": "Setup MXN $25,000 one-time + MXN $12,000/month · 2,000 included conversations" },
-        { "@type": "Offer", "name": "Scale",      "price": "35000", "priceCurrency": "MXN", "description": "Setup MXN $50,000 one-time + MXN $35,000/month · 10,000 included conversations" },
-        { "@type": "Offer", "name": "Enterprise", "priceCurrency": "MXN", "description": "Custom pricing for banking, fintech, healthcare and large corporates" }
+        { "@type": "Offer", "name": "Developer",  "price": "0",     "priceCurrency": "MXN" },
+        { "@type": "Offer", "name": "Builder",    "price": "499",   "priceCurrency": "MXN" },
+        { "@type": "Offer", "name": "Agency",     "price": "2499",  "priceCurrency": "MXN" },
+        { "@type": "Offer", "name": "Platform",   "price": "9999",  "priceCurrency": "MXN" },
+        { "@type": "Offer", "name": "Enterprise", "priceCurrency": "MXN" }
       ],
       "provider": {
         "@type": "Organization",
+        "@id": "https://tramstec.com/#org",
         "name": "TramsTec",
         "url": "https://tramstec.com",
         "logo": "https://tramstec.com/og-image.png",
-        "areaServed": ["MX", "Latin America"],
-        "contactPoint": { "@type": "ContactPoint", "email": "support@tramstec.com", "contactType": "customer support" }
+        "areaServed": ["MX", "Latin America", "AR", "CO", "CL", "PE"],
+        "contactPoint": { "@type": "ContactPoint", "email": "support@tramstec.com", "contactType": "developer relations" }
       }
     }
     </script>
 
-    <!-- JSON-LD: FAQ (so search engines and LLMs see Q&A directly) -->
+    <!-- ===== JSON-LD #2: ItemList of MCP capability categories ===== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "TramsTec MCP capability categories",
+      "description": "Six semantic categories of MCP tools exposed by TramsTec.",
+      "itemListOrder": "https://schema.org/ItemListOrderAscending",
+      "numberOfItems": 6,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Messaging",         "description": "Send and receive WhatsApp messages, templates, media. Tools: sendMessage, sendTemplate, sendMedia, scheduleMessage." },
+        { "@type": "ListItem", "position": 2, "name": "Memory & Context",  "description": "Persistent semantic memory per customer with vector search. Tools: getCustomerContext, searchBusinessMemory, summarizeConversation, getCommercialHistory." },
+        { "@type": "ListItem", "position": 3, "name": "CRM Intelligence",  "description": "Automatic CRM enrichment and relationship intelligence. Tools: extractLeadInsights, identifyCustomerValue, getCustomerRelationshipSummary, extractPurchaseIntent." },
+        { "@type": "ListItem", "position": 4, "name": "Operations",        "description": "Extract orders, commitments, follow-ups, deliveries from free-form text. Tools: extractOrdersFromConversation, detectPendingCommitments, logisticsFollowUp, confirmDelivery." },
+        { "@type": "ListItem", "position": 5, "name": "Payments",          "description": "LATAM payment rails + CFDI invoicing. Tools: generatePaymentLink, generateSpeiInstructions, generateInvoice, confirmPayment." },
+        { "@type": "ListItem", "position": 6, "name": "Human Handoff",     "description": "Escalation and ownership. Tools: escalateToHuman, assignConversationOwner, addInternalNote." }
+      ]
+    }
+    </script>
+
+    <!-- ===== JSON-LD #3: FAQ ===== -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "¿TramsTec incluye la IA?",
-          "acceptedAnswer": { "@type": "Answer", "text": "No. TramsTec es el puente entre tu agente de IA y WhatsApp. Tú traes tu agente — Claude, ChatGPT, Gemini, n8n o uno propio. Nosotros le damos las herramientas (tools MCP) para operar WhatsApp Business." }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Es un servidor MCP?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Sí. TramsTec implementa el Model Context Protocol (MCP) sobre HTTP/SSE y stdio. Cualquier cliente MCP-compatible se conecta con una API key." }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Qué herramientas MCP expone?",
-          "acceptedAnswer": { "@type": "Answer", "text": "13 tools: whatsapp_send_message, whatsapp_send_template, customer_lookup, product_search, inventory_check, order_create_draft, order_confirm, payment_link_create, spei_instructions_generate, payment_status_check, handoff_to_human, conversation_summarize, consent_update." }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Cuánto cuesta?",
-          "acceptedAnswer": { "@type": "Answer", "text": "En MXN sin IVA: Starter $6,000/mes + $8,000 setup (500 conversaciones). Growth $12,000/mes + $25,000 setup (2,000 conversaciones). Scale $35,000/mes + $50,000 setup (10,000 conversaciones). Enterprise a la medida. WhatsApp/Meta y comisiones de pasarela se cobran al costo." }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Funciona con Claude / ChatGPT / Gemini / n8n?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Sí. Hablamos el protocolo estándar de MCP. Soporta Claude Desktop, Claude Code, OpenAI Agents, ChatGPT (GPTs/Actions), Google Gemini, n8n, Make.com, Zapier, y cualquier agente propio que pueda hablar MCP o HTTP." }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Qué métodos de pago acepta para clientes finales?",
-          "acceptedAnswer": { "@type": "Answer", "text": "SPEI, OXXO, tarjeta de crédito/débito, vía Stripe MX, Mercado Pago, Conekta u Openpay. CFDI 4.0 disponible para facturación." }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Es seguro? ¿Quién puede marcar pagos como recibidos?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Ninguna tool MCP puede marcar un pago como confirmado. Sólo un webhook firmado del procesador de pago o un operador humano autenticado pueden hacerlo. Cada acción del agente queda auditada." }
-        }
+        { "@type": "Question", "name": "¿Qué es TramsTec?", "acceptedAnswer": { "@type": "Answer", "text": "Infraestructura de memoria y contexto de negocio para agentes de IA en WhatsApp · LATAM. Seis categorías de capacidades MCP: messaging, memory, CRM intelligence, operations, payments, human handoff." } },
+        { "@type": "Question", "name": "¿Diferencia vs Twilio o WhatsApp Business API directa?", "acceptedAnswer": { "@type": "Answer", "text": "Esos te dan el canal de mensajería. TramsTec te da memoria persistente, búsqueda semántica, extracción automática de pedidos/leads, CRM auto-generado, workflows LATAM (CFDI, SAT, SPEI, OXXO) y multi-tenant — todo accesible como tools MCP." } },
+        { "@type": "Question", "name": "¿Es discoverable por agentes y crawlers?", "acceptedAnswer": { "@type": "Answer", "text": "Sí. Exponemos llms.txt, mcp-manifest.json, /.well-known/mcp.json, /.well-known/ai-plugin.json, JSON-LD schema.org (SoftwareApplication, ItemList, FAQPage), microdata throughout y MCP nativo sobre HTTP/SSE." } },
+        { "@type": "Question", "name": "¿Pricing?", "acceptedAnswer": { "@type": "Answer", "text": "Usage-based: Developer gratis · Builder $499 MXN · Agency $2,499 MXN · Platform $9,999 MXN · Enterprise custom. Basado en tool calls + memory operations + conversations." } }
       ]
     }
     </script>
+
+    <!-- ===== JSON-LD #4: Service hierarchy (hasOfferCatalog with tools) ===== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "@id": "https://tramstec.com/#service",
+      "name": "TramsTec MCP",
+      "serviceType": "AI Infrastructure · Conversational Memory · WhatsApp Tools",
+      "areaServed": ["Mexico", "Latin America"],
+      "provider": { "@id": "https://tramstec.com/#org" },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "MCP tools by category",
+        "itemListElement": [
+          { "@type": "OfferCatalog", "name": "Messaging",        "itemListElement": [ {"@type":"Offer","name":"sendMessage"}, {"@type":"Offer","name":"sendTemplate"}, {"@type":"Offer","name":"sendMedia"}, {"@type":"Offer","name":"scheduleMessage"} ] },
+          { "@type": "OfferCatalog", "name": "Memory & Context", "itemListElement": [ {"@type":"Offer","name":"getCustomerContext"}, {"@type":"Offer","name":"searchBusinessMemory"}, {"@type":"Offer","name":"summarizeConversation"}, {"@type":"Offer","name":"getCommercialHistory"} ] },
+          { "@type": "OfferCatalog", "name": "CRM Intelligence", "itemListElement": [ {"@type":"Offer","name":"extractLeadInsights"}, {"@type":"Offer","name":"identifyCustomerValue"}, {"@type":"Offer","name":"getCustomerRelationshipSummary"}, {"@type":"Offer","name":"extractPurchaseIntent"} ] },
+          { "@type": "OfferCatalog", "name": "Operations",       "itemListElement": [ {"@type":"Offer","name":"extractOrdersFromConversation"}, {"@type":"Offer","name":"detectPendingCommitments"}, {"@type":"Offer","name":"logisticsFollowUp"}, {"@type":"Offer","name":"confirmDelivery"} ] },
+          { "@type": "OfferCatalog", "name": "Payments",         "itemListElement": [ {"@type":"Offer","name":"generatePaymentLink"}, {"@type":"Offer","name":"generateSpeiInstructions"}, {"@type":"Offer","name":"generateInvoice"}, {"@type":"Offer","name":"confirmPayment"} ] },
+          { "@type": "OfferCatalog", "name": "Human Handoff",    "itemListElement": [ {"@type":"Offer","name":"escalateToHuman"}, {"@type":"Offer","name":"assignConversationOwner"}, {"@type":"Offer","name":"addInternalNote"} ] }
+        ]
+      }
+    }
+    </script>
   </head>
-  <body>
+
+  <body itemscope itemtype="https://schema.org/SoftwareApplication">
+    <meta itemprop="name" content="TramsTec" />
+    <meta itemprop="applicationCategory" content="AI Infrastructure" />
+    <meta itemprop="operatingSystem" content="MCP-compatible AI clients" />
+
     <a class="skip-link" href="#main">Saltar al contenido</a>
 
-    <!-- HEADER -->
     <header class="site-header" role="banner">
       <div class="container header-inner">
         <a class="brand" href="#top" aria-label="TramsTec, inicio">
@@ -150,10 +173,12 @@
         </a>
 
         <nav class="site-nav" aria-label="Navegación">
-          <a href="#que-hace">Qué hace</a>
-          <a href="#como-funciona">Cómo funciona</a>
+          <a href="#capacidades">Capacidades</a>
+          <a href="#memoria">Memoria</a>
+          <a href="#workflows">Workflows</a>
+          <a href="#agentes">Agentes</a>
           <a href="#precios">Precios</a>
-          <a href="#comprar" class="nav-cta">Empezar</a>
+          <a href="#empezar" class="nav-cta">Empezar</a>
           <div class="lang-switcher" role="group" aria-label="Idioma">
             <span class="lang-current" aria-current="true" lang="es">Esp</span>
             <a href="en/" class="lang-link" hreflang="en" lang="en" aria-label="Switch to English">Ing</a>
@@ -164,382 +189,864 @@
     </header>
 
     <main id="main">
-      <!-- HERO -->
-      <section class="hero" id="top">
+
+      <!-- ================================================== -->
+      <!-- HERO — what we are + dual CTA + architecture diagram -->
+      <!-- ================================================== -->
+      <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="container hero-grid">
           <div class="hero-copy">
             <div class="eyebrow">
               <span class="dot" aria-hidden="true"></span>
-              El puente entre tu IA y WhatsApp · México
+              Infraestructura AI · WhatsApp · LATAM
             </div>
-            <h1 class="hero-title">
-              Conecta tu <em>IA</em> a WhatsApp.
+            <h1 class="hero-title" id="hero-title" itemprop="description">
+              Memoria persistente para agentes de IA en <em>WhatsApp</em>.
             </h1>
             <p class="hero-lede">
-              Tú traes tu agente — Claude, ChatGPT, n8n, el tuyo. Nosotros le damos las herramientas para vender, cobrar y atender por WhatsApp.
+              La capa que tu agente necesita para recordar clientes, extraer pedidos y operar negocios LATAM. <strong>No es una API de mensajería</strong>.
             </p>
             <div class="hero-cta">
-              <a class="btn btn-primary" href="#comprar">Empezar</a>
-              <a class="btn btn-ghost" href="#como-funciona">Ver cómo funciona</a>
+              <a class="btn btn-primary" href="#empezar">Empezar gratis</a>
+              <a class="btn btn-ghost" href="#capacidades">Ver capacidades</a>
+              <a class="btn btn-quiet" href="mailto:ventas@tramstec.com?subject=Enterprise%20demo">Hablar con ventas</a>
             </div>
             <ul class="hero-meta" role="list">
-              <li><strong>Trae tu IA</strong>, no la incluimos</li>
-              <li><strong>SPEI</strong>, OXXO y tarjeta</li>
-              <li><strong>Sin contratos</strong> largos</li>
+              <li><strong>MCP-native</strong></li>
+              <li><strong>Vector search</strong></li>
+              <li><strong>SAT · CFDI · SPEI · OXXO</strong></li>
             </ul>
           </div>
 
-          <aside class="hero-platform" aria-label="Conversación de ejemplo">
-            <div class="platform-top">
-              <span>WhatsApp · ejemplo</span>
-              <strong>Vivo</strong>
-            </div>
-            <div class="metric-row" aria-label="Métricas de ejemplo">
-              <div><span>Pedidos hoy</span><strong>47</strong></div>
-              <div><span>Auto-resueltos</span><strong>88%</strong></div>
-              <div><span>Pagos</span><strong>SPEI</strong></div>
-            </div>
-            <div class="flow-card">
-              <div class="flow-line">
-                <span>Cliente</span><i></i><span>IA</span><i></i><span>Pago</span>
-              </div>
-            </div>
-            <div class="hero-console" aria-label="Vista esquemática de conversación">
-              <div class="console-bar">
-                <span class="console-dot"></span>
-                <span class="console-dot"></span>
-                <span class="console-dot"></span>
-                <span class="console-title">Pedido #A-2041</span>
-              </div>
-              <pre class="console-body"><code><span class="c-key">cliente:</span>  <span class="c-str">"quiero 2 kg de tortillas"</span>
-<span class="c-key">ia:</span>       <span class="c-str">"$50. ¿Confirmas?"</span>
-<span class="c-key">cliente:</span>  <span class="c-str">"sí"</span>
-<span class="c-ok">✓</span> Pedido creado
-<span class="c-ok">✓</span> Link de pago enviado
-<span class="c-ok">✓</span> Pago recibido (SPEI)</code></pre>
-            </div>
-            <div class="platform-footer">
-              <span>Pedido</span>
-              <span>Pago</span>
-              <span>Entrega</span>
-            </div>
+          <aside class="hero-platform repo-diagram-wrap" aria-label="Arquitectura TramsTec">
+            <svg class="repo-arch" viewBox="0 0 640 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="archTitle archDesc" preserveAspectRatio="xMidYMid meet">
+              <title id="archTitle">Cómo encaja TramsTec en tu stack</title>
+              <desc id="archDesc">Tu agente y WhatsApp Cloud API se conectan a través de TramsTec, la capa de memoria y contexto. El backbone es pgvector + Postgres + BullMQ + audit log + OpenTelemetry.</desc>
+
+              <defs>
+                <!-- Subtle dot grid background -->
+                <pattern id="archDots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <circle cx="1" cy="1" r="0.8" fill="#e5e5e5"/>
+                </pattern>
+
+                <!-- Soft glow behind TramsTec center -->
+                <radialGradient id="archGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#0f3a3a" stop-opacity="0.25"/>
+                  <stop offset="60%" stop-color="#0f3a3a" stop-opacity="0.05"/>
+                  <stop offset="100%" stop-color="#0f3a3a" stop-opacity="0"/>
+                </radialGradient>
+
+                <!-- Drop shadow for cards -->
+                <filter id="archShadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0a0a0a" flood-opacity="0.06"/>
+                </filter>
+                <filter id="archShadowStrong" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#0a0a0a" flood-opacity="0.18"/>
+                </filter>
+
+                <!-- Arrow markers -->
+                <marker id="arrPrimary" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="9" markerHeight="9" orient="auto">
+                  <path d="M0 0 L12 6 L0 12 z" fill="#0a0a0a"/>
+                </marker>
+                <marker id="arrAccent" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="9" markerHeight="9" orient="auto">
+                  <path d="M0 0 L12 6 L0 12 z" fill="#0f3a3a"/>
+                </marker>
+              </defs>
+
+              <!-- Background dot grid (very subtle) -->
+              <rect width="640" height="460" fill="url(#archDots)" opacity="0.5"/>
+
+              <!-- Glow behind center -->
+              <ellipse cx="320" cy="160" rx="220" ry="140" fill="url(#archGlow)" class="elite-glow"/>
+
+              <!-- ===== TOP ROW: Agent ←→ TramsTec ←→ WhatsApp ===== -->
+
+              <!-- Left: Your agent -->
+              <g filter="url(#archShadow)">
+                <rect x="20" y="80" width="180" height="160" rx="14" fill="#ffffff" stroke="#e5e5e5" stroke-width="1.5"/>
+                <!-- Live status dot -->
+                <circle cx="40" cy="100" r="4" fill="#15803d" class="elite-pulse"/>
+                <text x="55" y="104" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#737373" letter-spacing="0.04em">LIVE</text>
+                <text x="110" y="140" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" font-weight="600" fill="#0a0a0a" letter-spacing="-0.02em">Tu agente</text>
+                <line x1="40" y1="158" x2="180" y2="158" stroke="#e5e5e5" stroke-width="1"/>
+                <text x="110" y="186" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#525252">Claude · OpenAI</text>
+                <text x="110" y="208" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#525252">LangChain · n8n</text>
+                <text x="110" y="228" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#a3a3a3">+ Cursor · custom</text>
+              </g>
+
+              <!-- Center: TramsTec memory layer (highlighted dark) -->
+              <g filter="url(#archShadowStrong)">
+                <rect x="230" y="40" width="240" height="240" rx="16" fill="#0a0a0a"/>
+                <!-- Top accent bar -->
+                <rect x="230" y="40" width="240" height="3" rx="2" fill="url(#archGlow)"/>
+                <rect x="230" y="40" width="240" height="3" fill="#0f3a3a"/>
+                <!-- Title -->
+                <text x="350" y="82" text-anchor="middle" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#ffffff" letter-spacing="-0.03em">TramsTec</text>
+                <text x="350" y="106" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#a3a3a3" letter-spacing="0.12em">MEMORY LAYER</text>
+
+                <line x1="252" y1="126" x2="448" y2="126" stroke="#262626" stroke-width="1"/>
+
+                <!-- Tool signatures inside -->
+                <text x="350" y="156" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#ffffff" font-weight="500">getCustomerContext()</text>
+                <text x="350" y="180" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#ffffff" font-weight="500">searchBusinessMemory()</text>
+                <text x="350" y="204" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#ffffff" font-weight="500">extractOrders()</text>
+
+                <line x1="252" y1="222" x2="448" y2="222" stroke="#262626" stroke-width="1"/>
+
+                <!-- Bottom stats row -->
+                <text x="290" y="248" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#737373">6 cat</text>
+                <text x="350" y="248" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#737373">30+ tools</text>
+                <text x="410" y="248" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#737373">&lt;50ms</text>
+              </g>
+
+              <!-- Right: WhatsApp -->
+              <g filter="url(#archShadow)">
+                <rect x="500" y="80" width="120" height="160" rx="14" fill="#ffffff" stroke="#e5e5e5" stroke-width="1.5"/>
+                <!-- Mini WhatsApp icon -->
+                <circle cx="560" cy="120" r="18" fill="#25d366"/>
+                <path d="M555 113 L563 113 L568 118 L568 127 L563 132 L555 132 L555 127 L552 130 L552 117 L555 113 Z" fill="#ffffff" transform="translate(-3, -1)"/>
+                <text x="560" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#0a0a0a" letter-spacing="-0.02em">WhatsApp</text>
+                <text x="560" y="194" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="#525252">Cloud API</text>
+                <text x="560" y="216" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#a3a3a3">cliente real</text>
+              </g>
+
+              <!-- Animated connection lines -->
+              <line class="elite-flow" x1="205" y1="148" x2="225" y2="148" stroke="#0f3a3a" stroke-width="2" marker-end="url(#arrAccent)"/>
+              <line class="elite-flow" x1="225" y1="172" x2="205" y2="172" stroke="#0a0a0a" stroke-width="2" marker-end="url(#arrPrimary)"/>
+              <line class="elite-flow" x1="475" y1="148" x2="495" y2="148" stroke="#0a0a0a" stroke-width="2" marker-end="url(#arrPrimary)"/>
+              <line class="elite-flow" x1="495" y1="172" x2="475" y2="172" stroke="#0f3a3a" stroke-width="2" marker-end="url(#arrAccent)"/>
+
+              <!-- ===== BOTTOM: Memory backbone ===== -->
+              <text x="320" y="318" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#737373" letter-spacing="0.1em">MEMORY BACKBONE</text>
+
+              <g transform="translate(20, 332)" filter="url(#archShadow)">
+                <rect x="0" y="0" width="600" height="100" rx="14" fill="#fafafa" stroke="#e5e5e5" stroke-width="1.5"/>
+                <g font-family="JetBrains Mono, monospace" font-size="12" fill="#0a0a0a" text-anchor="middle" font-weight="500">
+                  <rect x="20" y="20" width="130" height="60" rx="10" fill="#ffffff" stroke="#e5e5e5" stroke-width="1"/>
+                  <text x="85" y="42" font-size="10" fill="#a3a3a3" font-weight="400">db</text>
+                  <text x="85" y="62">pgvector</text>
+
+                  <rect x="160" y="20" width="130" height="60" rx="10" fill="#ffffff" stroke="#e5e5e5" stroke-width="1"/>
+                  <text x="225" y="42" font-size="10" fill="#a3a3a3" font-weight="400">storage</text>
+                  <text x="225" y="62">Postgres</text>
+
+                  <rect x="300" y="20" width="130" height="60" rx="10" fill="#ffffff" stroke="#e5e5e5" stroke-width="1"/>
+                  <text x="365" y="42" font-size="10" fill="#a3a3a3" font-weight="400">queue</text>
+                  <text x="365" y="62">BullMQ</text>
+
+                  <rect x="440" y="20" width="140" height="60" rx="10" fill="#ffffff" stroke="#e5e5e5" stroke-width="1"/>
+                  <text x="510" y="42" font-size="10" fill="#a3a3a3" font-weight="400">obs</text>
+                  <text x="510" y="62">audit · OTel</text>
+                </g>
+              </g>
+
+              <!-- Connector center → backbone -->
+              <line x1="350" y1="280" x2="350" y2="328" stroke="#d4d4d4" stroke-width="1.5" stroke-dasharray="3 4"/>
+            </svg>
           </aside>
         </div>
       </section>
 
-      <section class="proof-strip" aria-label="Cómo se reparte el trabajo">
-        <div class="container proof-grid">
-          <div>
-            <strong>Tú traes</strong>
-            <span>Tu agente de IA (Claude, ChatGPT, Gemini, n8n o uno propio) y tu número de WhatsApp Business.</span>
-          </div>
-          <div>
-            <strong>Nosotros traemos</strong>
-            <span>Las herramientas para que tu IA mande mensajes, tome pedidos, cobre y escale a tu equipo.</span>
-          </div>
-          <div>
-            <strong>Juntos</strong>
-            <span>Tu IA opera WhatsApp en segundos, sin que tú escribas integración.</span>
+      <!-- ================================================== -->
+      <!-- STAT STRIP — ribbon under hero, anchored with eyebrow -->
+      <!-- ================================================== -->
+      <section class="section section--stats-ribbon" aria-label="Métricas clave">
+        <div class="container">
+          <div class="stats-eyebrow"><span class="stats-eyebrow-dot" aria-hidden="true"></span> Infraestructura en vivo</div>
+          <div class="repo-stats" role="list">
+            <div class="repo-stat" role="listitem"><span class="repo-stat-num">99.95%</span><span class="repo-stat-label">Uptime</span></div>
+            <div class="repo-stat" role="listitem"><span class="repo-stat-num">&lt;50ms</span><span class="repo-stat-label">p95 retrieval</span></div>
+            <div class="repo-stat" role="listitem"><span class="repo-stat-num">6</span><span class="repo-stat-label">categorías MCP</span></div>
+            <div class="repo-stat" role="listitem"><span class="repo-stat-num">30+</span><span class="repo-stat-label">tools</span></div>
+            <div class="repo-stat" role="listitem"><span class="repo-stat-num">5</span><span class="repo-stat-label">países LATAM</span></div>
           </div>
         </div>
       </section>
 
-      <!-- WHAT IT DOES -->
-      <section class="section" id="que-hace">
+      <!-- ================================================== -->
+      <!-- CAPABILITY TAXONOMY — the centerpiece -->
+      <!-- 6 categories with structured tool lists.
+           Each card is itemscope so AIs parse capabilities by name. -->
+      <!-- ================================================== -->
+      <section class="section section-band" id="capacidades" aria-labelledby="cap-title" itemscope itemtype="https://schema.org/ItemList">
+        <meta itemprop="name" content="TramsTec MCP capabilities" />
+        <meta itemprop="numberOfItems" content="6" />
         <div class="container">
-          <div class="section-kicker">Qué le damos a tu IA</div>
-          <h2 class="section-title">Tres herramientas, bien hechas.</h2>
+          <div class="section-kicker">Capacidades MCP</div>
+          <h2 class="section-title" id="cap-title">Seis categorías. Una sola API.</h2>
           <p class="section-lede">
-            TramsTec no es la IA — es lo que tu IA usa para operar WhatsApp.
+            Cada capacidad expone tools MCP listas para ser llamadas por tu agente. Todas auditadas, scoped y con idempotencia.
           </p>
 
-          <div class="cap-grid">
-            <article class="cap">
-              <span class="cap-tag">mensajería</span>
-              <h3>Hablar por WhatsApp</h3>
-              <p>Tu IA manda y recibe mensajes con tus clientes en tu número de WhatsApp Business.</p>
+          <div class="repo-cap-grid">
+            <!-- 1. MESSAGING -->
+            <article class="repo-cap-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/Service">
+              <meta itemprop="position" content="1" />
+              <meta itemprop="serviceType" content="Messaging" />
+              <div class="repo-cap-head">
+                <span class="repo-cap-icon" aria-hidden="true">✉</span>
+                <h3 class="repo-cap-title" itemprop="name">Messaging</h3>
+                <span class="repo-cap-count">6 tools</span>
+              </div>
+              <p class="repo-cap-desc" itemprop="description">Enviar y recibir mensajes, plantillas y media en WhatsApp. Auto-switch a template cuando se sale la ventana de 24h.</p>
+              <ul class="repo-cap-tools" aria-label="Tools en messaging">
+                <li>sendMessage</li>
+                <li>sendTemplate</li>
+                <li>sendMedia</li>
+                <li>scheduleMessage</li>
+                <li>receiveMessage</li>
+                <li>markAsRead</li>
+              </ul>
             </article>
-            <article class="cap">
-              <span class="cap-tag">cobro</span>
-              <h3>Cobrar</h3>
-              <p>Genera links de pago, SPEI u OXXO. Confirmamos el pago y avisamos a tu IA.</p>
+
+            <!-- 2. MEMORY & CONTEXT -->
+            <article class="repo-cap-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/Service">
+              <meta itemprop="position" content="2" />
+              <meta itemprop="serviceType" content="Memory & Context" />
+              <div class="repo-cap-head">
+                <span class="repo-cap-icon" aria-hidden="true">🧠</span>
+                <h3 class="repo-cap-title" itemprop="name">Memory &amp; Context</h3>
+                <span class="repo-cap-count">6 tools</span>
+              </div>
+              <p class="repo-cap-desc" itemprop="description">Memoria semántica persistente por cliente. Búsqueda vectorial (pgvector) sobre todo el historial. Continuidad entre conversaciones.</p>
+              <ul class="repo-cap-tools" aria-label="Tools en memory">
+                <li>getCustomerContext</li>
+                <li>searchBusinessMemory</li>
+                <li>summarizeConversation</li>
+                <li>getCommercialHistory</li>
+                <li>indexMessage</li>
+                <li>exportMemory</li>
+              </ul>
             </article>
-            <article class="cap">
-              <span class="cap-tag">handoff</span>
-              <h3>Pasar a tu equipo</h3>
-              <p>Si hay duda, queja o monto alto, tu IA pasa la conversación a una persona.</p>
+
+            <!-- 3. CRM INTELLIGENCE -->
+            <article class="repo-cap-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/Service">
+              <meta itemprop="position" content="3" />
+              <meta itemprop="serviceType" content="CRM Intelligence" />
+              <div class="repo-cap-head">
+                <span class="repo-cap-icon" aria-hidden="true">📊</span>
+                <h3 class="repo-cap-title" itemprop="name">CRM Intelligence</h3>
+                <span class="repo-cap-count">6 tools</span>
+              </div>
+              <p class="repo-cap-desc" itemprop="description">CRM auto-generado: lead scoring, customer value, sentiment, relación. Enriquecimiento desde conversaciones crudas.</p>
+              <ul class="repo-cap-tools" aria-label="Tools en CRM">
+                <li>extractLeadInsights</li>
+                <li>identifyCustomerValue</li>
+                <li>getCustomerRelationshipSummary</li>
+                <li>extractPurchaseIntent</li>
+                <li>scoreCustomer</li>
+                <li>tagCustomer</li>
+              </ul>
+            </article>
+
+            <!-- 4. OPERATIONS -->
+            <article class="repo-cap-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/Service">
+              <meta itemprop="position" content="4" />
+              <meta itemprop="serviceType" content="Operations" />
+              <div class="repo-cap-head">
+                <span class="repo-cap-icon" aria-hidden="true">⚙</span>
+                <h3 class="repo-cap-title" itemprop="name">Operations</h3>
+                <span class="repo-cap-count">5 tools</span>
+              </div>
+              <p class="repo-cap-desc" itemprop="description">Extracción de entidades operativas: pedidos, compromisos, follow-ups, entregas. Desde texto libre a estructura.</p>
+              <ul class="repo-cap-tools" aria-label="Tools en operations">
+                <li>extractOrdersFromConversation</li>
+                <li>detectPendingCommitments</li>
+                <li>logisticsFollowUp</li>
+                <li>confirmDelivery</li>
+                <li>trackOrderStatus</li>
+              </ul>
+            </article>
+
+            <!-- 5. PAYMENTS -->
+            <article class="repo-cap-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/Service">
+              <meta itemprop="position" content="5" />
+              <meta itemprop="serviceType" content="Payments" />
+              <div class="repo-cap-head">
+                <span class="repo-cap-icon" aria-hidden="true">💳</span>
+                <h3 class="repo-cap-title" itemprop="name">Payments</h3>
+                <span class="repo-cap-count">6 tools</span>
+              </div>
+              <p class="repo-cap-desc" itemprop="description">Rails LATAM nativos: SPEI, OXXO, PIX, MercadoPago. CFDI 4.0 vía Facturapi. Conciliación automática.</p>
+              <ul class="repo-cap-tools" aria-label="Tools en payments">
+                <li>generatePaymentLink</li>
+                <li>generateSpeiInstructions</li>
+                <li>generateInvoice</li>
+                <li>confirmPayment</li>
+                <li>getPaymentStatus</li>
+                <li>refundPayment</li>
+              </ul>
+            </article>
+
+            <!-- 6. HUMAN HANDOFF -->
+            <article class="repo-cap-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/Service">
+              <meta itemprop="position" content="6" />
+              <meta itemprop="serviceType" content="Human Handoff" />
+              <div class="repo-cap-head">
+                <span class="repo-cap-icon" aria-hidden="true">🤝</span>
+                <h3 class="repo-cap-title" itemprop="name">Human Handoff</h3>
+                <span class="repo-cap-count">5 tools</span>
+              </div>
+              <p class="repo-cap-desc" itemprop="description">Escalación con resumen estructurado. Asignación de owner. Notas internas. Gestión de carga del equipo.</p>
+              <ul class="repo-cap-tools" aria-label="Tools en handoff">
+                <li>escalateToHuman</li>
+                <li>assignConversationOwner</li>
+                <li>getConversationOwner</li>
+                <li>updateConversationOwner</li>
+                <li>addInternalNote</li>
+              </ul>
             </article>
           </div>
-        </div>
-      </section>
 
-      <!-- HOW IT WORKS -->
-      <section class="section section-band" id="como-funciona">
-        <div class="container">
-          <h2 class="section-title">Cómo funciona</h2>
-          <p class="section-lede">
-            Sin agendar demo. Sin instaladores. Pagas y operas.
-          </p>
-
-          <ol class="how-list" role="list">
-            <li>
-              <span class="how-num">01</span>
-              <div><h3>Eliges plan y pagas</h3><p>Pago seguro con Stripe (tarjeta, SPEI u OXXO).</p></div>
-            </li>
-            <li>
-              <span class="how-num">02</span>
-              <div><h3>Te mandamos las llaves</h3><p>Por correo: acceso al panel y la conexión para tu IA.</p></div>
-            </li>
-            <li>
-              <span class="how-num">03</span>
-              <div><h3>Pegas la conexión en tu IA</h3><p>En Claude Desktop, n8n, tu app — donde sea que viva tu agente. Un copy-paste.</p></div>
-            </li>
-            <li>
-              <span class="how-num">04</span>
-              <div><h3>Conectas tu WhatsApp Business</h3><p>Vinculas tu número desde el panel y tu IA empieza a atender.</p></div>
-            </li>
-          </ol>
-        </div>
-      </section>
-
-      <!-- COMPATIBLE WITH -->
-      <section class="section section-band">
-        <div class="container">
-          <div class="band-grid">
-            <div>
-              <h2 class="section-title">Funciona con tu IA.</h2>
-              <p class="section-lede">
-                Hablamos el protocolo estándar de los agentes (MCP). Tu IA se conecta con un copy-paste.
-              </p>
-            </div>
-            <ul class="region-list" role="list">
-              <li><strong>Claude</strong> · Desktop, Code, API</li>
-              <li><strong>ChatGPT / OpenAI</strong> · Agents, GPTs</li>
-              <li><strong>Gemini</strong> · Google AI Studio</li>
-              <li><strong>n8n · Make · Zapier</strong> · vía HTTP</li>
-              <li><strong>Tu agente propio</strong> · cualquier cliente MCP o HTTP</li>
-            </ul>
-          </div>
           <p class="fineprint" style="margin-top: var(--space-6);">
-            ¿No tienes IA propia? Empieza con Claude Desktop (gratis) y te ayudamos a configurarlo en el primer login.
+            Catálogo completo en <a href="mcp-manifest.json"><code>mcp-manifest.json</code></a> y <a href=".well-known/mcp.json"><code>/.well-known/mcp.json</code></a>.
           </p>
         </div>
       </section>
 
-      <!-- MEXICO / LATAM -->
+      <!-- ================================================== -->
+      <!-- HOW MEMORY WORKS — visual comparison + flow -->
+      <!-- ================================================== -->
+      <section class="section" id="memoria" aria-labelledby="mem-title">
+        <div class="container">
+          <div class="section-kicker">Cómo funciona la memoria</div>
+          <h2 class="section-title" id="mem-title">Antes vs. después de TramsTec.</h2>
+          <p class="section-lede">
+            La diferencia no es marginal. Sin memoria, tu agente arranca de cero en cada mensaje. Con TramsTec, recuerda y razona sobre todo el historial.
+          </p>
+
+          <!-- Side-by-side comparison cards -->
+          <div class="repo-compare-visual">
+            <article class="repo-compare-side is-bad" aria-label="Sin memoria">
+              <h3>Sin memoria</h3>
+              <ul>
+                <li>"Hola, ¿en qué puedo ayudarte?" a clientes recurrentes</li>
+                <li>Pedidos enterrados en el chat, sin extraer</li>
+                <li>Cero context de cotizaciones pasadas</li>
+                <li>Imposible buscar "lo que le ofrecí a Pedro"</li>
+                <li>Agente repite preguntas que ya respondió</li>
+                <li>Más tokens (le pasas todo el contexto cada vez)</li>
+              </ul>
+            </article>
+            <article class="repo-compare-side is-good" aria-label="Con TramsTec">
+              <h3>Con TramsTec</h3>
+              <ul>
+                <li>"Hola María, ¿quieres repetir las 2kg de tortillas?"</li>
+                <li>Pedidos extraídos y estructurados automáticamente</li>
+                <li>Cotizaciones y propuestas indexadas por intent</li>
+                <li>Vector search semántico en &lt;50ms</li>
+                <li>Continuidad real entre conversaciones</li>
+                <li>Tu agente solo pide lo que necesita</li>
+              </ul>
+            </article>
+          </div>
+
+          <!-- Memory flow SVG (big diagram showing how it works end-to-end) -->
+          <svg class="repo-memory-flow" viewBox="0 0 1200 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="memFlowTitle memFlowDesc" preserveAspectRatio="xMidYMid meet">
+            <title id="memFlowTitle">Flujo de memoria end-to-end</title>
+            <desc id="memFlowDesc">Cliente envía mensaje por WhatsApp → TramsTec lo indexa en pgvector y extrae intent/entidades → tu agente llama getCustomerContext y obtiene memoria + contexto → responde con continuidad.</desc>
+
+            <defs>
+              <pattern id="flowDots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+                <circle cx="1" cy="1" r="0.8" fill="#e5e5e5"/>
+              </pattern>
+              <filter id="flowShadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#0a0a0a" flood-opacity="0.08"/>
+              </filter>
+              <filter id="flowShadowStrong" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#0a0a0a" flood-opacity="0.18"/>
+              </filter>
+              <marker id="flowArr" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto">
+                <path d="M0 0 L12 6 L0 12 z" fill="#0a0a0a"/>
+              </marker>
+              <marker id="flowArrAccent" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="10" markerHeight="10" orient="auto">
+                <path d="M0 0 L12 6 L0 12 z" fill="#0f3a3a"/>
+              </marker>
+            </defs>
+
+            <!-- Background subtle dot grid -->
+            <rect width="1200" height="360" fill="url(#flowDots)" opacity="0.4"/>
+
+            <!-- All cards share y=40, height=240 (vertical center y=160) -->
+
+            <!-- Step 1: Cliente -->
+            <g filter="url(#flowShadow)">
+              <rect x="20" y="40" width="240" height="240" rx="14" fill="#ffffff" stroke="#e5e5e5" stroke-width="1.5"/>
+              <!-- Step badge -->
+              <circle cx="50" cy="70" r="14" fill="#0a0a0a"/>
+              <text x="50" y="74" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+              <text x="75" y="74" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#737373" letter-spacing="0.06em">CLIENTE</text>
+              <!-- WhatsApp chip -->
+              <rect x="20" y="100" width="240" height="1" fill="#f0f0f0"/>
+              <circle cx="50" cy="140" r="11" fill="#25d366"/>
+              <text x="75" y="145" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#525252">WhatsApp · 18:42</text>
+              <!-- Message bubble -->
+              <rect x="40" y="170" width="200" height="80" rx="10" fill="#f5f5f5"/>
+              <text x="140" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="500" fill="#0a0a0a">"quiero lo de</text>
+              <text x="140" y="220" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="500" fill="#0a0a0a">la otra vez"</text>
+              <text x="232" y="240" text-anchor="end" font-family="Inter, sans-serif" font-size="10" fill="#a3a3a3">✓✓</text>
+            </g>
+
+            <!-- Flow arrow 1 -->
+            <line class="elite-flow" x1="265" y1="160" x2="295" y2="160" stroke="#0a0a0a" stroke-width="2" marker-end="url(#flowArr)"/>
+
+            <!-- Step 2: TramsTec ingests -->
+            <g filter="url(#flowShadowStrong)">
+              <rect x="300" y="40" width="280" height="240" rx="14" fill="#0a0a0a"/>
+              <rect x="300" y="40" width="280" height="3" fill="#0f3a3a"/>
+              <!-- Step badge -->
+              <circle cx="330" cy="70" r="14" fill="#0f3a3a"/>
+              <text x="330" y="74" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+              <text x="355" y="74" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#a3a3a3" letter-spacing="0.06em">TRAMSTEC</text>
+              <!-- Live status -->
+              <circle cx="555" cy="70" r="4" fill="#15803d" class="elite-pulse"/>
+              <text x="548" y="74" text-anchor="end" font-family="Inter, sans-serif" font-size="10" fill="#737373" letter-spacing="0.04em">LIVE</text>
+
+              <rect x="300" y="100" width="280" height="1" fill="#262626"/>
+
+              <!-- Tool calls -->
+              <text x="320" y="138" font-family="JetBrains Mono, monospace" font-size="13" fill="#ffffff" font-weight="500">indexMessage()</text>
+              <text x="560" y="138" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#15803d">✓ 12ms</text>
+
+              <text x="320" y="170" font-family="JetBrains Mono, monospace" font-size="13" fill="#ffffff" font-weight="500">extractIntent()</text>
+              <text x="560" y="170" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#15803d">✓ 24ms</text>
+
+              <text x="320" y="202" font-family="JetBrains Mono, monospace" font-size="13" fill="#ffffff" font-weight="500">searchMemory()</text>
+              <text x="560" y="202" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#15803d">✓ 38ms</text>
+
+              <rect x="320" y="225" width="240" height="36" rx="6" fill="#1a1a1a" stroke="#262626" stroke-width="1"/>
+              <text x="334" y="248" font-family="JetBrains Mono, monospace" font-size="11" fill="#a3a3a3">pgvector:</text>
+              <text x="406" y="248" font-family="JetBrains Mono, monospace" font-size="11" fill="#5eb8b8" font-weight="500">hit · sim 0.94</text>
+            </g>
+
+            <!-- Flow arrow 2 -->
+            <line class="elite-flow" x1="585" y1="160" x2="615" y2="160" stroke="#0a0a0a" stroke-width="2" marker-end="url(#flowArr)"/>
+
+            <!-- Step 3: Tu agente -->
+            <g filter="url(#flowShadow)">
+              <rect x="620" y="40" width="280" height="240" rx="14" fill="#ffffff" stroke="#e5e5e5" stroke-width="1.5"/>
+              <circle cx="650" cy="70" r="14" fill="#0a0a0a"/>
+              <text x="650" y="74" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+              <text x="675" y="74" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#737373" letter-spacing="0.06em">TU AGENTE</text>
+              <text x="880" y="74" text-anchor="end" font-family="Inter, sans-serif" font-size="10" fill="#a3a3a3">recibe contexto</text>
+
+              <rect x="620" y="100" width="280" height="1" fill="#f0f0f0"/>
+
+              <!-- JSON structured response -->
+              <rect x="640" y="118" width="240" height="142" rx="8" fill="#fafafa" stroke="#e5e5e5" stroke-width="1"/>
+              <text x="658" y="142" font-family="JetBrains Mono, monospace" font-size="13" fill="#a3a3a3">{</text>
+              <text x="672" y="162" font-family="JetBrains Mono, monospace" font-size="12" fill="#525252">name:</text>
+              <text x="722" y="162" font-family="JetBrains Mono, monospace" font-size="12" fill="#0a0a0a" font-weight="500">"María García",</text>
+              <text x="672" y="182" font-family="JetBrains Mono, monospace" font-size="12" fill="#525252">lastOrder:</text>
+              <text x="752" y="182" font-family="JetBrains Mono, monospace" font-size="12" fill="#0a0a0a" font-weight="500">"2kg",</text>
+              <text x="672" y="202" font-family="JetBrains Mono, monospace" font-size="12" fill="#525252">intent:</text>
+              <text x="728" y="202" font-family="JetBrains Mono, monospace" font-size="12" fill="#0a0a0a" font-weight="500">"repeat",</text>
+              <text x="672" y="222" font-family="JetBrains Mono, monospace" font-size="12" fill="#525252">sentiment:</text>
+              <text x="752" y="222" font-family="JetBrains Mono, monospace" font-size="12" fill="#15803d" font-weight="500">"positive"</text>
+              <text x="658" y="246" font-family="JetBrains Mono, monospace" font-size="13" fill="#a3a3a3">}</text>
+            </g>
+
+            <!-- Flow arrow 3 -->
+            <line class="elite-flow" x1="905" y1="160" x2="935" y2="160" stroke="#0f3a3a" stroke-width="2" marker-end="url(#flowArrAccent)"/>
+
+            <!-- Step 4: Respuesta (accent) -->
+            <g filter="url(#flowShadow)">
+              <rect x="940" y="40" width="240" height="240" rx="14" fill="#0f3a3a"/>
+              <rect x="940" y="40" width="240" height="3" fill="#5eb8b8"/>
+              <circle cx="970" cy="70" r="14" fill="#ffffff"/>
+              <text x="970" y="74" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#0f3a3a">4</text>
+              <text x="995" y="74" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#a3d4d4" letter-spacing="0.06em">RESPUESTA</text>
+
+              <rect x="940" y="100" width="240" height="1" fill="#1a5050"/>
+
+              <!-- WhatsApp reply bubble -->
+              <rect x="960" y="130" width="200" height="120" rx="14" fill="#ffffff"/>
+              <text x="1060" y="160" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#0a0a0a">"¡Hola María!</text>
+              <text x="1060" y="184" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#0a0a0a">¿2kg como</text>
+              <text x="1060" y="208" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="#0a0a0a">la última vez?"</text>
+              <text x="1152" y="238" text-anchor="end" font-family="Inter, sans-serif" font-size="10" fill="#a3a3a3">18:42 ✓</text>
+            </g>
+
+            <!-- Bottom annotation -->
+            <text x="600" y="330" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="#737373" letter-spacing="0.02em">Todo persiste para la próxima conversación · pgvector indexing automático · multi-tenant aislado por org</text>
+          </svg>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- LATAM WORKFLOWS — real business use cases -->
+      <!-- ================================================== -->
+      <section class="section section-band" id="workflows" aria-labelledby="wf-title">
+        <div class="container">
+          <div class="section-kicker">Workflows LATAM</div>
+          <h2 class="section-title" id="wf-title">Casos reales, no demos.</h2>
+          <p class="section-lede">
+            Cada workflow combina varias tools MCP. Tu agente las orquesta. TramsTec se encarga del estado.
+          </p>
+
+          <div class="repo-workflows">
+            <article class="repo-workflow" itemscope itemtype="https://schema.org/HowTo">
+              <meta itemprop="name" content="Retail order capture and payment" />
+              <div class="repo-workflow-head">
+                <span class="repo-workflow-icon" aria-hidden="true">🛒</span>
+                <h3>Pedido retail con pago</h3>
+              </div>
+              <ol class="repo-workflow-steps">
+                <li>Cliente pide productos en lenguaje natural</li>
+                <li>Agente extrae pedido estructurado</li>
+                <li>Genera link de pago SPEI / tarjeta</li>
+                <li>Confirma pago y dispara entrega</li>
+              </ol>
+              <p class="repo-workflow-tools">
+                getCustomerContext · extractOrdersFromConversation · createOrder · generatePaymentLink · confirmPayment · sendMessage
+              </p>
+            </article>
+
+            <article class="repo-workflow" itemscope itemtype="https://schema.org/HowTo">
+              <meta itemprop="name" content="Sales follow-up across conversations" />
+              <div class="repo-workflow-head">
+                <span class="repo-workflow-icon" aria-hidden="true">💬</span>
+                <h3>Seguimiento de ventas</h3>
+              </div>
+              <ol class="repo-workflow-steps">
+                <li>Detecta cotizaciones pendientes de respuesta</li>
+                <li>Recupera contexto de la conversación previa</li>
+                <li>Re-engancha con mensaje personalizado</li>
+                <li>Escala a humano si el lead se enfría</li>
+              </ol>
+              <p class="repo-workflow-tools">
+                getPendingFollowUps · getCommercialHistory · extractPurchaseIntent · sendMessage · escalateToHuman
+              </p>
+            </article>
+
+            <article class="repo-workflow" itemscope itemtype="https://schema.org/HowTo">
+              <meta itemprop="name" content="Collections with stage-aware escalation" />
+              <div class="repo-workflow-head">
+                <span class="repo-workflow-icon" aria-hidden="true">💰</span>
+                <h3>Cobranza con etapas</h3>
+              </div>
+              <ol class="repo-workflow-steps">
+                <li>Revisa estado de pago vs. fecha de vencimiento</li>
+                <li>Manda recordatorio con tono escalado</li>
+                <li>Genera instrucciones SPEI o link</li>
+                <li>Si no paga, escala a equipo legal</li>
+              </ol>
+              <p class="repo-workflow-tools">
+                getCommercialHistory · getPaymentStatus · generateSpeiInstructions · sendTemplate · escalateToHuman
+              </p>
+            </article>
+
+            <article class="repo-workflow" itemscope itemtype="https://schema.org/HowTo">
+              <meta itemprop="name" content="Logistics and supplier coordination" />
+              <div class="repo-workflow-head">
+                <span class="repo-workflow-icon" aria-hidden="true">🚚</span>
+                <h3>Coordinación logística</h3>
+              </div>
+              <ol class="repo-workflow-steps">
+                <li>Detecta compromisos pendientes con proveedores</li>
+                <li>Confirma ETA por WhatsApp</li>
+                <li>Registra confirmación de entrega con foto</li>
+                <li>Alerta si un commitment se incumple</li>
+              </ol>
+              <p class="repo-workflow-tools">
+                detectPendingCommitments · logisticsFollowUp · sendMessage · confirmDelivery · addInternalNote
+              </p>
+            </article>
+
+            <article class="repo-workflow" itemscope itemtype="https://schema.org/HowTo">
+              <meta itemprop="name" content="Inbound lead qualification and routing" />
+              <div class="repo-workflow-head">
+                <span class="repo-workflow-icon" aria-hidden="true">🎯</span>
+                <h3>Calificación de leads</h3>
+              </div>
+              <ol class="repo-workflow-steps">
+                <li>Lead nuevo llega por WhatsApp</li>
+                <li>Agente extrae vertical, presupuesto, urgencia</li>
+                <li>Asigna score y tag</li>
+                <li>Rutea al humano correcto o nurture sequence</li>
+              </ol>
+              <p class="repo-workflow-tools">
+                extractLeadInsights · scoreCustomer · tagCustomer · assignConversationOwner · sendMessage
+              </p>
+            </article>
+
+            <article class="repo-workflow" itemscope itemtype="https://schema.org/HowTo">
+              <meta itemprop="name" content="Mexico CFDI invoice on demand" />
+              <div class="repo-workflow-head">
+                <span class="repo-workflow-icon" aria-hidden="true">🧾</span>
+                <h3>Factura CFDI México</h3>
+              </div>
+              <ol class="repo-workflow-steps">
+                <li>Cliente solicita factura en chat</li>
+                <li>Agente valida RFC contra lista 69-B del SAT</li>
+                <li>Genera CFDI 4.0 vía Facturapi</li>
+                <li>Envía PDF firmado por WhatsApp</li>
+              </ol>
+              <p class="repo-workflow-tools">
+                getCustomerContext · generateInvoice · sendMedia
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- LATAM REGIONS — country support map -->
+      <!-- ================================================== -->
+      <section class="section" id="latam">
+        <div class="container">
+          <div class="section-kicker">Países LATAM</div>
+          <h2 class="section-title">Construido para la realidad LATAM.</h2>
+          <p class="section-lede">85% de SMBs mexicanos venden por WhatsApp. La infra global no lo entiende. Nosotros sí.</p>
+
+          <div class="repo-countries" aria-label="Países soportados">
+            <span class="repo-country" data-status="live">🇲🇽 México</span>
+            <span class="repo-country" data-status="live">🇦🇷 Argentina</span>
+            <span class="repo-country" data-status="live">🇨🇴 Colombia</span>
+            <span class="repo-country" data-status="live">🇨🇱 Chile</span>
+            <span class="repo-country" data-status="live">🇵🇪 Perú</span>
+            <span class="repo-country" data-status="soon">🇧🇷 Brasil · próximamente</span>
+            <span class="repo-country" data-status="roadmap">🇻🇪 Venezuela · roadmap</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- AGENTS / STACKS — plug-and-play -->
+      <!-- ================================================== -->
+      <section class="section section-band" id="agentes">
+        <div class="container">
+          <div class="section-kicker">Tu stack</div>
+          <h2 class="section-title">Plug-and-play con cualquier agente.</h2>
+          <p class="section-lede">MCP nativo + REST + SSE. SDKs en TypeScript y Python.</p>
+
+          <div class="repo-logo-grid">
+            <div class="repo-logo"><span class="repo-logo-mark" aria-hidden="true">◆</span><span class="repo-logo-name">Claude</span><span class="repo-logo-tag">Desktop · Code · SDK</span></div>
+            <div class="repo-logo"><span class="repo-logo-mark" aria-hidden="true">●</span><span class="repo-logo-name">OpenAI Agents</span><span class="repo-logo-tag">GPT · Responses</span></div>
+            <div class="repo-logo"><span class="repo-logo-mark" aria-hidden="true">⛓</span><span class="repo-logo-name">LangChain</span><span class="repo-logo-tag">Tool node + memory</span></div>
+            <div class="repo-logo"><span class="repo-logo-mark" aria-hidden="true">▶</span><span class="repo-logo-name">Cursor</span><span class="repo-logo-tag">MCP local</span></div>
+            <div class="repo-logo"><span class="repo-logo-mark" aria-hidden="true">⚙</span><span class="repo-logo-name">n8n · Make</span><span class="repo-logo-tag">HTTP nodes</span></div>
+            <div class="repo-logo"><span class="repo-logo-mark" aria-hidden="true">{}</span><span class="repo-logo-name">Tu SDK</span><span class="repo-logo-tag">TS · Python · REST</span></div>
+            <div class="repo-logo"><span class="repo-logo-mark" aria-hidden="true">⌗</span><span class="repo-logo-name">AI SaaS</span><span class="repo-logo-tag">white-label</span></div>
+            <div class="repo-logo"><span class="repo-logo-mark" aria-hidden="true">⌂</span><span class="repo-logo-name">Agencias</span><span class="repo-logo-tag">5+ clientes</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- BUILD VS BUY — tighter table -->
+      <!-- ================================================== -->
       <section class="section">
         <div class="container">
-          <div class="band-grid">
-            <div>
-              <h2 class="section-title">Hecho en México.</h2>
-              <p class="section-lede">
-                Habla como tus clientes. Cobra como pagan en México.
-              </p>
-            </div>
-            <ul class="region-list" role="list">
-              <li><strong>SPEI · OXXO · tarjeta</strong></li>
-              <li><strong>Factura CFDI</strong> con tu RFC</li>
-              <li><strong>Español de México</strong>, no traducido</li>
-              <li><strong>Aviso LFPDPPP</strong> y derechos ARCO</li>
+          <div class="section-kicker">Build vs. Buy</div>
+          <h2 class="section-title">¿Cuántos meses-ingeniero antes de producción?</h2>
+          <p class="section-lede">No es "¿puedo construirlo?" — es "¿cuántos sprints vas a quemar antes de que tu agente opere en serio?".</p>
+
+          <div class="repo-table-wrap">
+            <table class="repo-compare" aria-label="Comparativa build vs TramsTec">
+              <thead><tr><th>Capacidad</th><th>In-house</th><th>TramsTec</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">WhatsApp Cloud API + reconexión</th><td>3-6 sem</td><td>incluido</td></tr>
+                <tr><th scope="row">Memoria semántica (vector)</th><td>1-2 meses</td><td>incluido</td></tr>
+                <tr><th scope="row">CRM auto-generado</th><td>1-3 meses</td><td>incluido</td></tr>
+                <tr><th scope="row">Extracción pedidos/leads</th><td>1-2 meses</td><td>tool</td></tr>
+                <tr><th scope="row">Búsqueda semántica</th><td>3-6 sem</td><td>tool</td></tr>
+                <tr><th scope="row">Continuidad comercial</th><td>1-2 meses</td><td>tool</td></tr>
+                <tr><th scope="row">Ventana 24h + templates</th><td>2-3 sem</td><td>auto</td></tr>
+                <tr><th scope="row">Idempotencia + audit</th><td>3-5 sem</td><td>incluido</td></tr>
+                <tr><th scope="row">Multi-tenant + API keys</th><td>1-2 meses</td><td>incluido</td></tr>
+                <tr><th scope="row">CFDI 4.0 + RFC + SAT</th><td>2-4 sem</td><td>incluido</td></tr>
+                <tr><th scope="row">SPEI + OXXO conciliación</th><td>3-6 sem</td><td>incluido</td></tr>
+                <tr><th scope="row">Observability + on-call</th><td>continuo</td><td>nosotros</td></tr>
+                <tr class="repo-compare-total"><th scope="row">Total a producción</th><td>6-12 meses</td><td>1 tarde</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- INFRASTRUCTURE STATS -->
+      <!-- ================================================== -->
+      <section class="section section-band">
+        <div class="container">
+          <div class="section-kicker">Infraestructura</div>
+          <h2 class="section-title">Infrastructure-grade, no toy project.</h2>
+          <p class="section-lede">Construido para agentes en producción, no para demos. Lo operamos como tú lo operarías — si tuvieras el equipo.</p>
+
+          <div class="repo-stats" role="list">
+            <div class="repo-stat"><span class="repo-stat-num">99.95%</span><span class="repo-stat-label">SLA uptime</span></div>
+            <div class="repo-stat"><span class="repo-stat-num">&lt;50ms</span><span class="repo-stat-label">p95 vector</span></div>
+            <div class="repo-stat"><span class="repo-stat-num">90d</span><span class="repo-stat-label">memoria hot</span></div>
+            <div class="repo-stat"><span class="repo-stat-num">730d</span><span class="repo-stat-label">archivada</span></div>
+            <div class="repo-stat"><span class="repo-stat-num">RLS</span><span class="repo-stat-label">multi-tenant</span></div>
+            <div class="repo-stat"><span class="repo-stat-num">OTel</span><span class="repo-stat-label">trace e2e</span></div>
+            <div class="repo-stat"><span class="repo-stat-num">SOC2</span><span class="repo-stat-label">en roadmap</span></div>
+            <div class="repo-stat"><span class="repo-stat-num">∞</span><span class="repo-stat-label">exportable</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- AI DISCOVERY — designed for autonomous discovery -->
+      <!-- This section serves AS the proof that we care about
+           machine-readability, and ALSO is itself machine-readable. -->
+      <!-- ================================================== -->
+      <section class="section" id="ai-discovery" aria-labelledby="disc-title">
+        <div class="container">
+          <div class="section-kicker">Descubrimiento autónomo</div>
+          <h2 class="section-title" id="disc-title">Diseñado para que los agentes nos encuentren solos.</h2>
+          <p class="section-lede">Cualquier AI agent o LLM crawler puede entender este servicio sin intervención humana. Estos son los artefactos públicos que exponemos:</p>
+          <div class="repo-discovery">
+            <h3>📡 Endpoints de discovery</h3>
+            <p>
+              Manifiestos machine-readable + metadata estructurada en cada página.
+            </p>
+            <ul class="repo-discovery-list">
+              <li><a href="llms.txt"><code>/llms.txt</code><small>Site summary markdown para crawlers LLM</small></a></li>
+              <li><a href="mcp-manifest.json"><code>/mcp-manifest.json</code><small>Manifiesto MCP completo (tools + transports + pricing)</small></a></li>
+              <li><a href=".well-known/mcp.json"><code>/.well-known/mcp.json</code><small>MCP discovery con categorías y workflows</small></a></li>
+              <li><a href=".well-known/ai-plugin.json"><code>/.well-known/ai-plugin.json</code><small>OpenAI plugin manifest convention</small></a></li>
+              <li><a href="sitemap.xml"><code>/sitemap.xml</code><small>Sitemap bilingüe con hreflang</small></a></li>
+              <li><a href="robots.txt"><code>/robots.txt</code><small>Bot policy explícita (incluye ClaudeBot, GPTBot, PerplexityBot)</small></a></li>
             </ul>
           </div>
         </div>
       </section>
 
-      <!-- PRICING — Simple, glanceable -->
-      <section class="section" id="precios">
+      <!-- ================================================== -->
+      <!-- PRICING -->
+      <!-- ================================================== -->
+      <section class="section section-band" id="precios">
         <div class="container">
-          <div class="section-kicker">Precios</div>
-          <h2 class="section-title">Un precio claro. Sin sorpresas.</h2>
-          <p class="section-lede">
-            Pesos mexicanos, sin IVA. WhatsApp y la comisión de la pasarela se cobran al costo.
-          </p>
+          <div class="section-kicker">Pricing</div>
+          <h2 class="section-title">Usage-based. No per-user.</h2>
+          <p class="section-lede">Empieza gratis. Crece sin contratos. Sin candados.</p>
 
-          <div class="pricing-cards" aria-label="Planes">
+          <div class="pricing-cards" aria-label="Tiers">
             <article class="pricing-card">
-              <div>
-                <span class="plan-label">Starter</span>
-                <h3>$6,000<small>/mes</small></h3>
-                <p>+ $8,000 una sola vez · 500 conversaciones</p>
-              </div>
-              <ul role="list">
-                <li>Para probar</li>
-                <li>1 número de WhatsApp</li>
-                <li>Panel básico</li>
-              </ul>
-              <button class="btn btn-ghost add-plan" type="button" data-plan="starter">Elegir</button>
+              <div><span class="plan-label">Developer</span><h3>Gratis</h3><p>Prototipa.</p></div>
+              <ul role="list"><li>10k tool calls</li><li>5k memory ops</li><li>100 conversaciones</li><li>1 org</li></ul>
+              <button class="btn btn-ghost add-plan" type="button" data-plan="developer">Empezar</button>
             </article>
-
+            <article class="pricing-card">
+              <div><span class="plan-label">Builder</span><h3>$499<small> MXN/mes</small></h3><p>Tu primer producto.</p></div>
+              <ul role="list"><li>100k tool calls</li><li>50k memory ops</li><li>1k conversaciones</li><li>1 org · 1 WA</li></ul>
+              <button class="btn btn-ghost add-plan" type="button" data-plan="builder">Elegir</button>
+            </article>
             <article class="pricing-card pricing-card-featured">
-              <div>
-                <span class="plan-label">Growth · recomendado</span>
-                <h3>$12,000<small>/mes</small></h3>
-                <p>+ $25,000 una sola vez · 2,000 conversaciones</p>
-              </div>
-              <ul role="list">
-                <li>Para vender en serio</li>
-                <li>Pagos y handoff a tu equipo</li>
-                <li>$3 por conversación extra</li>
-              </ul>
-              <button class="btn btn-primary add-plan" type="button" data-plan="growth">Elegir</button>
+              <div><span class="plan-label">Agency · recomendado</span><h3>$2,499<small> MXN/mes</small></h3><p>Varios clientes.</p></div>
+              <ul role="list"><li>500k tool calls</li><li>250k memory ops</li><li>5k conversaciones</li><li>5 orgs · scoped keys</li></ul>
+              <button class="btn btn-primary add-plan" type="button" data-plan="agency">Elegir</button>
             </article>
-
             <article class="pricing-card">
-              <div>
-                <span class="plan-label">Scale</span>
-                <h3>$35,000<small>/mes</small></h3>
-                <p>+ $50,000 una sola vez · 10,000 conversaciones</p>
-              </div>
-              <ul role="list">
-                <li>Para alto volumen</li>
-                <li>Varias sucursales</li>
-                <li>Integración con tu ERP/CRM</li>
-              </ul>
-              <button class="btn btn-ghost add-plan" type="button" data-plan="scale">Elegir</button>
+              <div><span class="plan-label">Platform</span><h3>$9,999<small> MXN/mes</small></h3><p>White-label · multi-tenant.</p></div>
+              <ul role="list"><li>5M tool calls</li><li>1M memory ops</li><li>25k conversaciones</li><li>Orgs ilimitadas · SLA</li></ul>
+              <button class="btn btn-ghost add-plan" type="button" data-plan="platform">Elegir</button>
             </article>
-
             <article class="pricing-card">
-              <div>
-                <span class="plan-label">Enterprise</span>
-                <h3>A la medida</h3>
-                <p>Banca, fintech, salud, corporativos</p>
-              </div>
-              <ul role="list">
-                <li>Volumen y SLA custom</li>
-                <li>Tus datos en tu nube</li>
-                <li>Contrato y soporte dedicado</li>
-              </ul>
-              <a class="btn btn-ghost" href="mailto:ventas@tramstec.com?subject=Cotizaci%C3%B3n%20Enterprise">Hablar con ventas</a>
+              <div><span class="plan-label">Enterprise</span><h3>A la medida</h3><p>Banca · fintech · retail.</p></div>
+              <ul role="list"><li>Volumen ∞</li><li>Infra dedicada / on-prem</li><li>SLA 99.95% + 24/7</li><li>MSA · NDA · DPA</li></ul>
+              <a class="btn btn-ghost" href="mailto:ventas@tramstec.com?subject=Enterprise">Ventas</a>
             </article>
           </div>
 
           <p class="fineprint">
-            Pago con Stripe — no guardamos datos de tarjeta. Cancelas cuando quieras desde el panel.
+            Overage: $0.05 MXN/tool call extra · $0.02 MXN/memory op extra. WhatsApp/Meta y pasarelas al costo. CFDI 4.0.
           </p>
         </div>
       </section>
 
-      <!-- CHECKOUT -->
-      <section class="section section-offset" id="comprar">
+      <!-- ================================================== -->
+      <!-- SIGN UP -->
+      <!-- ================================================== -->
+      <section class="section section-offset" id="empezar">
         <div class="container checkout-grid">
           <div>
             <div class="section-kicker">Empezar</div>
-            <h2 class="section-title">Pagas → te llegan las llaves → conectas tu IA.</h2>
+            <h2 class="section-title">Tu agente con memoria en minutos.</h2>
             <p class="section-lede">
-              En tu correo recibes acceso al panel y la conexión para tu agente. Lo pegas en Claude, ChatGPT o donde viva tu IA. En menos de 3 minutos.
+              Regístrate y te enviamos acceso anticipado: API key, endpoint MCP y snippet listo para tu stack.
             </p>
             <div class="addon-grid" aria-label="Extras">
               <label class="addon-card">
                 <input type="checkbox" data-addon="payments" />
-                <span>
-                  <strong>Más opciones de pago</strong>
-                  <small>Mercado Pago, Conekta, Openpay · $5,000/mes</small>
-                </span>
+                <span><strong>Pagos LATAM extendidos</strong><small>PIX, MercadoPago, Conekta · $5,000 MXN/mes</small></span>
               </label>
               <label class="addon-card">
                 <input type="checkbox" data-addon="erp" />
-                <span>
-                  <strong>Conectar tu sistema</strong>
-                  <small>Hojas de cálculo, HubSpot, Shopify · $8,000/mes</small>
-                </span>
+                <span><strong>Conectores</strong><small>Shopify, HubSpot, Odoo · $8,000 MXN/mes</small></span>
               </label>
               <label class="addon-card">
                 <input type="checkbox" data-addon="priority" />
-                <span>
-                  <strong>Soporte prioritario</strong>
-                  <small>Respuesta en horas, no días · $6,000/mes</small>
-                </span>
+                <span><strong>Priority Ops</strong><small>SLA 99.9% + Slack · $6,000 MXN/mes</small></span>
               </label>
             </div>
           </div>
 
-          <aside class="cart-panel" aria-label="Tu pedido">
-            <div class="cart-head">
-              <span>Tu pedido</span>
-              <strong data-cart-plan>Growth</strong>
-            </div>
+          <aside class="cart-panel" aria-label="Tu plan">
+            <div class="cart-head"><span>Tu plan</span><strong data-cart-plan>Agency</strong></div>
             <div class="cart-lines" data-cart-lines></div>
-            <div class="cart-total">
-              <span>Pago hoy</span>
-              <strong data-cart-total>MXN $37,000</strong>
-            </div>
+            <div class="cart-total"><span>Mensual estimado</span><strong data-cart-total>MXN $2,499</strong></div>
             <form class="checkout-form" data-checkout-form>
-              <label>
-                Tu correo
-                <input name="email" type="email" placeholder="tu@empresa.com" autocomplete="email" required />
-              </label>
-              <label>
-                Nombre del negocio o equipo
-                <input name="workspace" type="text" placeholder="Tortillería La Esperanza" required />
-              </label>
-              <label>
-                ¿Qué IA usas?
+              <label>Email <input name="email" type="email" placeholder="tu@empresa.com" autocomplete="email" required /></label>
+              <label>Empresa o proyecto <input name="workspace" type="text" placeholder="Mi AI vertical" required /></label>
+              <label>Stack
                 <select name="framework" required>
                   <option value="">Selecciona</option>
                   <option value="claude">Claude</option>
-                  <option value="openai">ChatGPT / OpenAI</option>
-                  <option value="gemini">Gemini</option>
-                  <option value="n8n">n8n</option>
-                  <option value="custom">Otra / la mía</option>
+                  <option value="openai">OpenAI Agents</option>
+                  <option value="langchain">LangChain</option>
+                  <option value="cursor">Cursor</option>
+                  <option value="n8n">n8n · Make</option>
+                  <option value="custom">Custom · SDK propio</option>
                 </select>
               </label>
               <details class="fiscal-details">
-                <summary>Datos para factura (opcional)</summary>
-                <label>Razón social
-                  <input name="fiscal_business_name" type="text" placeholder="Mi Empresa SA de CV" />
-                </label>
-                <label>RFC
-                  <input name="fiscal_rfc" type="text" maxlength="13" placeholder="ABC123456XYZ" />
-                </label>
-                <label>Código postal
-                  <input name="fiscal_postal_code" type="text" maxlength="5" placeholder="06700" inputmode="numeric" />
-                </label>
+                <summary>Factura (opcional)</summary>
+                <label>Razón social <input name="fiscal_business_name" type="text" placeholder="Mi Empresa SA de CV" /></label>
+                <label>RFC <input name="fiscal_rfc" type="text" maxlength="13" placeholder="ABC123456XYZ" /></label>
+                <label>C.P. <input name="fiscal_postal_code" type="text" maxlength="5" placeholder="06700" inputmode="numeric" /></label>
               </details>
               <label class="terms-row">
                 <input name="terms" type="checkbox" required />
-                <span>
-                  Acepto los <a href="terminos.html" target="_blank" rel="noopener">términos</a> y el <a href="aviso-privacidad.html" target="_blank" rel="noopener">aviso de privacidad</a>.
-                </span>
+                <span>Acepto los <a href="terminos.html" target="_blank" rel="noopener">términos</a> y <a href="aviso-privacidad.html" target="_blank" rel="noopener">privacidad</a>.</span>
               </label>
-              <button class="btn btn-primary btn-lg" type="submit" data-checkout-submit>Pagar</button>
-              <p class="checkout-note">
-                Pago seguro con Stripe. Te enviamos las credenciales por correo.
-              </p>
+              <button class="btn btn-primary btn-lg" type="submit" data-checkout-submit>Apartar mi lugar</button>
+              <p class="checkout-note">Acceso por orden de llegada. Sin pago hoy.</p>
               <div class="checkout-status" data-checkout-status role="status" aria-live="polite"></div>
             </form>
           </aside>
         </div>
       </section>
 
+      <!-- ================================================== -->
       <!-- TRUST -->
-      <section class="section">
+      <!-- ================================================== -->
+      <section class="section" aria-labelledby="trust-title">
         <div class="container">
-          <h2 class="section-title">Sin sorpresas, sin candados.</h2>
+          <div class="section-kicker">Control y portabilidad</div>
+          <h2 class="section-title" id="trust-title">Tus datos. Tu agente. Tus reglas.</h2>
+          <p class="section-lede">Cero lock-in. Cada decisión queda auditada. Exportas o revocas cuando quieras.</p>
           <div class="trust-grid">
-            <article class="trust">
-              <h3>Tú mandas</h3>
-              <p>Decides qué puede hacer la IA y cuándo te avisa. Tomas el control cuando quieras.</p>
-            </article>
-            <article class="trust">
-              <h3>Todo queda registrado</h3>
-              <p>Cada acción de la IA queda en bitácora. La puedes ver, exportar o auditar.</p>
-            </article>
-            <article class="trust">
-              <h3>Tus datos son tuyos</h3>
-              <p>Los descargas o cancelas cuando quieras. Sin contratos largos ni candados.</p>
-            </article>
+            <article class="trust"><h3>Scoped API keys</h3><p>Una por agente, cliente o entorno. Revoca en 1 click.</p></article>
+            <article class="trust"><h3>Audit inmutable</h3><p>Cada tool call con timestamp, args, resultado.</p></article>
+            <article class="trust"><h3>Portabilidad</h3><p>Exporta toda tu memoria en JSON o Parquet.</p></article>
           </div>
         </div>
       </section>
 
+      <!-- ================================================== -->
       <!-- CTA -->
+      <!-- ================================================== -->
       <section class="section section-cta">
         <div class="container cta-inner">
-          <h2 class="cta-title">Conecta tu IA a WhatsApp hoy.</h2>
-          <p class="cta-lede">Pagas, te llegan las llaves, las pegas en tu agente y opera.</p>
+          <h2 class="cta-title">Construye agentes con memoria. En LATAM.</h2>
+          <p class="cta-lede">Empieza gratis. Sin tarjeta.</p>
           <div class="cta-actions">
-            <a class="btn btn-primary btn-lg" href="#comprar">Empezar</a>
-            <a class="btn btn-ghost btn-lg" href="#como-funciona">Ver cómo funciona</a>
+            <a class="btn btn-primary btn-lg" href="#empezar">Apartar mi lugar</a>
+            <a class="btn btn-ghost btn-lg" href="#capacidades">Ver capacidades</a>
+            <a class="btn btn-quiet btn-lg" href="mailto:ventas@tramstec.com?subject=Enterprise">Ventas</a>
           </div>
         </div>
       </section>
@@ -555,19 +1062,19 @@
           </svg>
           <div>
             <div class="footer-name">TramsTec</div>
-            <div class="footer-tag">WhatsApp + IA · Hecho en México</div>
+            <div class="footer-tag">WhatsApp memory infrastructure for LATAM AI</div>
           </div>
         </div>
         <nav class="footer-nav" aria-label="Pie de página">
-          <a href="#que-hace">Qué hace</a>
+          <a href="#capacidades">Capacidades</a>
+          <a href="#memoria">Memoria</a>
+          <a href="#workflows">Workflows</a>
           <a href="#precios">Precios</a>
-          <a href="#comprar">Empezar</a>
+          <a href="#ai-discovery">AI discovery</a>
           <a href="terminos.html">Términos</a>
           <a href="aviso-privacidad.html">Privacidad</a>
         </nav>
-        <small class="footer-meta">
-          © <span id="year"></span> TramsTec · Precios en MXN, sin IVA.
-        </small>
+        <small class="footer-meta">© <span id="year"></span> TramsTec · Construido en México para LATAM.</small>
       </div>
     </footer>
 

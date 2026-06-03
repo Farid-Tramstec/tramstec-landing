@@ -1,0 +1,795 @@
+/* repo.css — additional styles for the AI-infrastructure repositioning.
+   Layered on top of styles.css. Uses existing CSS vars (--color-*, --space-*). */
+
+/* ---------- Tool grid (AI-native tools section) ---------- */
+.repo-toolgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4, 1rem);
+  margin-top: var(--space-6, 2rem);
+}
+.repo-tool {
+  background: var(--color-card, #fff);
+  border: 1px solid var(--color-border, #e5e0c9);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: transform 120ms ease, border-color 120ms ease;
+}
+.repo-tool:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary, #0f3a3a);
+}
+.repo-tool-name {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-primary, #0f3a3a);
+  background: rgba(231, 216, 184, 0.18);
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  align-self: flex-start;
+  word-break: break-word;
+}
+.repo-tool p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--color-text-muted, #5a5a55);
+}
+
+/* ---------- Agent grid (Built for agents section) ---------- */
+.repo-agent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-4, 1rem);
+  margin-top: var(--space-6, 2rem);
+}
+.repo-agent {
+  background: var(--color-card, #fff);
+  border: 1px solid var(--color-border, #e5e0c9);
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.repo-agent h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-primary, #0f3a3a);
+}
+.repo-agent p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--color-text-muted, #5a5a55);
+  flex: 1;
+}
+.repo-agent code {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  color: var(--color-primary-highlight, #7a6b3f);
+  background: rgba(15, 58, 58, 0.06);
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+  align-self: flex-start;
+  word-break: break-all;
+}
+
+/* ---------- LATAM grid ---------- */
+.repo-latam-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4, 1rem);
+  margin-top: var(--space-6, 2rem);
+}
+.repo-latam {
+  background: var(--color-card, #fff);
+  border: 1px solid var(--color-border, #e5e0c9);
+  border-radius: 12px;
+  padding: 1.3rem 1.4rem;
+}
+.repo-latam h3 {
+  margin: 0 0 0.8rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-primary, #0f3a3a);
+  letter-spacing: -0.01em;
+}
+.repo-latam ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.repo-latam li {
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--color-text, #1a1a1a);
+  padding-left: 1.1rem;
+  position: relative;
+}
+.repo-latam li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--color-primary, #0f3a3a);
+  font-weight: 600;
+}
+
+/* ---------- Build vs Buy comparison table ---------- */
+.repo-table-wrap {
+  margin-top: var(--space-6, 2rem);
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--color-border, #e5e0c9);
+}
+.repo-compare {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  background: var(--color-card, #fff);
+}
+.repo-compare thead th {
+  background: var(--color-primary, #0f3a3a);
+  color: var(--color-bg, #faf6e7);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+}
+.repo-compare tbody th {
+  text-align: left;
+  font-weight: 500;
+  padding: 0.7rem 1rem;
+  color: var(--color-text, #1a1a1a);
+  background: rgba(231, 216, 184, 0.18);
+  border-bottom: 1px solid var(--color-border, #e5e0c9);
+}
+.repo-compare tbody td {
+  padding: 0.7rem 1rem;
+  color: var(--color-text-muted, #5a5a55);
+  border-bottom: 1px solid var(--color-border, #e5e0c9);
+}
+.repo-compare tbody td:last-child {
+  color: var(--color-primary, #0f3a3a);
+  font-weight: 600;
+}
+.repo-compare-total th,
+.repo-compare-total td {
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  background: rgba(15, 58, 58, 0.05) !important;
+  border-top: 2px solid var(--color-primary, #0f3a3a);
+}
+
+/* ---------- Infrastructure grid ---------- */
+.repo-infra-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-4, 1rem);
+  margin-top: var(--space-6, 2rem);
+}
+.repo-infra {
+  background: var(--color-card, #fff);
+  border: 1px solid var(--color-border, #e5e0c9);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+}
+.repo-infra h3 {
+  margin: 0 0 0.45rem 0;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--color-primary, #0f3a3a);
+}
+.repo-infra p {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--color-text-muted, #5a5a55);
+}
+
+/* ---------- Quiet button variant (third CTA) ---------- */
+.btn-quiet {
+  background: transparent;
+  color: var(--color-text-muted, #5a5a55);
+  border: 1px solid transparent;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+.btn-quiet:hover {
+  color: var(--color-primary, #0f3a3a);
+  text-decoration-thickness: 2px;
+  background: transparent;
+}
+
+/* ---------- Dark-mode adjustments ---------- */
+[data-theme="dark"] .repo-tool,
+[data-theme="dark"] .repo-agent,
+[data-theme="dark"] .repo-latam,
+[data-theme="dark"] .repo-infra,
+[data-theme="dark"] .repo-table-wrap,
+[data-theme="dark"] .repo-compare {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+[data-theme="dark"] .repo-compare tbody th {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-bg, #faf6e7);
+}
+[data-theme="dark"] .repo-compare tbody td {
+  color: rgba(250, 246, 231, 0.78);
+}
+[data-theme="dark"] .repo-compare tbody td:last-child {
+  color: var(--color-primary-highlight, #e7d8b8);
+}
+[data-theme="dark"] .repo-tool-name {
+  background: rgba(231, 216, 184, 0.1);
+  color: var(--color-primary-highlight, #e7d8b8);
+}
+[data-theme="dark"] .repo-agent code {
+  background: rgba(255, 255, 255, 0.06);
+}
+[data-theme="dark"] .repo-latam li {
+  color: rgba(250, 246, 231, 0.92);
+}
+[data-theme="dark"] .repo-tool h3,
+[data-theme="dark"] .repo-agent h3,
+[data-theme="dark"] .repo-latam h3,
+[data-theme="dark"] .repo-infra h3 {
+  color: var(--color-primary-highlight, #e7d8b8);
+}
+
+/* ---------- Stat strip (big numbers, small labels) ---------- */
+.repo-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-4, 1rem);
+  margin-top: var(--space-6, 2rem);
+}
+.repo-stat {
+  text-align: center;
+  padding: 1.25rem 0.75rem;
+  background: var(--color-card, #fff);
+  border: 1px solid var(--color-border, #e5e0c9);
+  border-radius: 12px;
+}
+.repo-stat-num {
+  display: block;
+  font-size: clamp(1.75rem, 4vw, 2.4rem);
+  font-weight: 700;
+  color: var(--color-primary, #0f3a3a);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-feature-settings: "tnum";
+}
+.repo-stat-label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--color-text-muted, #5a5a55);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.45rem;
+}
+
+/* ---------- Mini cards (icon + headline + tagline) ---------- */
+.repo-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-3, 0.75rem);
+  margin-top: var(--space-6, 2rem);
+}
+.repo-mini {
+  background: var(--color-card, #fff);
+  border: 1px solid var(--color-border, #e5e0c9);
+  border-radius: 10px;
+  padding: 0.95rem 1.05rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.repo-mini-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+.repo-mini h3 {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--color-primary, #0f3a3a);
+  letter-spacing: -0.01em;
+}
+.repo-mini p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--color-text-muted, #5a5a55);
+}
+
+/* ---------- Tool card (signature + sample response) ---------- */
+.repo-tool-card {
+  background: var(--color-card, #fff);
+  border: 1px solid var(--color-border, #e5e0c9);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+.repo-tool-sig {
+  font-size: 0.82rem;
+  color: var(--color-primary, #0f3a3a);
+  font-weight: 600;
+  word-break: break-word;
+}
+.repo-tool-arrow {
+  color: var(--color-text-muted, #aaa);
+  font-size: 0.8rem;
+}
+.repo-tool-out {
+  font-size: 0.78rem;
+  color: var(--color-text-muted, #5a5a55);
+  word-break: break-word;
+}
+
+/* ---------- Agent logo grid ---------- */
+.repo-logo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3, 0.75rem);
+  margin-top: var(--space-6, 2rem);
+}
+.repo-logo {
+  background: var(--color-card, #fff);
+  border: 1px solid var(--color-border, #e5e0c9);
+  border-radius: 10px;
+  padding: 1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+  transition: transform 120ms ease, border-color 120ms ease;
+}
+.repo-logo:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary, #0f3a3a);
+}
+.repo-logo-mark {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+.repo-logo-name {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--color-primary, #0f3a3a);
+}
+.repo-logo-tag {
+  font-size: 0.74rem;
+  color: var(--color-text-muted, #5a5a55);
+}
+
+/* ---------- Architecture / diagram containers ---------- */
+.repo-arch {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.repo-diagram-wrap {
+  background: var(--color-card, #fff);
+  border: 1px solid var(--color-border, #e5e0c9);
+  border-radius: 14px;
+  padding: 1.5rem 1.6rem;
+  /* Stretch to fill hero column so bottom edge aligns with hero-meta row */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.repo-flow-svg {
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  display: block;
+  margin: var(--space-6, 2rem) auto 0;
+}
+
+/* ---------- LATAM country pills ---------- */
+.repo-countries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: var(--space-3, 0.75rem);
+}
+.repo-country {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.7rem;
+  background: rgba(15, 58, 58, 0.08);
+  color: var(--color-primary, #0f3a3a);
+  border-radius: 99px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.repo-country[data-status="live"]::before { content: "●"; color: #2ea968; }
+.repo-country[data-status="soon"]::before { content: "◐"; color: #c9a04a; }
+.repo-country[data-status="roadmap"]::before { content: "○"; color: #999; }
+
+/* ---------- Dark mode ---------- */
+[data-theme="dark"] .repo-stat,
+[data-theme="dark"] .repo-mini,
+[data-theme="dark"] .repo-tool-card,
+[data-theme="dark"] .repo-logo,
+[data-theme="dark"] .repo-diagram-wrap {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+[data-theme="dark"] .repo-stat-num,
+[data-theme="dark"] .repo-mini h3,
+[data-theme="dark"] .repo-logo-name,
+[data-theme="dark"] .repo-tool-sig {
+  color: var(--color-primary-highlight, #e7d8b8);
+}
+[data-theme="dark"] .repo-country {
+  background: rgba(231, 216, 184, 0.12);
+  color: var(--color-primary-highlight, #e7d8b8);
+}
+
+/* ---------- Capability category grid (6 cells, taxonomic) ---------- */
+.repo-cap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4, 1rem);
+  margin-top: var(--space-6, 2rem);
+}
+.repo-cap-card {
+  background: var(--color-card, #fff);
+  border: 1px solid var(--color-border, #e5e0c9);
+  border-radius: 14px;
+  padding: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: transform 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+}
+.repo-cap-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-primary, #0f3a3a);
+  box-shadow: 0 10px 30px -10px rgba(15, 58, 58, 0.18);
+}
+.repo-cap-head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.repo-cap-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: rgba(15, 58, 58, 0.1);
+  color: var(--color-primary, #0f3a3a);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.repo-cap-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-primary, #0f3a3a);
+  letter-spacing: -0.01em;
+}
+.repo-cap-desc {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--color-text-muted, #5a5a55);
+}
+.repo-cap-tools {
+  list-style: none;
+  padding: 0;
+  margin: 0.25rem 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.repo-cap-tools li {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  color: var(--color-primary, #0f3a3a);
+  padding: 0.25rem 0.55rem;
+  background: rgba(231, 216, 184, 0.16);
+  border-radius: 6px;
+  word-break: break-word;
+}
+.repo-cap-count {
+  display: inline-block;
+  margin-left: auto;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-primary, #0f3a3a);
+  background: var(--color-primary-highlight, #e7d8b8);
+  padding: 0.15rem 0.55rem;
+  border-radius: 99px;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- "How memory works" visual comparison ---------- */
+.repo-compare-visual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4, 1rem);
+  margin-top: var(--space-6, 2rem);
+}
+.repo-compare-side {
+  background: var(--color-card, #fff);
+  border: 1px solid var(--color-border, #e5e0c9);
+  border-radius: 14px;
+  padding: 1.2rem 1.3rem;
+}
+.repo-compare-side h3 {
+  margin: 0 0 0.7rem 0;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-text-muted, #5a5a55);
+}
+.repo-compare-side.is-bad h3 { color: #c44d3a; }
+.repo-compare-side.is-good h3 { color: #2ea968; }
+.repo-compare-side ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  font-size: 0.92rem;
+  color: var(--color-text, #1a1a1a);
+  line-height: 1.45;
+}
+.repo-compare-side li {
+  padding-left: 1.4rem;
+  position: relative;
+}
+.repo-compare-side.is-bad li::before {
+  content: "✗";
+  position: absolute;
+  left: 0;
+  color: #c44d3a;
+  font-weight: 700;
+}
+.repo-compare-side.is-good li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #2ea968;
+  font-weight: 700;
+}
+
+/* ---------- Workflow card (vertical use case) ---------- */
+.repo-workflows {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4, 1rem);
+  margin-top: var(--space-6, 2rem);
+}
+.repo-workflow {
+  background: var(--color-card, #fff);
+  border: 1px solid var(--color-border, #e5e0c9);
+  border-radius: 14px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.repo-workflow-head {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.repo-workflow-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.repo-workflow h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-primary, #0f3a3a);
+}
+.repo-workflow-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: step;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.repo-workflow-steps li {
+  counter-increment: step;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--color-text, #1a1a1a);
+  padding-left: 1.7rem;
+  position: relative;
+}
+.repo-workflow-steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 999px;
+  background: var(--color-primary, #0f3a3a);
+  color: var(--color-bg, #faf6e7);
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.repo-workflow-tools {
+  margin: 0;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.74rem;
+  color: var(--color-text-muted, #5a5a55);
+  padding: 0.5rem 0.6rem;
+  background: rgba(231, 216, 184, 0.14);
+  border-radius: 6px;
+  word-break: break-word;
+}
+
+/* ---------- Discovery banner (for AI agents / crawlers) ---------- */
+.repo-discovery {
+  background: linear-gradient(135deg, rgba(15, 58, 58, 0.04) 0%, rgba(231, 216, 184, 0.18) 100%);
+  border: 1px solid var(--color-border, #e5e0c9);
+  border-radius: 16px;
+  padding: 1.5rem 1.6rem;
+  margin-top: var(--space-6, 2rem);
+}
+.repo-discovery h3 {
+  margin: 0 0 0.4rem 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-primary, #0f3a3a);
+}
+.repo-discovery p {
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+  color: var(--color-text-muted, #5a5a55);
+  max-width: 60ch;
+}
+.repo-discovery-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.6rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.repo-discovery-list li a {
+  display: block;
+  padding: 0.65rem 0.8rem;
+  background: var(--color-card, #fff);
+  border: 1px solid var(--color-border, #e5e0c9);
+  border-radius: 8px;
+  color: var(--color-primary, #0f3a3a);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 120ms ease, transform 120ms ease;
+}
+.repo-discovery-list li a:hover {
+  border-color: var(--color-primary, #0f3a3a);
+  transform: translateY(-1px);
+}
+.repo-discovery-list li a small {
+  display: block;
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--color-text-muted, #5a5a55);
+  margin-top: 0.15rem;
+  font-family: "Inter", sans-serif;
+}
+
+/* ---------- Big "memory layer" diagram container ---------- */
+.repo-memory-flow {
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  display: block;
+  margin: var(--space-6, 2rem) auto 0;
+  background: var(--color-card, #fff);
+  border: 1px solid var(--color-border, #e5e0c9);
+  border-radius: 14px;
+  padding: 1rem;
+}
+
+/* ---------- Dark mode for new components ---------- */
+[data-theme="dark"] .repo-cap-card,
+[data-theme="dark"] .repo-compare-side,
+[data-theme="dark"] .repo-workflow,
+[data-theme="dark"] .repo-discovery-list li a,
+[data-theme="dark"] .repo-memory-flow {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+[data-theme="dark"] .repo-discovery {
+  background: rgba(255, 255, 255, 0.02);
+}
+[data-theme="dark"] .repo-cap-title,
+[data-theme="dark"] .repo-workflow h3,
+[data-theme="dark"] .repo-discovery h3 {
+  color: var(--color-primary-highlight, #e7d8b8);
+}
+[data-theme="dark"] .repo-cap-icon {
+  background: rgba(231, 216, 184, 0.1);
+  color: var(--color-primary-highlight, #e7d8b8);
+}
+[data-theme="dark"] .repo-cap-tools li {
+  background: rgba(231, 216, 184, 0.08);
+  color: var(--color-primary-highlight, #e7d8b8);
+}
+[data-theme="dark"] .repo-cap-count {
+  background: var(--color-primary, #0f3a3a);
+  color: var(--color-primary-highlight, #e7d8b8);
+}
+[data-theme="dark"] .repo-discovery-list li a {
+  color: var(--color-primary-highlight, #e7d8b8);
+}
+[data-theme="dark"] .repo-compare-side li {
+  color: rgba(250, 246, 231, 0.92);
+}
+[data-theme="dark"] .repo-workflow-steps li {
+  color: rgba(250, 246, 231, 0.92);
+}
+[data-theme="dark"] .repo-workflow-steps li::before {
+  background: var(--color-primary-highlight, #e7d8b8);
+  color: var(--color-primary, #0f3a3a);
+}
+
+/* ---------- Mobile tweaks ---------- */
+@media (max-width: 720px) {
+  .repo-toolgrid,
+  .repo-agent-grid,
+  .repo-latam-grid,
+  .repo-infra-grid,
+  .repo-mini-grid,
+  .repo-logo-grid,
+  .repo-cap-grid,
+  .repo-workflows {
+    grid-template-columns: 1fr;
+  }
+  .repo-compare-visual {
+    grid-template-columns: 1fr;
+  }
+  .repo-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .repo-compare {
+    font-size: 0.85rem;
+  }
+  .repo-compare thead th,
+  .repo-compare tbody th,
+  .repo-compare tbody td {
+    padding: 0.55rem 0.65rem;
+  }
+}

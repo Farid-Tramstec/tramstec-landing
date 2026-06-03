@@ -1,0 +1,118 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schemas/mcp-discovery.json",
+  "name": "tramstec",
+  "displayName": "TramsTec — WhatsApp Memory & Business Context Infrastructure for LATAM",
+  "version": "0.2.0",
+  "tagline": "Persistent WhatsApp memory for AI agents · LATAM",
+  "description": "MCP-native memory and business-context infrastructure for AI agents operating WhatsApp in Latin America. Six capability categories: messaging, memory, CRM intelligence, operations, payments, human handoff.",
+  "vendor": "TramsTec",
+  "homepage": "https://tramstec.com",
+  "documentation": "https://tramstec.com/llms.txt",
+  "manifest": "https://tramstec.com/mcp-manifest.json",
+  "contact": "support@tramstec.com",
+  "transports": [
+    { "kind": "http_sse", "url": "https://mcp.tramstec.com/sse", "auth": "bearer" },
+    { "kind": "stdio", "command": "wcm-mcp" },
+    { "kind": "rest", "url": "https://api.tramstec.com/v1/tools/:name", "auth": "bearer" }
+  ],
+  "capability_categories": [
+    {
+      "id": "messaging",
+      "name": "Messaging",
+      "description": "Send and receive WhatsApp messages, templates, and media — with auto opt-out, 24h window handling, and approved-template fallback.",
+      "tools": ["sendMessage", "sendTemplate", "sendMedia", "scheduleMessage", "receiveMessage", "markAsRead"]
+    },
+    {
+      "id": "memory",
+      "name": "Memory & Context",
+      "description": "Persistent per-customer conversational memory with semantic search via pgvector. Cross-conversation continuity.",
+      "tools": ["getCustomerContext", "searchBusinessMemory", "summarizeConversation", "getCommercialHistory", "indexMessage", "exportMemory"]
+    },
+    {
+      "id": "crm",
+      "name": "CRM Intelligence",
+      "description": "Automatic CRM enrichment, lead scoring, customer value identification, relationship intelligence — extracted from raw conversations.",
+      "tools": ["extractLeadInsights", "identifyCustomerValue", "getCustomerRelationshipSummary", "extractPurchaseIntent", "scoreCustomer", "tagCustomer"]
+    },
+    {
+      "id": "operations",
+      "name": "Operations",
+      "description": "Extract structured operational entities from free-form WhatsApp text: orders, commitments, follow-ups, deliveries.",
+      "tools": ["extractOrdersFromConversation", "detectPendingCommitments", "logisticsFollowUp", "confirmDelivery", "trackOrderStatus"]
+    },
+    {
+      "id": "payments",
+      "name": "Payments",
+      "description": "LATAM-native payment rails: SPEI, OXXO, PIX, MercadoPago. CFDI 4.0 invoicing via Facturapi. Auto-reconciliation.",
+      "tools": ["generatePaymentLink", "generateSpeiInstructions", "generateInvoice", "confirmPayment", "getPaymentStatus", "refundPayment"]
+    },
+    {
+      "id": "handoff",
+      "name": "Human Handoff",
+      "description": "Escalate to human operators with structured summaries, assign owners, manage workload across the team.",
+      "tools": ["escalateToHuman", "assignConversationOwner", "getConversationOwner", "updateConversationOwner", "addInternalNote"]
+    }
+  ],
+  "workflows": [
+    {
+      "id": "retail_order",
+      "name": "Retail order capture and payment",
+      "description": "Customer asks for products in WhatsApp → agent extracts structured order → creates payment link → confirms when paid → notifies for delivery.",
+      "tools_used": ["getCustomerContext", "extractOrdersFromConversation", "createOrder", "generatePaymentLink", "confirmPayment", "sendMessage"]
+    },
+    {
+      "id": "sales_followup",
+      "name": "Sales follow-up across multiple conversations",
+      "description": "Agent detects pending quotes, follows up at the right time, remembers what was discussed previously, escalates if customer goes silent.",
+      "tools_used": ["getPendingFollowUps", "getCommercialHistory", "extractPurchaseIntent", "sendMessage", "escalateToHuman"]
+    },
+    {
+      "id": "collections",
+      "name": "Collections with stage-aware escalation",
+      "description": "Agent tracks payment status, sends progressively firmer reminders, generates SPEI instructions, escalates to legal stage if needed.",
+      "tools_used": ["getCommercialHistory", "getPaymentStatus", "generateSpeiInstructions", "sendTemplate", "escalateToHuman"]
+    },
+    {
+      "id": "logistics_coordination",
+      "name": "Logistics and supplier coordination",
+      "description": "Agent coordinates with suppliers via WhatsApp, tracks delivery commitments, confirms ETAs, raises alerts when commitments slip.",
+      "tools_used": ["detectPendingCommitments", "logisticsFollowUp", "sendMessage", "confirmDelivery", "addInternalNote"]
+    },
+    {
+      "id": "lead_qualification",
+      "name": "Inbound lead qualification and routing",
+      "description": "New WhatsApp lead → agent extracts insights (vertical, budget, urgency) → scores → routes to right human team or schedules nurture sequence.",
+      "tools_used": ["extractLeadInsights", "scoreCustomer", "tagCustomer", "assignConversationOwner", "sendMessage"]
+    },
+    {
+      "id": "invoice_workflow_mx",
+      "name": "Mexico CFDI invoice on demand",
+      "description": "Customer requests an invoice → agent validates RFC against SAT 69-B list → generates CFDI 4.0 via Facturapi → sends PDF via WhatsApp.",
+      "tools_used": ["getCustomerContext", "generateInvoice", "sendMedia"]
+    }
+  ],
+  "regions": ["MX", "AR", "CO", "CL", "PE", "BR"],
+  "languages": ["es-MX", "es-AR", "es-CO", "es-CL", "pt-BR", "en"],
+  "compliance": ["LFPDPPP", "LGPD-roadmap", "WhatsApp Business Policy", "PCI-DSS-passthrough"],
+  "audience": [
+    "AI engineers", "AI-native SaaS", "Vertical AI startups",
+    "Agencies", "LATAM SMBs operating on WhatsApp", "Enterprise digital channels teams"
+  ],
+  "pricing": {
+    "model": "usage-based",
+    "tiers": [
+      { "name": "Developer", "price_usd": 0, "price_mxn": 0 },
+      { "name": "Builder", "price_usd": 29, "price_mxn": 499 },
+      { "name": "Agency", "price_usd": 129, "price_mxn": 2499 },
+      { "name": "Platform", "price_usd": 499, "price_mxn": 9999 },
+      { "name": "Enterprise", "price_usd": null, "price_mxn": null }
+    ]
+  },
+  "indexable_pages": [
+    "https://tramstec.com/",
+    "https://tramstec.com/en/",
+    "https://tramstec.com/llms.txt",
+    "https://tramstec.com/mcp-manifest.json",
+    "https://tramstec.com/.well-known/ai-plugin.json"
+  ]
+}

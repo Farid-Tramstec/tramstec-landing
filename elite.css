@@ -1,0 +1,1287 @@
+/* ==========================================================================
+   elite.css — premium visual layer
+   Loaded AFTER styles.css + repo.css. Overrides the warm palette with a
+   neutral, infrastructure-grade design system inspired by Stripe / Vercel /
+   Linear / Anthropic. Preserves all existing IA, copy, and structure.
+   ========================================================================== */
+
+:root {
+  /* -------- Color palette: neutral + brand accent -------- */
+  --e-bg:           #ffffff;
+  --e-bg-subtle:    #fafafa;
+  --e-bg-muted:     #f5f5f5;
+  --e-surface:      #ffffff;
+  --e-surface-2:    #fafafa;
+
+  --e-fg:           #0a0a0a;
+  --e-fg-strong:    #050505;
+  --e-fg-muted:     #525252;
+  --e-fg-subtle:    #737373;
+  --e-fg-faint:     #a3a3a3;
+
+  --e-border:       #e5e5e5;
+  --e-border-strong:#d4d4d4;
+  --e-border-faint: #f0f0f0;
+
+  /* Brand accent — teal (kept for continuity) but used sparingly */
+  --e-accent:        #0f3a3a;
+  --e-accent-strong: #0a2828;
+  --e-accent-soft:   rgba(15, 58, 58, 0.06);
+  --e-accent-glow:   rgba(15, 58, 58, 0.12);
+  --e-accent-fg:     #ffffff;
+
+  --e-success: #15803d;
+  --e-warning: #c2410c;
+  --e-error:   #b91c1c;
+
+  /* -------- Spacing scale (4px base) -------- */
+  --e-1:  4px;
+  --e-2:  8px;
+  --e-3:  12px;
+  --e-4:  16px;
+  --e-5:  20px;
+  --e-6:  24px;
+  --e-8:  32px;
+  --e-10: 40px;
+  --e-12: 48px;
+  --e-16: 64px;
+  --e-20: 80px;
+  --e-24: 96px;
+  --e-32: 128px;
+
+  /* -------- Radii -------- */
+  --e-radius-sm: 6px;
+  --e-radius-md: 8px;
+  --e-radius-lg: 12px;
+  --e-radius-xl: 16px;
+
+  /* -------- Shadows — refined, multi-layer -------- */
+  --e-shadow-xs:  0 1px 2px rgba(15, 23, 42, 0.04);
+  --e-shadow-sm:  0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --e-shadow-md:  0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  --e-shadow-lg:  0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.06);
+  --e-shadow-xl:  0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.05);
+  --e-shadow-focus: 0 0 0 3px var(--e-accent-glow);
+
+  /* -------- Type -------- */
+  --e-font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --e-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+
+  /* Override existing tokens so descendant components inherit */
+  --color-bg:                 var(--e-bg);
+  --color-card:               var(--e-surface);
+  --color-text:               var(--e-fg);
+  --color-text-muted:         var(--e-fg-muted);
+  --color-border:             var(--e-border);
+  --color-primary:            var(--e-accent);
+  --color-primary-highlight:  var(--e-accent-strong);
+}
+
+[data-theme="dark"] {
+  --e-bg:           #0a0a0a;
+  --e-bg-subtle:    #111111;
+  --e-bg-muted:     #161616;
+  --e-surface:      #141414;
+  --e-surface-2:    #1a1a1a;
+
+  --e-fg:           #fafafa;
+  --e-fg-strong:    #ffffff;
+  --e-fg-muted:     #a3a3a3;
+  --e-fg-subtle:    #737373;
+  --e-fg-faint:     #525252;
+
+  --e-border:       #262626;
+  --e-border-strong:#404040;
+  --e-border-faint: #1f1f1f;
+
+  --e-accent:        #5eb8b8;
+  --e-accent-strong: #7fd0d0;
+  --e-accent-soft:   rgba(94, 184, 184, 0.1);
+  --e-accent-glow:   rgba(94, 184, 184, 0.18);
+  --e-accent-fg:     #0a0a0a;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+body {
+  background: var(--e-bg) !important;
+  color: var(--e-fg) !important;
+  font-family: var(--e-font-sans);
+  font-feature-settings: "cv11", "ss01", "ss03";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--e-accent);
+  color: var(--e-accent-fg);
+}
+
+/* ==========================================================================
+   Layout — tighter container, generous vertical rhythm
+   ========================================================================== */
+
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding-left: clamp(20px, 4vw, 32px);
+  padding-right: clamp(20px, 4vw, 32px);
+}
+
+.section {
+  padding-top: clamp(40px, 5vw, 64px) !important;
+  padding-bottom: clamp(40px, 5vw, 64px) !important;
+}
+.section-band {
+  background: var(--e-bg-subtle) !important;
+  border-top: 1px solid var(--e-border-faint);
+  border-bottom: 1px solid var(--e-border-faint);
+}
+
+/* Collapse padding when two non-band sections sit adjacent (rare) */
+.section + .section:not(.section-band):not(.section-cta):not(.section-offset) {
+  padding-top: clamp(24px, 3vw, 40px) !important;
+}
+
+/* Tighter gap inside sections — kicker / title / lede / content */
+.section .section-kicker { margin-bottom: 10px !important; }
+.section .section-title { margin-bottom: 12px !important; }
+.section .section-lede { margin-bottom: clamp(20px, 3vw, 32px) !important; }
+
+/* ==========================================================================
+   Header — sticky, refined
+   ========================================================================== */
+
+.site-header {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--e-border-faint) !important;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+[data-theme="dark"] .site-header {
+  background: rgba(10, 10, 10, 0.8) !important;
+}
+.header-inner {
+  padding-top: var(--e-4);
+  padding-bottom: var(--e-4);
+}
+.brand-name {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--e-fg) !important;
+}
+.site-nav a {
+  color: var(--e-fg-muted) !important;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 150ms ease;
+}
+.site-nav a:hover { color: var(--e-fg) !important; }
+.site-nav .nav-cta {
+  background: var(--e-fg) !important;
+  color: var(--e-bg) !important;
+  padding: 8px 16px;
+  border-radius: var(--e-radius-md);
+  border: 1px solid var(--e-fg);
+}
+.site-nav .nav-cta:hover {
+  background: var(--e-fg-strong) !important;
+  color: var(--e-bg) !important;
+}
+[data-theme="dark"] .site-nav .nav-cta {
+  background: var(--e-fg) !important;
+  color: var(--e-bg) !important;
+}
+
+/* Language switcher */
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--e-border);
+  border-radius: 99px;
+  background: var(--e-surface);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.lang-switcher .lang-link,
+.lang-switcher .lang-current {
+  color: var(--e-fg-muted);
+  text-decoration: none;
+}
+.lang-switcher .lang-current {
+  color: var(--e-fg);
+}
+
+/* Theme toggle */
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--e-border) !important;
+  background: var(--e-surface) !important;
+  color: var(--e-fg-muted) !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.theme-toggle:hover {
+  border-color: var(--e-border-strong) !important;
+  color: var(--e-fg) !important;
+}
+
+/* ==========================================================================
+   Typography hierarchy
+   ========================================================================== */
+
+.hero-title {
+  font-size: clamp(2.25rem, 5.5vw, 4rem) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.045em !important;
+  line-height: 1.02 !important;
+  color: var(--e-fg) !important;
+  margin: 0 0 var(--e-5) 0 !important;
+}
+.hero-title em {
+  font-style: normal;
+  color: var(--e-accent);
+  background: linear-gradient(135deg, var(--e-accent) 0%, #2a7878 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+}
+
+.hero-lede {
+  font-size: clamp(1.0625rem, 1.5vw, 1.1875rem) !important;
+  line-height: 1.55 !important;
+  color: var(--e-fg-muted) !important;
+  max-width: 56ch !important;
+  font-weight: 400;
+}
+
+.section-title {
+  font-size: clamp(1.5rem, 3vw, 2.25rem) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.025em !important;
+  line-height: 1.15 !important;
+  color: var(--e-fg) !important;
+  margin: 0 0 var(--e-3) 0 !important;
+}
+
+.section-lede {
+  font-size: clamp(1rem, 1.25vw, 1.0625rem) !important;
+  line-height: 1.6 !important;
+  color: var(--e-fg-muted) !important;
+  max-width: 62ch;
+  margin: 0 auto var(--e-6) auto;
+}
+
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.1em !important;
+  color: var(--e-accent) !important;
+  margin-bottom: var(--e-3) !important;
+}
+.section-kicker::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--e-accent);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: var(--e-accent-soft);
+  border: 1px solid var(--e-accent-soft);
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--e-accent);
+  text-transform: uppercase;
+  margin-bottom: var(--e-5);
+}
+.eyebrow .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--e-accent);
+  animation: elitePulse 2.4s ease-in-out infinite;
+}
+@keyframes elitePulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ==========================================================================
+   Buttons — premium
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--e-font-sans) !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.005em;
+  border-radius: var(--e-radius-md) !important;
+  padding: 10px 18px !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease !important;
+  cursor: pointer;
+  border: 1px solid transparent !important;
+  text-decoration: none !important;
+}
+.btn-lg {
+  padding: 12px 24px !important;
+  font-size: 15px !important;
+}
+
+.btn-primary {
+  background: var(--e-fg) !important;
+  color: var(--e-bg) !important;
+  border-color: var(--e-fg) !important;
+  box-shadow: var(--e-shadow-sm);
+}
+.btn-primary:hover {
+  background: var(--e-fg-strong) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--e-shadow-md);
+}
+
+.btn-ghost {
+  background: var(--e-surface) !important;
+  color: var(--e-fg) !important;
+  border-color: var(--e-border) !important;
+}
+.btn-ghost:hover {
+  border-color: var(--e-border-strong) !important;
+  background: var(--e-bg-subtle) !important;
+  transform: translateY(-1px);
+}
+
+.btn-quiet {
+  background: transparent !important;
+  color: var(--e-fg-muted) !important;
+  border-color: transparent !important;
+  padding: 10px 14px !important;
+}
+.btn-quiet:hover {
+  color: var(--e-fg) !important;
+  background: var(--e-bg-subtle) !important;
+}
+
+/* ==========================================================================
+   Cards — unified premium card style
+   ========================================================================== */
+
+.repo-cap-card,
+.repo-stat,
+.repo-mini,
+.repo-workflow,
+.repo-logo,
+.repo-latam,
+.repo-tool-card,
+.repo-compare-side,
+.repo-infra,
+.pricing-card,
+.trust,
+.repo-diagram-wrap {
+  background: var(--e-surface) !important;
+  border: 1px solid var(--e-border) !important;
+  border-radius: var(--e-radius-lg) !important;
+  box-shadow: var(--e-shadow-xs) !important;
+  transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease !important;
+}
+
+.repo-cap-card:hover,
+.repo-mini:hover,
+.repo-workflow:hover,
+.repo-tool-card:hover,
+.repo-logo:hover,
+.repo-latam:hover,
+.repo-infra:hover,
+.repo-stat:hover {
+  border-color: var(--e-border-strong) !important;
+  box-shadow: var(--e-shadow-md) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Featured pricing — subtle highlight ring, no over-the-top color */
+.pricing-card-featured {
+  border-color: var(--e-fg) !important;
+  box-shadow: var(--e-shadow-md), 0 0 0 1px var(--e-fg) !important;
+}
+.pricing-card-featured .plan-label {
+  background: var(--e-fg);
+  color: var(--e-bg);
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Capability category cards — premium
+   ========================================================================== */
+
+.repo-cap-card {
+  padding: var(--e-6) !important;
+}
+.repo-cap-icon {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 10px !important;
+  background: var(--e-accent-soft) !important;
+  color: var(--e-accent) !important;
+  font-size: 18px !important;
+}
+.repo-cap-title {
+  font-weight: 600 !important;
+  letter-spacing: -0.015em !important;
+  color: var(--e-fg) !important;
+  font-size: 1rem !important;
+}
+.repo-cap-count {
+  background: var(--e-bg-muted) !important;
+  color: var(--e-fg-muted) !important;
+  border: 1px solid var(--e-border) !important;
+  font-weight: 500 !important;
+}
+.repo-cap-desc {
+  color: var(--e-fg-muted) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.55 !important;
+}
+.repo-cap-tools li {
+  background: var(--e-bg-subtle) !important;
+  border: 1px solid var(--e-border-faint) !important;
+  color: var(--e-fg) !important;
+  padding: 6px 10px !important;
+  font-family: var(--e-font-mono) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  border-radius: var(--e-radius-sm) !important;
+}
+
+/* ==========================================================================
+   Stats — premium ribbon style
+   ========================================================================== */
+
+/* Tight ribbon variant for stat strips that should hug the hero */
+.section--stats-ribbon {
+  padding-top: clamp(24px, 3vw, 40px) !important;
+  padding-bottom: clamp(40px, 5vw, 64px) !important;
+}
+.section--stats-ribbon .repo-stats {
+  margin-top: var(--e-4) !important;
+}
+.stats-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--e-fg-subtle);
+  margin-bottom: var(--e-4);
+}
+.stats-eyebrow::before,
+.stats-eyebrow::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--e-border);
+  max-width: 80px;
+}
+.stats-eyebrow .stats-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #15803d;
+  box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.15);
+  animation: elitePulse 2s ease-in-out infinite;
+}
+
+.repo-stat {
+  padding: var(--e-5) var(--e-5) !important;
+  text-align: left !important;
+}
+.repo-stat-num {
+  font-family: var(--e-font-sans) !important;
+  font-size: clamp(1.5rem, 2.5vw, 2rem) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.04em !important;
+  color: var(--e-fg) !important;
+  line-height: 1 !important;
+  font-feature-settings: "tnum", "cv11" !important;
+}
+.repo-stat-label {
+  font-size: 11px !important;
+  letter-spacing: 0.08em !important;
+  color: var(--e-fg-subtle) !important;
+  margin-top: 6px !important;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Tool cards (signatures)
+   ========================================================================== */
+
+.repo-tool-card {
+  padding: var(--e-4) var(--e-5) !important;
+}
+.repo-tool-sig {
+  background: transparent !important;
+  color: var(--e-fg) !important;
+  padding: 0 !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+}
+.repo-tool-out {
+  color: var(--e-fg-muted) !important;
+  font-size: 12px !important;
+}
+.repo-tool-arrow {
+  color: var(--e-fg-faint) !important;
+}
+
+/* ==========================================================================
+   Logo grid (agents)
+   ========================================================================== */
+
+.repo-logo {
+  padding: var(--e-5) var(--e-3) !important;
+}
+.repo-logo-mark {
+  font-size: 22px !important;
+  color: var(--e-accent) !important;
+}
+.repo-logo-name {
+  font-weight: 600 !important;
+  color: var(--e-fg) !important;
+  font-size: 14px !important;
+}
+.repo-logo-tag {
+  color: var(--e-fg-subtle) !important;
+  font-size: 12px !important;
+}
+
+/* ==========================================================================
+   Workflow cards
+   ========================================================================== */
+
+.repo-workflow {
+  padding: var(--e-6) !important;
+}
+.repo-workflow h3 {
+  font-weight: 600 !important;
+  color: var(--e-fg) !important;
+  letter-spacing: -0.01em !important;
+}
+.repo-workflow-steps li {
+  color: var(--e-fg) !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+.repo-workflow-steps li::before {
+  background: var(--e-fg) !important;
+  color: var(--e-bg) !important;
+}
+.repo-workflow-tools {
+  background: var(--e-bg-subtle) !important;
+  border: 1px solid var(--e-border-faint) !important;
+  font-size: 11.5px !important;
+  color: var(--e-fg-muted) !important;
+  line-height: 1.6 !important;
+  padding: 10px 12px !important;
+}
+
+/* ==========================================================================
+   LATAM
+   ========================================================================== */
+
+.repo-latam {
+  padding: var(--e-6) !important;
+}
+.repo-latam h3 {
+  font-weight: 600 !important;
+  color: var(--e-fg) !important;
+}
+.repo-latam li {
+  color: var(--e-fg) !important;
+  font-size: 14px !important;
+}
+.repo-latam li::before {
+  color: var(--e-accent) !important;
+}
+
+.repo-country {
+  background: var(--e-surface) !important;
+  border: 1px solid var(--e-border) !important;
+  color: var(--e-fg) !important;
+  padding: 6px 12px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  box-shadow: var(--e-shadow-xs);
+}
+
+/* ==========================================================================
+   Comparison side-by-side
+   ========================================================================== */
+
+.repo-compare-side {
+  padding: var(--e-6) !important;
+}
+.repo-compare-side h3 {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  margin: 0 0 var(--e-4) 0 !important;
+}
+.repo-compare-side li {
+  color: var(--e-fg) !important;
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+}
+
+/* ==========================================================================
+   Compare table
+   ========================================================================== */
+
+.repo-table-wrap {
+  border-radius: var(--e-radius-lg) !important;
+  border: 1px solid var(--e-border) !important;
+  overflow: hidden;
+  box-shadow: var(--e-shadow-xs);
+}
+.repo-compare thead th {
+  background: var(--e-bg-subtle) !important;
+  color: var(--e-fg) !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase;
+  padding: var(--e-4) var(--e-5) !important;
+  border-bottom: 1px solid var(--e-border) !important;
+}
+.repo-compare tbody th {
+  background: var(--e-surface) !important;
+  color: var(--e-fg) !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  padding: var(--e-3) var(--e-5) !important;
+  border-bottom: 1px solid var(--e-border-faint) !important;
+}
+.repo-compare tbody td {
+  color: var(--e-fg-muted) !important;
+  font-size: 14px !important;
+  padding: var(--e-3) var(--e-5) !important;
+  border-bottom: 1px solid var(--e-border-faint) !important;
+}
+.repo-compare tbody td:last-child {
+  color: var(--e-fg) !important;
+  font-weight: 500 !important;
+}
+.repo-compare-total th,
+.repo-compare-total td {
+  background: var(--e-bg-subtle) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  border-top: 1px solid var(--e-border) !important;
+}
+
+/* ==========================================================================
+   Pricing
+   ========================================================================== */
+
+.pricing-card {
+  padding: var(--e-6) !important;
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-4);
+}
+.pricing-card h3 {
+  font-size: 1.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.03em !important;
+  color: var(--e-fg) !important;
+  margin: var(--e-2) 0 !important;
+  line-height: 1.1;
+}
+.pricing-card h3 small {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--e-fg-subtle);
+  letter-spacing: 0;
+}
+.plan-label {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase;
+  color: var(--e-fg-muted) !important;
+  display: inline-block;
+}
+.pricing-card p {
+  color: var(--e-fg-muted) !important;
+  font-size: 13px !important;
+}
+.pricing-card ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+.pricing-card li {
+  color: var(--e-fg) !important;
+  font-size: 14px !important;
+  padding-left: 22px;
+  position: relative;
+  list-style: none;
+}
+.pricing-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 14px;
+  height: 14px;
+  background: var(--e-accent-soft);
+  border-radius: 99px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'><path d='M3.5 8.5L6.5 11.5L12.5 5.5' stroke='%230f3a3a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 11px;
+}
+
+/* ==========================================================================
+   Trust cards
+   ========================================================================== */
+
+.trust {
+  padding: var(--e-6) !important;
+}
+.trust h3 {
+  font-weight: 600 !important;
+  color: var(--e-fg) !important;
+  letter-spacing: -0.015em !important;
+  margin-bottom: var(--e-2) !important;
+}
+.trust p {
+  color: var(--e-fg-muted) !important;
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+}
+
+/* ==========================================================================
+   Infrastructure cards
+   ========================================================================== */
+
+.repo-infra {
+  padding: var(--e-5) !important;
+}
+.repo-infra h3 {
+  font-weight: 600 !important;
+  color: var(--e-fg) !important;
+}
+.repo-infra p {
+  color: var(--e-fg-muted) !important;
+}
+
+/* ==========================================================================
+   Discovery banner
+   ========================================================================== */
+
+.repo-discovery {
+  background: var(--e-bg-subtle) !important;
+  border: 1px solid var(--e-border) !important;
+  border-radius: var(--e-radius-xl) !important;
+  padding: var(--e-8) !important;
+}
+.repo-discovery h3 {
+  color: var(--e-fg) !important;
+  font-size: 1.125rem !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.015em !important;
+}
+.repo-discovery p {
+  color: var(--e-fg-muted) !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+}
+.repo-discovery-list li a {
+  background: var(--e-surface) !important;
+  border: 1px solid var(--e-border) !important;
+  color: var(--e-fg) !important;
+  font-size: 13px !important;
+  padding: var(--e-3) var(--e-4) !important;
+  transition: all 150ms ease;
+}
+.repo-discovery-list li a:hover {
+  border-color: var(--e-border-strong) !important;
+  background: var(--e-bg-muted) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--e-shadow-sm);
+}
+.repo-discovery-list li a small {
+  color: var(--e-fg-subtle) !important;
+  font-size: 11px !important;
+}
+
+/* ==========================================================================
+   Hero section
+   ========================================================================== */
+
+.hero {
+  padding-top: clamp(64px, 10vw, 128px) !important;
+  padding-bottom: clamp(48px, 8vw, 96px) !important;
+  background:
+    radial-gradient(ellipse 1200px 600px at 50% -10%, var(--e-accent-soft) 0%, transparent 70%),
+    var(--e-bg) !important;
+  position: relative;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--e-border-faint) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--e-border-faint) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.5;
+  mask-image: radial-gradient(ellipse 800px 400px at 50% 30%, black 0%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 800px 400px at 50% 30%, black 0%, transparent 80%);
+  pointer-events: none;
+}
+.hero-grid {
+  position: relative;
+  z-index: 1;
+  gap: clamp(32px, 4vw, 64px) !important;
+}
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3) var(--e-6);
+  list-style: none;
+  padding: 0;
+  margin-top: var(--e-6);
+}
+.hero-meta li {
+  color: var(--e-fg-subtle);
+  font-size: 13px;
+  font-weight: 500;
+}
+.hero-meta li strong {
+  color: var(--e-fg);
+}
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin-top: var(--e-6);
+}
+
+/* ==========================================================================
+   Diagram wrap — premium framing
+   Tight padding so the SVG dominates the card.
+   ========================================================================== */
+
+.repo-diagram-wrap {
+  padding: 12px !important;
+  background: var(--e-surface) !important;
+  border-radius: var(--e-radius-xl) !important;
+  box-shadow: var(--e-shadow-lg), 0 0 0 1px var(--e-border) !important;
+  border: none !important;
+  display: flex !important;
+  align-items: stretch !important;
+  justify-content: center !important;
+  position: relative;
+  overflow: hidden;
+}
+/* Subtle accent gradient on the wrap top edge (premium signal) */
+.repo-diagram-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--e-accent), transparent);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.repo-arch {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 !important;
+}
+
+.repo-memory-flow {
+  border: 1px solid var(--e-border) !important;
+  border-radius: var(--e-radius-xl) !important;
+  background: var(--e-surface) !important;
+  box-shadow: var(--e-shadow-md) !important;
+  padding: 16px !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  position: relative;
+  overflow: hidden;
+}
+.repo-memory-flow::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--e-accent), transparent);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* SVG animation utilities */
+@keyframes eliteDiagramFlow {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -16; }
+}
+@keyframes eliteDiagramPulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.15); }
+}
+@keyframes eliteGlow {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 0.65; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .elite-flow {
+    stroke-dasharray: 6 6;
+    animation: eliteDiagramFlow 1.6s linear infinite;
+  }
+  .elite-pulse {
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: eliteDiagramPulse 2s ease-in-out infinite;
+  }
+  .elite-glow {
+    animation: eliteGlow 3.2s ease-in-out infinite;
+  }
+}
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+
+.checkout-form label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--e-fg-muted);
+}
+.checkout-form input,
+.checkout-form select {
+  width: 100%;
+  padding: 10px 12px !important;
+  border: 1px solid var(--e-border) !important;
+  background: var(--e-surface) !important;
+  border-radius: var(--e-radius-md) !important;
+  font-size: 14px !important;
+  color: var(--e-fg) !important;
+  font-family: var(--e-font-sans) !important;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+  margin-top: 6px;
+}
+.checkout-form input:focus,
+.checkout-form select:focus {
+  outline: none;
+  border-color: var(--e-accent) !important;
+  box-shadow: var(--e-shadow-focus) !important;
+}
+.cart-panel {
+  background: var(--e-surface) !important;
+  border: 1px solid var(--e-border) !important;
+  border-radius: var(--e-radius-xl) !important;
+  padding: var(--e-6) !important;
+  box-shadow: var(--e-shadow-sm) !important;
+}
+.cart-head {
+  font-size: 13px;
+  color: var(--e-fg-muted);
+  padding-bottom: var(--e-3);
+  border-bottom: 1px solid var(--e-border);
+}
+.cart-head strong {
+  color: var(--e-fg);
+  font-weight: 600;
+}
+.cart-lines {
+  padding: var(--e-3) 0;
+}
+.cart-line {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 13px;
+  color: var(--e-fg-muted);
+}
+.cart-line strong {
+  color: var(--e-fg);
+  font-weight: 500;
+}
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--e-3);
+  border-top: 1px solid var(--e-border);
+  margin-bottom: var(--e-4);
+  font-size: 14px;
+  color: var(--e-fg-muted);
+}
+.cart-total strong {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--e-fg);
+  letter-spacing: -0.02em;
+}
+.addon-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--e-3);
+  padding: var(--e-4);
+  border: 1px solid var(--e-border);
+  border-radius: var(--e-radius-md);
+  background: var(--e-surface);
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+.addon-card:hover {
+  border-color: var(--e-border-strong);
+  background: var(--e-bg-subtle);
+}
+.addon-card input[type="checkbox"] {
+  margin-top: 4px;
+  accent-color: var(--e-accent);
+}
+.addon-card strong {
+  display: block;
+  color: var(--e-fg);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.addon-card small {
+  color: var(--e-fg-subtle);
+  font-size: 12px;
+}
+.checkout-note {
+  font-size: 12px !important;
+  color: var(--e-fg-subtle) !important;
+  margin-top: var(--e-3) !important;
+}
+.checkout-status {
+  margin-top: var(--e-3);
+  font-size: 13px;
+  color: var(--e-fg-muted);
+  min-height: 20px;
+}
+.checkout-status[data-kind="success"] {
+  color: var(--e-success);
+}
+.checkout-status[data-kind="error"] {
+  color: var(--e-error);
+}
+.fiscal-details summary {
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--e-fg-muted);
+  padding: 8px 0;
+  list-style: revert;
+}
+.terms-row {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--e-fg-muted);
+}
+.terms-row input[type="checkbox"] {
+  accent-color: var(--e-accent);
+  margin-top: 3px;
+}
+.terms-row a {
+  color: var(--e-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ==========================================================================
+   CTA section
+   ========================================================================== */
+
+.section-cta {
+  background: var(--e-fg) !important;
+  color: var(--e-bg);
+}
+.section-cta .cta-title {
+  color: var(--e-bg) !important;
+  font-size: clamp(1.75rem, 3vw, 2.5rem) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.03em !important;
+  margin: 0 0 var(--e-3) 0;
+}
+.section-cta .cta-lede {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 16px !important;
+  margin: 0 0 var(--e-6) 0;
+}
+.section-cta .btn-primary {
+  background: var(--e-bg) !important;
+  color: var(--e-fg) !important;
+  border-color: var(--e-bg) !important;
+}
+.section-cta .btn-ghost {
+  background: transparent !important;
+  color: var(--e-bg) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+.section-cta .btn-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+.section-cta .btn-quiet {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+.section-cta .btn-quiet:hover {
+  color: var(--e-bg) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.site-footer {
+  background: var(--e-bg-subtle) !important;
+  border-top: 1px solid var(--e-border) !important;
+  padding: var(--e-12) 0 !important;
+}
+.footer-name {
+  font-weight: 600 !important;
+  color: var(--e-fg) !important;
+}
+.footer-tag {
+  color: var(--e-fg-subtle) !important;
+  font-size: 13px;
+}
+.footer-nav a {
+  color: var(--e-fg-muted) !important;
+  font-size: 13px !important;
+  transition: color 150ms ease;
+}
+.footer-nav a:hover {
+  color: var(--e-fg) !important;
+}
+.footer-meta {
+  color: var(--e-fg-faint) !important;
+  font-size: 12px !important;
+}
+
+/* ==========================================================================
+   Inline code (in prose)
+   ========================================================================== */
+
+p code, li code, h3 code, .section-lede code, .fineprint code {
+  font-family: var(--e-font-mono) !important;
+  font-size: 0.875em !important;
+  font-weight: 500;
+  background: var(--e-bg-muted) !important;
+  color: var(--e-fg) !important;
+  padding: 2px 6px;
+  border-radius: var(--e-radius-sm);
+  border: 1px solid var(--e-border-faint);
+}
+
+.fineprint {
+  color: var(--e-fg-subtle) !important;
+  font-size: 13px !important;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   Focus states (universal, polished)
+   ========================================================================== */
+
+*:focus-visible {
+  outline: 2px solid var(--e-accent);
+  outline-offset: 2px;
+  border-radius: var(--e-radius-sm);
+}
+
+/* ==========================================================================
+   Skip link
+   ========================================================================== */
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 8px;
+  background: var(--e-fg);
+  color: var(--e-bg);
+  padding: 8px 12px;
+  border-radius: var(--e-radius-md);
+  font-size: 13px;
+  text-decoration: none;
+  z-index: 100;
+  transition: top 200ms ease;
+}
+.skip-link:focus {
+  top: 8px;
+}
+
+/* ==========================================================================
+   Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   Print
+   ========================================================================== */
+
+@media print {
+  .site-header, .site-footer, .section-cta { display: none; }
+  body { color: black; background: white; }
+}

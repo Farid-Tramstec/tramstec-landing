@@ -1,63 +1,116 @@
 # TramsTec
 
-> TramsTec is the MCP (Model Context Protocol) server that connects AI agents — Claude, OpenAI/ChatGPT, Gemini, n8n, custom — to WhatsApp Business for sales, support, and payments. Mexico-first with SPEI, OXXO, and CFDI invoicing.
+> TramsTec is **WhatsApp memory and business-context infrastructure for Latin America**. The persistent memory layer that lets AI agents — Claude, OpenAI Agents, LangChain, Cursor, n8n, and custom — truly understand and operate LATAM businesses on WhatsApp. Not a messaging API, not a chatbot builder. The infrastructure on top.
 
-TramsTec is **not** an AI agent. It is the bridge between your existing AI agent and WhatsApp Business. You bring the AI (any MCP-compatible client). TramsTec exposes tools the AI calls to send WhatsApp messages, create orders, generate payment links (Stripe / Mercado Pago / SPEI / OXXO), check inventory, look up customers, hand off to humans, and audit every action.
+## What TramsTec is
 
-## What we do
-- Expose WhatsApp Business as MCP tools (send messages, send templates, receive messages, manage conversations).
-- Expose commerce as MCP tools (create draft orders, confirm orders, generate payment links, generate SPEI instructions, check payment status, manage inventory).
-- Expose human handoff as MCP tools (escalate conversations to a human operator with structured summaries).
-- Audit every tool call: input, output, actor, latency. Exportable bitácora.
-- Multi-tenant: each paying customer gets their own organization, API key, and isolated data.
+TramsTec is the **conversational memory layer** between AI systems and WhatsApp-first businesses in LATAM. Existing messaging APIs (Twilio, MessageBird, the WhatsApp Business API directly) give you a channel. TramsTec assumes that's solved and builds on top what an AI agent actually needs to operate a real business:
 
-## What we are not
-- We are not a chatbot or chatbot builder.
-- We do not include an LLM. You bring your own (Claude, ChatGPT, Gemini, Llama, custom).
-- We do not lock you in: BYO LLM, BYO BSP (WhatsApp Business Solution Provider), BYO payment processor.
+- Persistent, per-customer conversational memory
+- Automatic CRM enrichment and timeline generation
+- Order, lead, and intent extraction from free-form text
+- Semantic search over the entire business memory (pgvector)
+- Commercial continuity (pending follow-ups, decision history)
+- Mexico/LATAM business workflows (SAT, CFDI 4.0, SPEI, OXXO, collections)
+- Infrastructure-grade reliability, observability, audit trail
+- Multi-tenant isolation, scoped API keys, white-label
 
-## Who it is for
-- Developers and AI builders integrating WhatsApp Business into their AI agents.
-- Mexican and LatAm businesses operating sales, support, or collections on WhatsApp.
-- Agencies and integrators delivering AI automation projects.
-- SaaS products adding WhatsApp + Mexican payments to their AI workflows.
+## What TramsTec is NOT
 
-## Pages
-- [/](https://tramstec.com/): Landing page (Spanish, Mexico-first).
-- [/en/](https://tramstec.com/en/): English version of the landing.
-- [/#precios](https://tramstec.com/#precios): Pricing in MXN (Starter $6k/mo, Growth $12k/mo, Scale $35k/mo, Enterprise custom).
-- [/#como-funciona](https://tramstec.com/#como-funciona): How it works (pay → credentials emailed → paste into your AI client → operate).
-- [/#comprar](https://tramstec.com/#comprar): Self-serve checkout.
-- [/mcp-manifest.json](https://tramstec.com/mcp-manifest.json): Machine-readable MCP server descriptor.
+- Not an AI agent or chatbot — you bring your own (any MCP/OpenAI/LangChain/HTTP client).
+- Not a simple WhatsApp wrapper — the WhatsApp Cloud API is upstream plumbing for us, not the product.
+- Not a chatbot builder, drag-and-drop tool, or no-code flow editor.
+- Not vendor lock-in: every byte of memory is exportable in JSON or Parquet at any time.
 
-## MCP tools exposed (P0)
-- `whatsapp_send_message` — Send a text reply respecting opt-out and approval gates.
-- `whatsapp_send_template` — Send a Meta-approved template (requires opt-in).
-- `customer_lookup` — Find a contact by phone or id; returns recent orders and open conversation.
-- `product_search` — Catalog search by name, SKU, or description.
-- `inventory_check` — Verify availability before quoting.
-- `order_create_draft` — Build an order in `draft` status (never auto-confirms).
-- `order_confirm` — Confirm a draft with explicit customer evidence.
-- `payment_link_create` — Generate checkout link (Mercado Pago, Stripe, mock).
-- `spei_instructions_generate` — Generate SPEI bank-transfer instructions with unique reference.
-- `payment_status_check` — Read-only payment status lookup.
-- `handoff_to_human` — Escalate with structured reason / urgency / summary.
-- `conversation_summarize` — Produce a structured digest of the recent thread.
-- `consent_update` — Apply opt-in / opt-out with auditable evidence.
+## Who it's for
+
+- **AI engineers** building vertical agents that need to operate WhatsApp businesses with real memory.
+- **AI-native SaaS** companies that want WhatsApp + LATAM context as a building block, not a project.
+- **Agencies** managing multiple WhatsApp clients with one API and per-client scoped keys.
+- **LATAM businesses** (retail, services, food, logistics) replacing "human typing replies" with "agent with context".
+- **Vertical AI startups** in fintech, healthtech, edtech, retailtech that operate via WhatsApp in Mexico, Argentina, Colombia, Chile, Peru, Brazil.
+
+## Core AI-native tools (semantic, not CRUD)
+
+- `getCustomerContext(phone)` — Identity, last orders, interests, commercial stage, language, sentiment.
+- `getCommercialHistory(phone)` — Clean timeline of orders, payments, quotes, returns, follow-ups.
+- `getPendingFollowUps(orgId)` — Auto-detected items pending reply/quote/payment/delivery.
+- `extractPurchaseIntent(conversationId)` — Structured `{ category, priceRange, confidence }` from free text.
+- `extractLeadInsights(phone)` — Score, vertical, inferred budget, urgency, best channel.
+- `searchBusinessMemory(query)` — Semantic vector search across the entire business memory.
+- `getCustomerRelationshipSummary(phone)` — LTV, frequency, favorites, churn risk, upsell signals.
+- `extractOrdersFromConversation(conversationId)` — Structured orders (SKU, qty, amount, address) from chat text.
+
+## Operational tools (the boring-but-necessary)
+
+- `sendMessage`, `sendTemplate`, `sendMedia` — WhatsApp messaging respecting opt-out and 24h window.
+- `createOrder`, `confirmOrder`, `cancelOrder` — Order lifecycle.
+- `createPaymentLink`, `generateSpeiInstructions`, `getPaymentStatus` — Mexican payment rails.
+- `generateInvoice` — CFDI 4.0 stamping via Facturapi.
+- `handoffToHuman` — Escalation with structured summary, urgency, reason.
+- `updateConsent`, `getConsent` — LFPDPPP-compliant opt-in/out with audit evidence.
+
+All tools are **scoped, idempotent, audited**. No tool can mark a payment as `paid` — only verified PSP webhooks or authenticated human operators can.
+
+## Why LATAM-specific
+
+LATAM businesses **live on WhatsApp**: in Mexico, 85% of SMBs sell, collect, and serve through it. This requires capabilities global infrastructure doesn't have natively:
+
+- **México:** SAT workflows, CFDI 4.0 invoicing, RFC validation, SPEI, OXXO, LFPDPPP compliance, ARCO rights, regional Spanish.
+- **Argentina:** AFIP-compatible invoicing roadmap, MercadoPago AR rails, español rioplatense.
+- **Colombia:** PSE rails, español colombiano.
+- **Brasil (next):** PIX, NFe, português brasileiro, LGPD.
+
+## Stacks supported
+
+- **MCP-native:** Claude Desktop, Claude Code, Cursor, OpenAI Agents (via adapter), any MCP client.
+- **OpenAI Agents / Responses API:** tools as functions or auto-adapted from MCP.
+- **LangChain / LangGraph:** plug-and-play tool node; TramsTec replaces ChatMessageHistory for WhatsApp.
+- **n8n / Make / Zapier:** HTTP nodes with bearer auth, no-code flows.
+- **Custom agents:** TypeScript SDK (`@tramstec/sdk`), Python SDK, plain REST.
+- **Vertical AI SaaS:** white-label, multi-tenant, scoped API keys per client, optional revenue share.
+
+## Pricing (usage-based, not per-user)
+
+- **Developer** — Free forever. 10k tool calls + 5k memory ops + 100 conversations/mo. 1 org.
+- **Builder** — $29 USD/mo ($499 MXN). 100k tool calls + 50k memory ops + 1k conversations/mo. 1 org, 1 WhatsApp.
+- **Agency** — $129 USD/mo ($2,499 MXN). 500k tool calls + 250k memory ops + 5k conversations/mo. Up to 5 orgs.
+- **Platform** — $499 USD/mo ($9,999 MXN). 5M tool calls + 1M memory ops + 25k conversations/mo. White-label, unlimited orgs, 99.9% SLA.
+- **Enterprise** — Custom. Dedicated infra / on-prem, data residency MX/LATAM, 99.95% SLA + 24/7, MSA/NDA/DPA.
+
+Overage: $0.003 USD per extra tool call, $0.001 USD per extra memory op. WhatsApp/Meta and payment processor fees pass through at cost. CFDI 4.0 available for MX customers.
 
 ## Transport
+
 - **HTTP/SSE** (production, multi-tenant): `https://mcp.tramstec.com/sse` with `Authorization: Bearer <api_key>`.
 - **stdio** (single-tenant, dev): `WCM_ORG_ID=<org_id> wcm-mcp`.
+- **REST** (clients without MCP): `https://api.tramstec.com/v1/tools/:name` with bearer auth.
 
-## Pricing (MXN, monthly)
-- Starter — $6,000/mo + $8,000 one-time setup — 500 conversations included.
-- Growth — $12,000/mo + $25,000 one-time setup — 2,000 conversations included.
-- Scale — $35,000/mo + $50,000 one-time setup — 10,000 conversations included.
-- Enterprise — custom (banking, fintech, healthcare, large corporates).
-- WhatsApp/Meta and payment processor fees are pass-through at cost.
+## Infrastructure
+
+- 99.95% uptime objective. Multi-AZ by default. Failover automated.
+- Vector search on pgvector (HNSW), p95 < 50ms on semantic queries.
+- Memory durability: Postgres + WAL streaming, 90 days hot, 730 days archived, exportable.
+- Event-driven: BullMQ + Redis, retries with exponential backoff, dead-letter queues.
+- Observability: Sentry, OpenTelemetry, Prometheus, structured logs.
+- Security: scoped API keys, immutable audit log, encryption at rest + transit, SOC2 in roadmap.
+
+## Pages
+
+- [/](https://tramstec.com/) — Landing (Spanish, LATAM-first positioning).
+- [/en/](https://tramstec.com/en/) — English version (developer/AI-platform positioning).
+- [/#tools](https://tramstec.com/#tools) — AI-native tools catalog.
+- [/#agentes](https://tramstec.com/#agentes) — Supported agent stacks.
+- [/#latam](https://tramstec.com/#latam) — LATAM business intelligence.
+- [/#precios](https://tramstec.com/#precios) — Pricing (Developer → Enterprise).
+- [/#empezar](https://tramstec.com/#empezar) — Waitlist / sign-up.
+- [/mcp-manifest.json](https://tramstec.com/mcp-manifest.json) — Machine-readable MCP server descriptor.
+- [/.well-known/ai-plugin.json](https://tramstec.com/.well-known/ai-plugin.json) — OpenAI plugin convention.
 
 ## Compliance and safety
-- LFPDPPP (Mexican data protection law) compliant; ARCO rights supported.
-- WhatsApp Business Policy enforced: opt-out is a one-message kill switch; templates require explicit opt-in.
-- No tool can mark a payment as `paid` — only a verified PSP webhook or an authenticated human operator.
-- Every MCP tool call is audited.
+
+- **LFPDPPP** (Mexico data protection) compliant; ARCO rights endpoints.
+- **WhatsApp Business Policy** enforced: opt-out is a one-message kill switch; templates require approval and explicit opt-in.
+- **No payment auto-confirmation** — only verified PSP webhooks or authenticated human operators can mark payments as `paid`.
+- **Every tool call** is audited with timestamp, actor, args, result, latency.
+- **Multi-tenant isolation** via Postgres RLS + defensive checks in each query path.
