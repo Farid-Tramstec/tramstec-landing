@@ -62,6 +62,19 @@
     },
   };
   const T = I18N[LANG];
+
+  // -----------------------------------------------------------------
+  // Analytics — Plausible event helper. Defensive: silent no-op if
+  // Plausible script hasn't loaded (adblock, offline, etc.). Never throws.
+  // -----------------------------------------------------------------
+  function track(event, props) {
+    try {
+      if (typeof window.plausible === "function") {
+        window.plausible(event, props ? { props } : undefined);
+      }
+    } catch (_) { /* never break the page on analytics failure */ }
+  }
+
   // -----------------------------------------------------------------
   // Theme toggle + footer year (unchanged from the original landing).
   // -----------------------------------------------------------------
@@ -83,34 +96,32 @@
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
   // -----------------------------------------------------------------
-  // Pricing data — repositioned for "WhatsApp Memory Infrastructure".
-  // Five tiers: Developer (free) / Builder / Agency / Platform / Enterprise.
-  // Prices in MINOR units (cents/centavos). Two currency tables per locale.
+  // Pricing — operational infrastructure for AI agents on WhatsApp.
+  // Four plans: Developer (free) / Production / Platform / Enterprise.
+  // Prices in MINOR units (cents). USD across locales — pricing wording is English.
   // -----------------------------------------------------------------
   const PRICING = {
     es: {
-      currency: "MXN",
+      currency: "USD",
       plans: {
-        developer:  { label: "Developer",  monthly_cents:       0, tool_calls:   10000, memory_ops:   5000, conversations:    100, customLabel: "Gratis · siempre" },
-        builder:    { label: "Builder",    monthly_cents:   49900, tool_calls:  100000, memory_ops:  50000, conversations:   1000 },
-        agency:     { label: "Agency",     monthly_cents:  249900, tool_calls:  500000, memory_ops: 250000, conversations:   5000 },
-        platform:   { label: "Platform",   monthly_cents:  999900, tool_calls: 5000000, memory_ops:1000000, conversations:  25000 },
-        enterprise: { label: "Enterprise", monthly_cents:       0, tool_calls:       0, memory_ops:      0, conversations:      0, customLabel: "A la medida" },
+        developer:  { label: "Developer",  monthly_cents:      0, customLabel: "Free" },
+        production: { label: "Production", monthly_cents:   9900 },
+        platform:   { label: "Platform",   monthly_cents:  99900 },
+        enterprise: { label: "Enterprise", monthly_cents:      0, customLabel: "Custom" },
       },
       addons: {
-        payments: { label: "Pagos LATAM extendidos", monthly_cents: 500000 },
-        erp:      { label: "Conectores de negocio",  monthly_cents: 800000 },
-        priority: { label: "AI Ops prioritario",     monthly_cents: 600000 },
+        payments: { label: "Pagos LATAM extendidos", monthly_cents: 30000 },
+        erp:      { label: "Conectores de negocio",  monthly_cents: 50000 },
+        priority: { label: "AI Ops prioritario",     monthly_cents: 40000 },
       },
     },
     en: {
       currency: "USD",
       plans: {
-        developer:  { label: "Developer",  monthly_cents:      0, tool_calls:   10000, memory_ops:   5000, conversations:    100, customLabel: "Free · forever" },
-        builder:    { label: "Builder",    monthly_cents:   2900, tool_calls:  100000, memory_ops:  50000, conversations:   1000 },
-        agency:     { label: "Agency",     monthly_cents:  12900, tool_calls:  500000, memory_ops: 250000, conversations:   5000 },
-        platform:   { label: "Platform",   monthly_cents:  49900, tool_calls: 5000000, memory_ops:1000000, conversations:  25000 },
-        enterprise: { label: "Enterprise", monthly_cents:      0, tool_calls:       0, memory_ops:      0, conversations:      0, customLabel: "Custom" },
+        developer:  { label: "Developer",  monthly_cents:      0, customLabel: "Free" },
+        production: { label: "Production", monthly_cents:   9900 },
+        platform:   { label: "Platform",   monthly_cents:  99900 },
+        enterprise: { label: "Enterprise", monthly_cents:      0, customLabel: "Custom" },
       },
       addons: {
         payments: { label: "Extended LATAM payments", monthly_cents: 30000 },
@@ -151,10 +162,10 @@
   // -----------------------------------------------------------------
   // Cart state + render
   // -----------------------------------------------------------------
-  const money = new Intl.NumberFormat(T.locale, { style: "currency", currency: T.currency, maximumFractionDigits: 0 });
+  const money = new Intl.NumberFormat(T.locale, { style: "currency", currency: fallback.currency, maximumFractionDigits: 0 });
   const numFmt = new Intl.NumberFormat(T.locale);
   // Default selection is Agency (the "recommended" tier in the new pricing).
-  const cart = { plan: "agency", addons: new Set() };
+  const cart = { plan: "production", addons: new Set() };
 
   const planLabel = document.querySelector("[data-cart-plan]");
   const cartLines = document.querySelector("[data-cart-lines]");
@@ -162,7 +173,7 @@
   const status = document.querySelector("[data-checkout-status]");
 
   function selectedPlan() {
-    return plans[cart.plan] || plans.agency || plans.developer;
+    return plans[cart.plan] || plans.production || plans.developer;
   }
 
   function renderCart() {
@@ -191,6 +202,7 @@
       if (!slug || !plans[slug]) return;
       cart.plan = slug;
       renderCart();
+      track("Plan Selected", { plan: slug, lang: LANG });
       document.getElementById("comprar")?.scrollIntoView({ behavior: "smooth" });
       if (status) status.textContent = T.addedToCart(plans[slug].label);
     });
@@ -274,6 +286,7 @@
           const body = await res.json().catch(() => ({}));
           if (!res.ok) throw new Error(body?.error || `HTTP ${res.status}`);
           setStatus(T.waitlistSuccess, "success");
+          track("Waitlist Submit", { result: "success", plan: payload.plan_slug || "unknown", lang: LANG });
           form.reset();
           // Clear cart so the UI returns to a neutral state.
           cart.plan = null;
@@ -285,6 +298,7 @@
           }
         } catch (err) {
           setStatus(T.waitlistError(err instanceof Error ? err.message : String(err)), "error");
+          track("Waitlist Submit", { result: "error", plan: payload.plan_slug || "unknown", lang: LANG });
           if (submitBtn) {
             submitBtn.removeAttribute("disabled");
             submitBtn.textContent = T.waitlistButton;

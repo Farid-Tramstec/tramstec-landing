@@ -152,6 +152,18 @@
       }
     }
     </script>
+
+    <!-- ============================================================
+         Analytics
+         · Plausible (privacy-first, sin cookie banner, GDPR/LGPD)
+         · Vercel Web Analytics + Speed Insights (auto-injected en prod)
+         Tags de eventos via window.plausible('Event', { props: {...} }).
+         Outbound links (mailto:, https://) trackean automáticamente.
+         ============================================================ -->
+    <script defer data-domain="tramstec.com" src="https://plausible.io/js/script.outbound-links.tagged-events.js"></script>
+    <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
   </head>
 
   <body itemscope itemtype="https://schema.org/SoftwareApplication">
@@ -204,7 +216,7 @@
               Memoria persistente para agentes de IA en <em>WhatsApp</em>.
             </h1>
             <p class="hero-lede">
-              La capa que tu agente necesita para recordar clientes, extraer pedidos y operar negocios LATAM. <strong>No es una API de mensajería</strong>.
+              La capa que tu agente necesita para recordar clientes, extraer pedidos y operar negocios en México y LATAM. <strong>No es una API de mensajería</strong>.
             </p>
             <div class="hero-cta">
               <a class="btn btn-primary" href="#empezar">Empezar gratis</a>
@@ -918,40 +930,80 @@
       <!-- ================================================== -->
       <section class="section section-band" id="precios">
         <div class="container">
-          <div class="section-kicker">Pricing</div>
-          <h2 class="section-title">Usage-based. No per-user.</h2>
-          <p class="section-lede">Empieza gratis. Crece sin contratos. Sin candados.</p>
+          <div class="section-kicker">Precios</div>
+          <h2 class="section-title">Precios diseñados para agentes de IA</h2>
+          <p class="section-lede">
+            Paga por infraestructura operacional, no por asientos. Empieza gratis, despliega a producción y escala a millones de conversaciones de WhatsApp.
+          </p>
 
-          <div class="pricing-cards" aria-label="Tiers">
+          <div class="pricing-cards" aria-label="Planes">
             <article class="pricing-card">
-              <div><span class="plan-label">Developer</span><h3>Gratis</h3><p>Prototipa.</p></div>
-              <ul role="list"><li>10k tool calls</li><li>5k memory ops</li><li>100 conversaciones</li><li>1 org</li></ul>
-              <button class="btn btn-ghost add-plan" type="button" data-plan="developer">Empezar</button>
+              <div>
+                <span class="plan-label">Developer</span>
+                <h3>Gratis</h3>
+                <p>Empieza a construir</p>
+              </div>
+              <ul role="list">
+                <li>Entorno sandbox</li>
+                <li>Documentación lista para MCP</li>
+                <li>Prueba workflows de WhatsApp</li>
+                <li>Construye y valida tu agente</li>
+                <li>Ideal para developers experimentando con IA nativa para WhatsApp</li>
+              </ul>
+              <button class="btn btn-ghost add-plan" type="button" data-plan="developer">Empezar a construir</button>
             </article>
-            <article class="pricing-card">
-              <div><span class="plan-label">Builder</span><h3>$499<small> MXN/mes</small></h3><p>Tu primer producto.</p></div>
-              <ul role="list"><li>100k tool calls</li><li>50k memory ops</li><li>1k conversaciones</li><li>1 org · 1 WA</li></ul>
-              <button class="btn btn-ghost add-plan" type="button" data-plan="builder">Elegir</button>
-            </article>
+
             <article class="pricing-card pricing-card-featured">
-              <div><span class="plan-label">Agency · recomendado</span><h3>$2,499<small> MXN/mes</small></h3><p>Varios clientes.</p></div>
-              <ul role="list"><li>500k tool calls</li><li>250k memory ops</li><li>5k conversaciones</li><li>5 orgs · scoped keys</li></ul>
-              <button class="btn btn-primary add-plan" type="button" data-plan="agency">Elegir</button>
+              <div>
+                <span class="plan-label">Production</span>
+                <h3>$99<small> USD/mes</small></h3>
+                <p>Lanza agentes de IA reales en WhatsApp</p>
+              </div>
+              <ul role="list">
+                <li>Infraestructura de WhatsApp lista para producción</li>
+                <li>Memoria de contexto para conversaciones de negocio</li>
+                <li>Orquestación confiable de mensajes</li>
+                <li>Soporte para handoff agente-humano</li>
+                <li>Analytics de conversaciones en vivo</li>
+              </ul>
+              <button class="btn btn-primary add-plan" type="button" data-plan="production">Desplegar a producción</button>
             </article>
+
             <article class="pricing-card">
-              <div><span class="plan-label">Platform</span><h3>$9,999<small> MXN/mes</small></h3><p>White-label · multi-tenant.</p></div>
-              <ul role="list"><li>5M tool calls</li><li>1M memory ops</li><li>25k conversaciones</li><li>Orgs ilimitadas · SLA</li></ul>
-              <button class="btn btn-ghost add-plan" type="button" data-plan="platform">Elegir</button>
+              <div>
+                <span class="plan-label">Platform</span>
+                <h3>$999<small> USD/mes</small></h3>
+                <p>Escala miles de conversaciones</p>
+              </div>
+              <ul role="list">
+                <li>Infraestructura multi-tenant</li>
+                <li>Listo para white-label</li>
+                <li>Observabilidad avanzada</li>
+                <li>Acceso API para plataformas y agencias</li>
+                <li>Soporte prioritario para agentes mission-critical</li>
+              </ul>
+              <button class="btn btn-ghost add-plan" type="button" data-plan="platform">Hablar con ventas</button>
             </article>
+
             <article class="pricing-card">
-              <div><span class="plan-label">Enterprise</span><h3>A la medida</h3><p>Banca · fintech · retail.</p></div>
-              <ul role="list"><li>Volumen ∞</li><li>Infra dedicada / on-prem</li><li>SLA 99.95% + 24/7</li><li>MSA · NDA · DPA</li></ul>
-              <a class="btn btn-ghost" href="mailto:ventas@tramstec.com?subject=Enterprise">Ventas</a>
+              <div>
+                <span class="plan-label">Enterprise</span>
+                <h3>A la medida</h3>
+                <p>Infraestructura custom para operaciones AI a gran escala</p>
+              </div>
+              <ul role="list">
+                <li>Opciones de despliegue dedicado</li>
+                <li>SLAs personalizados</li>
+                <li>Revisión de seguridad y compliance</li>
+                <li>Integraciones avanzadas</li>
+                <li>Onboarding y soporte enterprise</li>
+              </ul>
+              <a class="btn btn-ghost" href="mailto:ventas@tramstec.com?subject=Enterprise%20—%20TramsTec">Contáctanos</a>
             </article>
           </div>
 
           <p class="fineprint">
-            Overage: $0.05 MXN/tool call extra · $0.02 MXN/memory op extra. WhatsApp/Meta y pasarelas al costo. CFDI 4.0.
+            Precios listados en USD. Cobro basado en uso de tool calls, memory operations y conversaciones activas. Comisiones de WhatsApp/Meta y pasarelas de pago se cobran al costo.
           </p>
         </div>
       </section>
@@ -984,9 +1036,9 @@
           </div>
 
           <aside class="cart-panel" aria-label="Tu plan">
-            <div class="cart-head"><span>Tu plan</span><strong data-cart-plan>Agency</strong></div>
+            <div class="cart-head"><span>Tu plan</span><strong data-cart-plan>Production</strong></div>
             <div class="cart-lines" data-cart-lines></div>
-            <div class="cart-total"><span>Mensual estimado</span><strong data-cart-total>MXN $2,499</strong></div>
+            <div class="cart-total"><span>Mensual estimado</span><strong data-cart-total>USD $99</strong></div>
             <form class="checkout-form" data-checkout-form>
               <label>Email <input name="email" type="email" placeholder="tu@empresa.com" autocomplete="email" required /></label>
               <label>Empresa o proyecto <input name="workspace" type="text" placeholder="Mi AI vertical" required /></label>
@@ -1061,7 +1113,7 @@
           </svg>
           <div>
             <div class="footer-name">TramsTec</div>
-            <div class="footer-tag">WhatsApp memory infrastructure for LATAM AI</div>
+            <div class="footer-tagline">Donde la IA genera resultados.</div>
           </div>
         </div>
         <nav class="footer-nav" aria-label="Pie de página">

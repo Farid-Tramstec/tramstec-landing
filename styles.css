@@ -1425,6 +1425,14 @@ p { text-wrap: pretty; max-width: 70ch; }
   font-weight: 600;
   font-size: var(--text-base);
 }
+.footer-tagline {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-style: italic;
+  letter-spacing: -0.005em;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
 .footer-tag {
   color: var(--color-text-muted);
   font-size: var(--text-xs);

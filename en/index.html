@@ -145,6 +145,18 @@
       }
     }
     </script>
+
+    <!-- ============================================================
+         Analytics
+         · Plausible (privacy-first, no cookie banner, GDPR/LGPD)
+         · Vercel Web Analytics + Speed Insights (auto-injected on prod)
+         Event tagging via window.plausible('Event', { props: {...} }).
+         Outbound links (mailto:, https://) tracked automatically.
+         ============================================================ -->
+    <script defer data-domain="tramstec.com" src="https://plausible.io/js/script.outbound-links.tagged-events.js"></script>
+    <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
   </head>
 
   <body itemscope itemtype="https://schema.org/SoftwareApplication">
@@ -191,7 +203,7 @@
               Persistent memory for AI agents on <em>WhatsApp</em>.
             </h1>
             <p class="hero-lede">
-              The layer your agent needs to remember customers, extract orders, and operate LATAM businesses. <strong>Not a messaging API</strong>.
+              The layer your agent needs to remember customers, extract orders, and operate businesses in Mexico and LATAM. <strong>Not a messaging API</strong>.
             </p>
             <div class="hero-cta">
               <a class="btn btn-primary" href="#start">Start free</a>
@@ -680,18 +692,80 @@
       <section class="section section-band" id="pricing">
         <div class="container">
           <div class="section-kicker">Pricing</div>
-          <h2 class="section-title">Usage-based. Not per-user.</h2>
-          <p class="section-lede">Start free. Scale with your product. No contracts.</p>
+          <h2 class="section-title">Pricing designed for AI agents</h2>
+          <p class="section-lede">
+            Pay for operational infrastructure, not for seats. Start free, deploy to production, and scale to millions of WhatsApp conversations.
+          </p>
 
-          <div class="pricing-cards" aria-label="Tiers">
-            <article class="pricing-card"><div><span class="plan-label">Developer</span><h3>Free</h3><p>Prototype.</p></div><ul role="list"><li>10k tool calls</li><li>5k memory ops</li><li>100 conversations</li><li>1 org</li></ul><button class="btn btn-ghost add-plan" type="button" data-plan="developer">Start</button></article>
-            <article class="pricing-card"><div><span class="plan-label">Builder</span><h3>$29<small> USD/mo</small></h3><p>Your first product.</p></div><ul role="list"><li>100k tool calls</li><li>50k memory ops</li><li>1k conversations</li><li>1 org · 1 WA</li></ul><button class="btn btn-ghost add-plan" type="button" data-plan="builder">Choose</button></article>
-            <article class="pricing-card pricing-card-featured"><div><span class="plan-label">Agency · recommended</span><h3>$129<small> USD/mo</small></h3><p>Multiple clients.</p></div><ul role="list"><li>500k tool calls</li><li>250k memory ops</li><li>5k conversations</li><li>5 orgs · scoped keys</li></ul><button class="btn btn-primary add-plan" type="button" data-plan="agency">Choose</button></article>
-            <article class="pricing-card"><div><span class="plan-label">Platform</span><h3>$499<small> USD/mo</small></h3><p>White-label · multi-tenant.</p></div><ul role="list"><li>5M tool calls</li><li>1M memory ops</li><li>25k conversations</li><li>Unlimited orgs · SLA</li></ul><button class="btn btn-ghost add-plan" type="button" data-plan="platform">Choose</button></article>
-            <article class="pricing-card"><div><span class="plan-label">Enterprise</span><h3>Custom</h3><p>Banking · fintech · retail.</p></div><ul role="list"><li>Unlimited volume</li><li>Dedicated / on-prem</li><li>99.95% SLA + 24/7</li><li>MSA · NDA · DPA</li></ul><a class="btn btn-ghost" href="mailto:sales@tramstec.com?subject=Enterprise">Sales</a></article>
+          <div class="pricing-cards" aria-label="Plans">
+            <article class="pricing-card">
+              <div>
+                <span class="plan-label">Developer</span>
+                <h3>Free</h3>
+                <p>Start building</p>
+              </div>
+              <ul role="list">
+                <li>Sandbox environment</li>
+                <li>MCP-ready documentation</li>
+                <li>Test WhatsApp workflows</li>
+                <li>Build and validate your agent</li>
+                <li>Ideal for developers experimenting with WhatsApp-native AI</li>
+              </ul>
+              <button class="btn btn-ghost add-plan" type="button" data-plan="developer">Start Building</button>
+            </article>
+
+            <article class="pricing-card pricing-card-featured">
+              <div>
+                <span class="plan-label">Production</span>
+                <h3>$99<small> /month</small></h3>
+                <p>Launch real AI agents on WhatsApp</p>
+              </div>
+              <ul role="list">
+                <li>Production-ready WhatsApp infrastructure</li>
+                <li>Context memory for business conversations</li>
+                <li>Reliable message orchestration</li>
+                <li>Agent-to-human handoff support</li>
+                <li>Analytics for live conversations</li>
+              </ul>
+              <button class="btn btn-primary add-plan" type="button" data-plan="production">Deploy to Production</button>
+            </article>
+
+            <article class="pricing-card">
+              <div>
+                <span class="plan-label">Platform</span>
+                <h3>$999<small> /month</small></h3>
+                <p>Scale thousands of conversations</p>
+              </div>
+              <ul role="list">
+                <li>Multi-tenant infrastructure</li>
+                <li>White-label ready</li>
+                <li>Advanced observability</li>
+                <li>API access for platforms and agencies</li>
+                <li>Priority support for mission-critical agents</li>
+              </ul>
+              <button class="btn btn-ghost add-plan" type="button" data-plan="platform">Talk to Sales</button>
+            </article>
+
+            <article class="pricing-card">
+              <div>
+                <span class="plan-label">Enterprise</span>
+                <h3>Custom</h3>
+                <p>Custom infrastructure for large-scale AI operations</p>
+              </div>
+              <ul role="list">
+                <li>Dedicated deployment options</li>
+                <li>Custom SLAs</li>
+                <li>Security and compliance review</li>
+                <li>Advanced integrations</li>
+                <li>Enterprise onboarding and support</li>
+              </ul>
+              <a class="btn btn-ghost" href="mailto:sales@tramstec.com?subject=Enterprise%20—%20TramsTec">Contact Us</a>
+            </article>
           </div>
 
-          <p class="fineprint">Overage: $0.003 USD/extra tool call · $0.001 USD/extra memory op. WhatsApp/Meta and PSP fees pass through.</p>
+          <p class="fineprint">
+            Starting prices listed in USD. Usage-based billing on tool calls, memory operations and active conversations. WhatsApp/Meta fees and payment gateway commissions pass through at cost.
+          </p>
         </div>
       </section>
 
@@ -710,9 +784,9 @@
           </div>
 
           <aside class="cart-panel" aria-label="Your plan">
-            <div class="cart-head"><span>Your plan</span><strong data-cart-plan>Agency</strong></div>
+            <div class="cart-head"><span>Your plan</span><strong data-cart-plan>Production</strong></div>
             <div class="cart-lines" data-cart-lines></div>
-            <div class="cart-total"><span>Monthly estimate</span><strong data-cart-total>USD $129</strong></div>
+            <div class="cart-total"><span>Monthly estimate</span><strong data-cart-total>USD $99</strong></div>
             <form class="checkout-form" data-checkout-form>
               <label>Email <input name="email" type="email" placeholder="you@company.com" autocomplete="email" required /></label>
               <label>Company or project <input name="workspace" type="text" placeholder="My vertical AI" required /></label>
@@ -783,7 +857,7 @@
           </svg>
           <div>
             <div class="footer-name">TramsTec</div>
-            <div class="footer-tag">WhatsApp memory infrastructure for LATAM AI</div>
+            <div class="footer-tagline">Where AI gets things done.</div>
           </div>
         </div>
         <nav class="footer-nav" aria-label="Footer">
