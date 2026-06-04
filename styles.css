@@ -1440,18 +1440,27 @@ p { text-wrap: pretty; max-width: 70ch; }
   gap: var(--space-3);
   color: var(--color-primary);
 }
+/* Footer brand uses the SAME styling as the header brand for visual
+   consistency. The legacy .footer-name / .footer-tagline selectors stay
+   so older CSS hooks keep working, but they now mirror .brand-name and
+   .brand-sub exactly. */
 .footer-name {
+  display: block;
   color: var(--color-text);
-  font-weight: 600;
-  font-size: var(--text-base);
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.1;
 }
 .footer-tagline {
+  display: block;
   color: var(--color-text-muted);
-  font-size: var(--text-sm);
+  font-size: 0.72rem;
   font-style: italic;
+  font-weight: 400;
   letter-spacing: -0.005em;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  white-space: nowrap;
+  margin-top: 1px;
+  margin-bottom: 0;
 }
 .footer-tag {
   color: var(--color-text-muted);
