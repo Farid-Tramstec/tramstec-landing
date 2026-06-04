@@ -301,6 +301,21 @@ p { text-wrap: pretty; max-width: 70ch; }
 .brand-name {
   color: var(--color-text);
   font-size: 1.05rem;
+  line-height: 1.1;
+}
+.brand-text {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.brand-sub {
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  margin-top: 1px;
 }
 .brand-mark { color: var(--color-primary); }
 
@@ -349,6 +364,7 @@ p { text-wrap: pretty; max-width: 70ch; }
   }
   .site-nav a:not(.nav-cta) { display: none; }
   .brand-name { font-size: var(--text-sm); }
+  .brand-sub { display: none; }
   .nav-cta { padding-inline: var(--space-3); }
 }
 
