@@ -1488,9 +1488,11 @@ p { text-wrap: pretty; max-width: 70ch; }
   padding-block: clamp(2rem, 5vw, 3.5rem);
 }
 
-/* Hero: was clamp(2rem...8vw...5rem). Now tight on top, modest below. */
+/* Hero: was clamp(2rem...8vw...5rem). Now tight on top, modest below.
+   Update 2026-06: tighter top padding — eyebrow should sit close to the
+   sticky header without being cramped. */
 .hero {
-  padding-block: clamp(1.5rem, 3vw, 2.5rem) clamp(2rem, 4vw, 3rem);
+  padding-block: clamp(0.5rem, 1.5vw, 1.25rem) clamp(2rem, 4vw, 3rem);
 }
 .hero-grid {
   gap: clamp(1.5rem, 3vw, 2.5rem);
@@ -1605,4 +1607,162 @@ p { text-wrap: pretty; max-width: 70ch; }
   .lang-switcher .lang-link {
     padding: 2px;
   }
+}
+
+/* ============================================================
+   Post-launch polish — 2026-06-04
+   1) Mobile horizontal overflow guard.
+   2) "Apartar mi lugar" form: terms-row checkbox, button, fiscal.
+   3) Footer alignment — "AI discovery" stays inline.
+   These rules are intentionally at the end of the file so they
+   win over earlier declarations without needing !important.
+   ============================================================ */
+
+/* ---------- 1) Mobile overflow guard ----------
+   Some hero/memory-flow SVGs and wide cards can push the layout
+   past viewport on narrow screens. Clamp html/body horizontally;
+   force media to stay within container. */
+html, body {
+  overflow-x: hidden;
+}
+@supports (overflow-x: clip) {
+  html, body { overflow-x: clip; }
+}
+img, svg, video, picture {
+  max-width: 100%;
+  height: auto;
+}
+/* Long URLs / code / inline mono strings shouldn't push width. */
+code, pre {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+/* The architecture and memory-flow diagrams must stay responsive. */
+.repo-diagram-wrap,
+.repo-arch,
+.repo-memory-flow {
+  max-width: 100%;
+}
+
+/* ---------- 2) "Apartar mi lugar" form polish ----------
+   The terms-row was inheriting .checkout-form's grid + 44px-tall
+   inputs, which made the checkbox huge and the text wrap weird.
+   Make it a horizontal flex row with a small native checkbox. */
+.checkout-form label.terms-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--text-xs);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+.checkout-form label.terms-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  flex: 0 0 16px;
+  accent-color: var(--color-primary);
+}
+.checkout-form label.terms-row span {
+  flex: 1;
+  font: inherit;
+  text-align: left;
+  line-height: 1.4;
+}
+.checkout-form label.terms-row a {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.checkout-form label.terms-row a:hover { color: var(--color-primary); }
+
+/* Submit button — was btn-lg (text-base) which felt oversized in the
+   cart panel. Match the rest of the form. */
+.checkout-form button[type="submit"].btn-lg {
+  width: 100%;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  padding: 0.75em 1.2em;
+  margin-top: var(--space-1);
+}
+
+/* Form labels — unify size + treat them as small uppercase eyebrows
+   so the form reads as one consistent component instead of mixed
+   weights/sizes. The actual input/select values stay normal weight. */
+.checkout-form label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+.checkout-form label.terms-row {
+  /* keep terms-row normal case */
+  letter-spacing: 0;
+  text-transform: none;
+}
+.checkout-form input,
+.checkout-form select {
+  font-size: var(--text-sm);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--color-text);
+}
+
+/* Fiscal details — match the same eyebrow style as labels */
+.checkout-form .fiscal-details {
+  margin: 0;
+}
+.checkout-form .fiscal-details summary {
+  list-style: none;
+  cursor: pointer;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding-block: var(--space-2);
+}
+.checkout-form .fiscal-details summary::-webkit-details-marker { display: none; }
+.checkout-form .fiscal-details summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: var(--space-2);
+  transition: transform var(--t-fast);
+  color: var(--color-primary);
+}
+.checkout-form .fiscal-details[open] summary::before {
+  transform: rotate(90deg);
+}
+.checkout-form .fiscal-details > label {
+  margin-top: var(--space-3);
+}
+
+/* ---------- 3) Footer: "AI discovery" stays inline ----------
+   Was grid 1.2fr 1fr 1fr — middle column too narrow for 7 links,
+   so the last 1-2 wrapped. Switch to auto/fluid/auto so nav gets
+   real estate and stays on one line at desktop widths. */
+.footer-inner {
+  grid-template-columns: auto 1fr auto;
+  gap: var(--space-5);
+  align-items: center;
+}
+.footer-nav {
+  gap: var(--space-4);
+  font-size: var(--text-xs);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  row-gap: var(--space-2);
+}
+.footer-nav a { white-space: nowrap; }
+.footer-meta { white-space: nowrap; }
+@media (max-width: 900px) {
+  /* Tablet: stack brand on top, nav full-width, meta below. */
+  .footer-inner { grid-template-columns: 1fr; }
+  .footer-nav { justify-content: flex-start; }
 }
