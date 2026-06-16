@@ -1,29 +1,45 @@
 {
   "$schema": "https://modelcontextprotocol.io/schemas/mcp-manifest.json",
   "name": "tramstec",
-  "displayName": "TramsTec — WhatsApp Memory & Business Context Infrastructure for LATAM",
-  "version": "0.2.0",
-  "description": "Persistent WhatsApp memory and business-context infrastructure for AI agents operating in Latin America. Native MCP server with semantic memory (pgvector), automatic CRM enrichment, order/lead extraction, and LATAM-specific workflows (SAT, CFDI, SPEI, OXXO). Bring your own LLM (Claude, OpenAI Agents, LangChain, Cursor, n8n, custom).",
+  "displayName": "TramsTec — WhatsApp infrastructure for AI agents",
+  "version": "0.3.0",
+  "description": "MCP server that lets AI agents operate WhatsApp businesses in Mexico/LATAM. 20 audited tools cover messaging, customer lookup, orders, payments (Stripe, Mercado Pago, SPEI), CFDI 4.0 invoicing, human handoff, consent, and a key-value memory store. Multi-tenant, audited, idempotent. Bring your own LLM (Claude, OpenAI Agents, LangChain, Cursor, n8n, custom).",
   "vendor": {
     "name": "TramsTec",
     "url": "https://tramstec.com",
-    "contact": "support@tramstec.com"
+    "contact": "sales@tramstec.com"
   },
-  "categories": ["ai-infrastructure", "conversational-memory", "messaging", "commerce", "payments", "crm"],
-  "regions": ["MX", "LATAM", "AR", "CO", "CL", "PE", "BR"],
-  "languages": ["es-MX", "es-AR", "es-CO", "es-CL", "pt-BR", "en"],
+  "categories": ["ai-infrastructure", "messaging", "commerce", "payments", "crm"],
+  "regions": ["MX", "LATAM"],
+  "languages": ["es-MX", "en"],
   "license": "Commercial — see tramstec.com/terms",
   "documentation": "https://tramstec.com/",
   "pricing": {
-    "model": "usage-based (tool calls + memory operations + conversations)",
+    "model": "tiered subscription, usage-based add-ons",
+    "currency": "USD",
     "tiers": [
-      { "name": "Developer",  "price_usd": 0,   "price_mxn": 0,    "tool_calls": 10000,    "memory_ops":   5000, "conversations":   100, "notes": "Free forever, single org, for experimentation." },
-      { "name": "Builder",    "price_usd": 29,  "price_mxn": 499,  "tool_calls": 100000,   "memory_ops":  50000, "conversations":  1000, "notes": "First product in production, 1 org, 1 WhatsApp number." },
-      { "name": "Agency",     "price_usd": 129, "price_mxn": 2499, "tool_calls": 500000,   "memory_ops": 250000, "conversations":  5000, "notes": "Up to 5 organizations, scoped keys, priority support." },
-      { "name": "Platform",   "price_usd": 499, "price_mxn": 9999, "tool_calls": 5000000,  "memory_ops":1000000, "conversations": 25000, "notes": "White-label, multi-tenant, unlimited orgs, 99.9% SLA." },
-      { "name": "Enterprise", "price_usd": null, "price_mxn": null,"tool_calls": null,     "memory_ops": null,   "conversations": null,  "notes": "Custom: dedicated infra, on-prem option, 99.95% SLA, MSA/NDA/DPA." }
+      {
+        "name": "Developer",
+        "price_usd": 0,
+        "notes": "Free. Sandbox environment, MCP docs, test WhatsApp workflows. For developers building and validating an agent."
+      },
+      {
+        "name": "Production",
+        "price_usd": 99,
+        "notes": "Launch real AI agents on WhatsApp. Production WhatsApp infrastructure, context memory, reliable orchestration, agent-to-human handoff, conversation analytics."
+      },
+      {
+        "name": "Platform",
+        "price_usd": 999,
+        "notes": "Scale thousands of conversations. Multi-tenant infrastructure, white-label ready (API-level), advanced observability, API access for platforms and agencies, priority support."
+      },
+      {
+        "name": "Enterprise",
+        "price_usd": null,
+        "notes": "Custom infrastructure for large-scale AI operations. Dedicated deployment, custom SLAs, security & compliance review, advanced integrations, enterprise onboarding."
+      }
     ],
-    "overage": { "per_tool_call_usd": 0.003, "per_memory_op_usd": 0.001 }
+    "fineprint": "Prices listed in USD. Usage-based billing on tool calls, memory operations and active conversations. WhatsApp/Meta fees and payment gateway commissions pass through at cost."
   },
   "transports": [
     {
@@ -37,85 +53,102 @@
       "command": "wcm-mcp",
       "env": ["WCM_ORG_ID", "DATABASE_URL"],
       "notes": "Single-tenant local development."
-    },
-    {
-      "kind": "rest",
-      "url": "https://api.tramstec.com/v1/tools/:name",
-      "auth": "bearer_api_key",
-      "notes": "For clients that do not speak MCP natively (n8n, Make, custom HTTP)."
     }
   ],
   "capabilities": {
     "tools": true,
     "resources": true,
     "prompts": true,
-    "memory": true,
-    "semantic_search": true,
     "multi_tenant": true,
-    "white_label": true,
-    "audit_log": true
+    "audit_log": true,
+    "idempotency": true,
+    "scoped_api_keys": true
   },
   "tools": [
-    { "name": "getCustomerContext",            "category": "memory",   "description": "Identity, last orders, interests, commercial stage, language, sentiment for a phone number. Returns AI-ready business context." },
-    { "name": "getCommercialHistory",          "category": "memory",   "description": "Clean cronology of orders, payments, quotes, returns, and pending follow-ups for a customer." },
-    { "name": "getPendingFollowUps",           "category": "memory",   "description": "Auto-detected items pending reply, quote, payment, or delivery across the org. The closes-the-loop tool." },
-    { "name": "extractPurchaseIntent",         "category": "ai",       "description": "Parses free-form WhatsApp text into structured purchase intent: category, priceRange, urgency, confidence." },
-    { "name": "extractLeadInsights",           "category": "ai",       "description": "CRM enrichment: score, vertical, inferred budget, urgency, best channel — from conversation signals." },
-    { "name": "extractOrdersFromConversation", "category": "ai",       "description": "Pulls structured orders (SKU, qty, amount, address, dates) from chat text. No prompt engineering required." },
-    { "name": "searchBusinessMemory",          "category": "retrieval","description": "Semantic vector search (pgvector / HNSW) across the entire business memory. p95 < 50ms." },
-    { "name": "getCustomerRelationshipSummary","category": "memory",   "description": "Executive summary per customer: LTV, frequency, favorites, churn risk, upsell opportunities." },
-    { "name": "sendMessage",                   "category": "messaging","description": "Send a WhatsApp text message. Respects opt-out and 24h window; auto-switches to template when needed." },
-    { "name": "sendTemplate",                  "category": "messaging","description": "Send a Meta-approved WhatsApp template. Requires opt-in." },
-    { "name": "sendMedia",                     "category": "messaging","description": "Send image/document/audio/video. Hosted upload + auto-resend on Meta hiccups." },
-    { "name": "createOrder",                   "category": "commerce", "description": "Create an order (draft by default). Idempotent via client_request_id." },
-    { "name": "confirmOrder",                  "category": "commerce", "description": "Confirm a draft order with explicit customer evidence." },
-    { "name": "createPaymentLink",             "category": "payments", "description": "Generate checkout link via Stripe, Mercado Pago, Conekta, Openpay, PIX." },
-    { "name": "generateSpeiInstructions",      "category": "payments", "description": "Mexican SPEI bank-transfer instructions with unique reference. Auto-reconciliation." },
-    { "name": "generateInvoice",               "category": "commerce", "description": "CFDI 4.0 stamping via Facturapi with org's RFC." },
-    { "name": "getPaymentStatus",              "category": "payments", "description": "Read-only payment status lookup." },
-    { "name": "handoffToHuman",                "category": "ops",      "description": "Escalate to a human operator with structured reason, urgency, and conversation summary." },
-    { "name": "updateConsent",                 "category": "compliance","description": "Apply opt-in or opt-out with auditable evidence (LFPDPPP compliant)." }
+    { "name": "whatsapp_send_message",     "category": "messaging",   "scope": "whatsapp:send",            "description": "Send a WhatsApp text message in an existing conversation. Respects opt-out and 24h window; queued via BullMQ with retry. Idempotent via client_request_id." },
+    { "name": "whatsapp_send_template",    "category": "messaging",   "scope": "whatsapp:template:send",   "description": "Send a Meta-approved WhatsApp template message. Requires opt-in. Idempotent." },
+    { "name": "whatsapp_send_media",       "category": "messaging",   "scope": "whatsapp:send",            "description": "Send image/document/audio/video to a WhatsApp contact. Media URL must be publicly reachable (Meta downloads it). Idempotent." },
+    { "name": "whatsapp_template_submit",  "category": "messaging",   "scope": "whatsapp:template:admin",  "description": "Submit a WhatsApp template to Meta for approval. Persists in local registry. Admin scope." },
+    { "name": "customer_lookup",           "category": "crm",         "scope": "customers:read",           "description": "Look up a contact by customer_id or phone. Returns contact data + recent orders + open conversation." },
+    { "name": "product_search",            "category": "crm",         "scope": "catalog:read",             "description": "Search the org's product catalog by name, SKU, or description. Uses pgvector for embeddings when OPENAI_API_KEY is configured; falls back to LIKE substring matching." },
+    { "name": "inventory_check",           "category": "crm",         "scope": "catalog:read",             "description": "Check current stock for one or more SKUs." },
+    { "name": "order_create_draft",        "category": "operations",  "scope": "orders:write",             "description": "Create an order in draft state. Computes totals and a summary_for_customer string. Never auto-confirms. Idempotent." },
+    { "name": "order_confirm",             "category": "operations",  "scope": "orders:write",             "description": "Confirm a draft order with explicit evidence (customer message or operator action). Idempotent." },
+    { "name": "payment_link_create",       "category": "payments",    "scope": "payments:create",          "description": "Generate a checkout link via Stripe or Mercado Pago (or a mock adapter for testing). OXXO Pay supported via Stripe MX. Idempotent." },
+    { "name": "spei_instructions_generate","category": "payments",    "scope": "payments:create",          "description": "Generate Mexican SPEI bank-transfer instructions with a unique reference. Idempotent." },
+    { "name": "payment_status_check",      "category": "payments",    "scope": "payments:read",            "description": "Look up the latest status of a payment. Fetches from the PSP for freshness on non-mock providers." },
+    { "name": "handoff_to_human",          "category": "handoff",     "scope": "conversations:handoff",    "description": "Escalate a conversation to a human operator with structured reason, urgency, and summary. Disables the AI agent on that conversation." },
+    { "name": "conversation_summarize",    "category": "conversations","scope": "conversations:read",      "description": "Build a heuristic structured digest of the last N messages in a conversation. Persists the summary. No LLM call inside." },
+    { "name": "conversation_search",       "category": "conversations","scope": "conversations:read",      "description": "Full-text substring search across conversation messages within the org." },
+    { "name": "consent_update",            "category": "compliance",  "scope": "consent:write",            "description": "Record an opt-in or opt-out event with auditable evidence. LFPDPPP compliant. Idempotent." },
+    { "name": "invoice_create",            "category": "commerce",    "scope": "invoices:create",          "description": "Issue a Mexican CFDI 4.0 invoice via Facturapi. Requires FACTURAPI_KEY. Idempotent per payment_id." },
+    { "name": "memory_set",                "category": "memory",      "scope": "memory:write",             "description": "Set a key/value entry in per-contact memory store. Supports TTL. Idempotent." },
+    { "name": "memory_get",                "category": "memory",      "scope": "memory:read",              "description": "Read a key from per-contact memory store. Returns {found:false} if missing or expired." },
+    { "name": "memory_list",               "category": "memory",      "scope": "memory:read",              "description": "List up to 200 memory entries for a contact." }
   ],
   "resources": [
     { "uriTemplate": "business://profile",        "description": "Organization metadata and branding." },
     { "uriTemplate": "business://policies",       "description": "Returns, shipping, payment, escalation policies." },
-    { "uriTemplate": "business://catalog",        "description": "Active product catalog with embeddings." },
-    { "uriTemplate": "business://memory",         "description": "Aggregated business memory (semantic index)." },
-    { "uriTemplate": "customer://{customer_id}",  "description": "Customer profile, history, relationship summary." },
-    { "uriTemplate": "conversation://{id}",       "description": "Conversation thread, metadata, extracted entities." },
-    { "uriTemplate": "order://{order_id}",        "description": "Order detail, items, payments, invoices." }
+    { "uriTemplate": "business://catalog",        "description": "Active product catalog." },
+    { "uriTemplate": "business://faq",            "description": "Frequently asked questions for the org." },
+    { "uriTemplate": "customer://{customer_id}",  "description": "Customer profile, recent orders, open conversation." },
+    { "uriTemplate": "conversation://{id}",       "description": "Conversation thread, metadata, message list." },
+    { "uriTemplate": "order://{order_id}",        "description": "Order detail, items, payments." }
   ],
   "prompts": [
-    { "name": "sales_agent_es_mx",          "description": "Mexico-Spanish sales agent prompt with TramsTec memory hooks." },
-    { "name": "support_agent_es_mx",        "description": "Mexico-Spanish support agent prompt with context retrieval." },
-    { "name": "order_taking_agent_es_mx",   "description": "Order-taking agent that uses extractOrdersFromConversation." },
-    { "name": "collections_agent_es_mx",    "description": "Stage-aware collections prompt with follow-up tracking." },
-    { "name": "vertical_agent_template",    "description": "Skeleton for vertical AI agents (clinics, logistics, real estate, retail)." },
-    { "name": "human_handoff_summary",      "description": "Conversation summarization optimized for human operators." }
+    { "name": "sales_agent_es_mx",        "description": "Mexico-Spanish sales agent prompt with TramsTec tool hooks." },
+    { "name": "support_agent_es_mx",      "description": "Mexico-Spanish support agent prompt." },
+    { "name": "order_taking_agent_es_mx", "description": "Order-taking agent prompt (uses order_create_draft + order_confirm)." },
+    { "name": "collections_agent_es_mx",  "description": "Stage-aware collections prompt with payment_link_create." },
+    { "name": "human_handoff_summary",    "description": "Conversation summarization optimized for human operators." },
+    { "name": "template_suggestion_agent","description": "Suggests WhatsApp templates to submit to Meta based on conversation patterns." }
   ],
   "compliance": [
-    "WhatsApp Business Policy",
-    "Mexican LFPDPPP (data protection)",
-    "Argentine LPD, Colombian Habeas Data",
-    "Brazilian LGPD (roadmap)",
-    "PCI DSS pass-through via Stripe / Mercado Pago (we never store card data)"
+    "WhatsApp Business Policy (opt-out kill switch, 24h window enforcement)",
+    "Mexican LFPDPPP — audit log, opt-out detection (BAJA/STOP/DESUSCRIBIR)",
+    "No payment auto-confirmation — only verified PSP webhooks (Stripe HMAC + Meta HMAC) or authenticated human operators can mark payments paid",
+    "PCI DSS pass-through via Stripe / Mercado Pago — TramsTec never stores card data",
+    "Multi-tenant isolation via application-level org_id assertions on every query"
   ],
   "compatibility": [
-    "Claude Desktop", "Claude Code", "Claude API", "Anthropic Agent SDK",
-    "OpenAI Agents", "OpenAI Responses API", "ChatGPT (GPTs / Actions)",
-    "LangChain", "LangGraph",
-    "Cursor",
-    "Google Gemini",
-    "n8n", "Make.com", "Zapier",
-    "@tramstec/sdk (TypeScript and Python)",
     "Any MCP-compatible client (stdio or HTTP/SSE)",
-    "Any HTTP client (REST endpoint)"
+    "Claude Desktop",
+    "Claude Code",
+    "Cursor (MCP local)",
+    "OpenAI Agents (via MCP-to-tool adapters)",
+    "LangChain (via MCP client)",
+    "n8n / Make / Zapier (via HTTP/SSE manual configuration)"
   ],
   "audience": [
-    "AI engineers building vertical agents",
-    "AI-native SaaS companies",
-    "Agencies serving multiple WhatsApp clients",
-    "LATAM businesses operating sales/support/collections on WhatsApp",
-    "Vertical AI startups (fintech, healthtech, retailtech, logistics)"
+    "AI engineers building vertical agents on WhatsApp",
+    "AI-native SaaS companies needing a WhatsApp execution layer",
+    "Agencies operating multiple WhatsApp clients in Mexico/LATAM",
+    "LATAM businesses (retail, services, logistics) moving from human-typed replies to agent-with-context"
+  ],
+  "roadmap": {
+    "intent": "Capabilities advertised on the website that are NOT yet in this manifest will land here as they ship. We publish this list to keep marketing and code honest.",
+    "items": [
+      { "name": "pgvector HNSW index + p95 <50ms semantic memory search", "target": "Q3 2026" },
+      { "name": "AI extraction tools: extract_purchase_intent, extract_lead_insights, extract_orders_from_conversation", "target": "Q3 2026" },
+      { "name": "customer_relationship_summary (LTV, churn risk, upsell)", "target": "Q3 2026" },
+      { "name": "REST endpoint /v1/tools/:name for non-MCP clients", "target": "Q3 2026" },
+      { "name": "@tramstec/sdk TypeScript and Python SDKs", "target": "Q4 2026" },
+      { "name": "OpenAPI 3 spec at /openapi.yaml", "target": "Q3 2026" },
+      { "name": "Conekta and Openpay payment adapters", "target": "Q4 2026" },
+      { "name": "PIX (Brasil), AFIP (Argentina), NFe payment/invoice integrations", "target": "Q1 2027" },
+      { "name": "Native Shopify, HubSpot, Odoo connectors", "target": "Q1 2027" },
+      { "name": "Prompts in en_US, pt_BR, es_AR, es_CO", "target": "Q4 2026" },
+      { "name": "White-label admin UI (theming editor)", "target": "Q4 2026" },
+      { "name": "ARCO rights endpoints (Mexico LFPDPPP)", "target": "Q4 2026" },
+      { "name": "SOC 2 Type II certification", "target": "2027" }
+    ]
+  },
+  "honest_caveats": [
+    "Manifest version 0.3.0 (2026-06-16) audit-aligned: the previous 0.2.0 manifest listed 19 tools that do not exist in the runtime. This version lists only the 20 tools actually implemented and callable today.",
+    "product_search semantic mode requires OPENAI_API_KEY; without it, embeddings degrade to pseudo-random and the search falls back to LIKE substring matching.",
+    "invoice_create requires a Facturapi account (FACTURAPI_KEY).",
+    "payment_link_create supports stripe, mercadopago, and a mock adapter. conekta and openpay adapters are in the roadmap.",
+    "Single MCP server process for HTTP/SSE — session store is in-memory. Multi-instance horizontal scaling requires a Redis-backed session store (roadmap).",
+    "BullMQ retry queue is wired with exponential backoff; the worker entrypoint must be started manually in deployment until the auto-start ships."
   ]
 }

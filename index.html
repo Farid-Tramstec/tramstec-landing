@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TramsTec — Memoria conversacional para agentes de IA en WhatsApp · LATAM</title>
-    <meta name="description" content="Infraestructura de memoria y contexto de negocio para agentes de IA en WhatsApp · LATAM. 6 categorías de capacidades MCP: messaging, memory, CRM intelligence, operations, payments, human handoff. Workflows nativos para retail, ventas, cobranza y logística." />
+    <meta name="description" content="MCP server para que agentes de IA operen WhatsApp en México y LATAM. 20 tools auditadas: messaging, customer lookup, orders, payments (Stripe, Mercado Pago, SPEI, OXXO), CFDI 4.0, handoff, consent, memory. Multi-tenant, audited, idempotent. Trae tu propio LLM (Claude, OpenAI Agents, LangChain, Cursor, n8n)." />
     <meta name="keywords" content="WhatsApp memory infrastructure, MCP server, AI agent infrastructure LATAM, conversational memory, semantic business search, CRM AI WhatsApp, order extraction WhatsApp, Claude WhatsApp, OpenAI Agents WhatsApp, LangChain WhatsApp, n8n WhatsApp, SAT, CFDI, SPEI, OXXO, México" />
     <meta name="theme-color" content="#0f3a3a" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -39,9 +39,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
-    <link rel="stylesheet" href="styles.css?v=4" />
-    <link rel="stylesheet" href="repo.css?v=4" />
-    <link rel="stylesheet" href="elite.css?v=4" />
+    <link rel="stylesheet" href="styles.css?v=5" />
+    <link rel="stylesheet" href="repo.css?v=5" />
+    <link rel="stylesheet" href="elite.css?v=5" />
 
     <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230f3a3a'/><path d='M8 11h16M16 11v14' stroke='%23e7d8b8' stroke-width='3' stroke-linecap='square' fill='none'/></svg>" />
 
@@ -104,12 +104,12 @@
       "itemListOrder": "https://schema.org/ItemListOrderAscending",
       "numberOfItems": 6,
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Messaging",         "description": "Send and receive WhatsApp messages, templates, media. Tools: sendMessage, sendTemplate, sendMedia, scheduleMessage." },
-        { "@type": "ListItem", "position": 2, "name": "Memory & Context",  "description": "Persistent semantic memory per customer with vector search. Tools: getCustomerContext, searchBusinessMemory, summarizeConversation, getCommercialHistory." },
-        { "@type": "ListItem", "position": 3, "name": "CRM Intelligence",  "description": "Automatic CRM enrichment and relationship intelligence. Tools: extractLeadInsights, identifyCustomerValue, getCustomerRelationshipSummary, extractPurchaseIntent." },
-        { "@type": "ListItem", "position": 4, "name": "Operations",        "description": "Extract orders, commitments, follow-ups, deliveries from free-form text. Tools: extractOrdersFromConversation, detectPendingCommitments, logisticsFollowUp, confirmDelivery." },
-        { "@type": "ListItem", "position": 5, "name": "Payments",          "description": "LATAM payment rails + CFDI invoicing. Tools: generatePaymentLink, generateSpeiInstructions, generateInvoice, confirmPayment." },
-        { "@type": "ListItem", "position": 6, "name": "Human Handoff",     "description": "Escalation and ownership. Tools: escalateToHuman, assignConversationOwner, addInternalNote." }
+        { "@type": "ListItem", "position": 1, "name": "WhatsApp Messaging",      "description": "Send text, Meta-approved templates, and media. Opt-out enforced, 24h-window applied, BullMQ queue with retry. Tools: whatsapp_send_message, whatsapp_send_template, whatsapp_send_media, whatsapp_template_submit." },
+        { "@type": "ListItem", "position": 2, "name": "Customer & Catalog",      "description": "Look up contacts and search the product catalog (pgvector embeddings or LIKE fallback) and inventory. Tools: customer_lookup, product_search, inventory_check." },
+        { "@type": "ListItem", "position": 3, "name": "Orders",                  "description": "Create draft orders (never auto-confirms) and confirm with explicit evidence. Idempotent. Tools: order_create_draft, order_confirm." },
+        { "@type": "ListItem", "position": 4, "name": "Payments & Invoicing",    "description": "Stripe (incl. OXXO Pay via Stripe MX), Mercado Pago, SPEI with unique reference, CFDI 4.0 via Facturapi. Tools: payment_link_create, spei_instructions_generate, payment_status_check, invoice_create." },
+        { "@type": "ListItem", "position": 5, "name": "Conversations & Memory",  "description": "Heuristic conversation digest, full-text substring search, per-contact key-value memory with TTL. Tools: conversation_summarize, conversation_search, memory_set, memory_get, memory_list." },
+        { "@type": "ListItem", "position": 6, "name": "Handoff & Compliance",    "description": "Escalate to human with structured summary. Record opt-in/opt-out with auditable evidence (LFPDPPP). Tools: handoff_to_human, consent_update." }
       ]
     }
     </script>
@@ -142,12 +142,12 @@
         "@type": "OfferCatalog",
         "name": "MCP tools by category",
         "itemListElement": [
-          { "@type": "OfferCatalog", "name": "Messaging",        "itemListElement": [ {"@type":"Offer","name":"sendMessage"}, {"@type":"Offer","name":"sendTemplate"}, {"@type":"Offer","name":"sendMedia"}, {"@type":"Offer","name":"scheduleMessage"} ] },
-          { "@type": "OfferCatalog", "name": "Memory & Context", "itemListElement": [ {"@type":"Offer","name":"getCustomerContext"}, {"@type":"Offer","name":"searchBusinessMemory"}, {"@type":"Offer","name":"summarizeConversation"}, {"@type":"Offer","name":"getCommercialHistory"} ] },
-          { "@type": "OfferCatalog", "name": "CRM Intelligence", "itemListElement": [ {"@type":"Offer","name":"extractLeadInsights"}, {"@type":"Offer","name":"identifyCustomerValue"}, {"@type":"Offer","name":"getCustomerRelationshipSummary"}, {"@type":"Offer","name":"extractPurchaseIntent"} ] },
-          { "@type": "OfferCatalog", "name": "Operations",       "itemListElement": [ {"@type":"Offer","name":"extractOrdersFromConversation"}, {"@type":"Offer","name":"detectPendingCommitments"}, {"@type":"Offer","name":"logisticsFollowUp"}, {"@type":"Offer","name":"confirmDelivery"} ] },
-          { "@type": "OfferCatalog", "name": "Payments",         "itemListElement": [ {"@type":"Offer","name":"generatePaymentLink"}, {"@type":"Offer","name":"generateSpeiInstructions"}, {"@type":"Offer","name":"generateInvoice"}, {"@type":"Offer","name":"confirmPayment"} ] },
-          { "@type": "OfferCatalog", "name": "Human Handoff",    "itemListElement": [ {"@type":"Offer","name":"escalateToHuman"}, {"@type":"Offer","name":"assignConversationOwner"}, {"@type":"Offer","name":"addInternalNote"} ] }
+          { "@type": "OfferCatalog", "name": "WhatsApp Messaging",     "itemListElement": [ {"@type":"Offer","name":"whatsapp_send_message"}, {"@type":"Offer","name":"whatsapp_send_template"}, {"@type":"Offer","name":"whatsapp_send_media"}, {"@type":"Offer","name":"whatsapp_template_submit"} ] },
+          { "@type": "OfferCatalog", "name": "Customer & Catalog",     "itemListElement": [ {"@type":"Offer","name":"customer_lookup"}, {"@type":"Offer","name":"product_search"}, {"@type":"Offer","name":"inventory_check"} ] },
+          { "@type": "OfferCatalog", "name": "Orders",                 "itemListElement": [ {"@type":"Offer","name":"order_create_draft"}, {"@type":"Offer","name":"order_confirm"} ] },
+          { "@type": "OfferCatalog", "name": "Payments & Invoicing",   "itemListElement": [ {"@type":"Offer","name":"payment_link_create"}, {"@type":"Offer","name":"spei_instructions_generate"}, {"@type":"Offer","name":"payment_status_check"}, {"@type":"Offer","name":"invoice_create"} ] },
+          { "@type": "OfferCatalog", "name": "Conversations & Memory", "itemListElement": [ {"@type":"Offer","name":"conversation_summarize"}, {"@type":"Offer","name":"conversation_search"}, {"@type":"Offer","name":"memory_set"}, {"@type":"Offer","name":"memory_get"}, {"@type":"Offer","name":"memory_list"} ] },
+          { "@type": "OfferCatalog", "name": "Handoff & Compliance",   "itemListElement": [ {"@type":"Offer","name":"handoff_to_human"}, {"@type":"Offer","name":"consent_update"} ] }
         ]
       }
     }
@@ -302,15 +302,15 @@
                 <line x1="252" y1="126" x2="448" y2="126" stroke="#262626" stroke-width="1"/>
 
                 <!-- Tool signatures inside -->
-                <text x="350" y="156" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#ffffff" font-weight="500">getCustomerContext()</text>
-                <text x="350" y="180" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#ffffff" font-weight="500">searchBusinessMemory()</text>
-                <text x="350" y="204" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#ffffff" font-weight="500">extractOrders()</text>
+                <text x="350" y="156" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#ffffff" font-weight="500">customer_lookup()</text>
+                <text x="350" y="180" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#ffffff" font-weight="500">payment_link_create()</text>
+                <text x="350" y="204" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#ffffff" font-weight="500">invoice_create()</text>
 
                 <line x1="252" y1="222" x2="448" y2="222" stroke="#262626" stroke-width="1"/>
 
                 <!-- Bottom stats row -->
                 <text x="290" y="248" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#737373">6 cat</text>
-                <text x="350" y="248" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#737373">30+ tools</text>
+                <text x="350" y="248" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#737373">20 tools</text>
                 <text x="410" y="248" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#737373">&lt;50ms</text>
               </g>
 
@@ -369,10 +369,10 @@
         <div class="container">
           <div class="stats-eyebrow"><span class="stats-eyebrow-dot" aria-hidden="true"></span> Infraestructura en vivo</div>
           <div class="repo-stats" role="list">
-            <div class="repo-stat" role="listitem"><span class="repo-stat-num">99.95%</span><span class="repo-stat-label">Uptime</span></div>
-            <div class="repo-stat" role="listitem"><span class="repo-stat-num">&lt;50ms</span><span class="repo-stat-label">p95 retrieval</span></div>
-            <div class="repo-stat" role="listitem"><span class="repo-stat-num">6</span><span class="repo-stat-label">categorías MCP</span></div>
-            <div class="repo-stat" role="listitem"><span class="repo-stat-num">30+</span><span class="repo-stat-label">tools</span></div>
+            <div class="repo-stat" role="listitem"><span class="repo-stat-num">20</span><span class="repo-stat-label">MCP tools</span></div>
+            <div class="repo-stat" role="listitem"><span class="repo-stat-num">6</span><span class="repo-stat-label">categorías</span></div>
+            <div class="repo-stat" role="listitem"><span class="repo-stat-num">100%</span><span class="repo-stat-label">tools auditadas</span></div>
+            <div class="repo-stat" role="listitem"><span class="repo-stat-num">2</span><span class="repo-stat-label">transports (HTTP/SSE · stdio)</span></div>
           </div>
         </div>
       </section>
@@ -393,121 +393,107 @@
           </p>
 
           <div class="repo-cap-grid">
-            <!-- 1. MESSAGING -->
+            <!-- 1. WHATSAPP MESSAGING -->
             <article class="repo-cap-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/Service">
               <meta itemprop="position" content="1" />
-              <meta itemprop="serviceType" content="Messaging" />
+              <meta itemprop="serviceType" content="WhatsApp Messaging" />
               <div class="repo-cap-head">
                 <span class="repo-cap-icon" aria-hidden="true">✉</span>
-                <h3 class="repo-cap-title" itemprop="name">Messaging</h3>
-                <span class="repo-cap-count">6 tools</span>
+                <h3 class="repo-cap-title" itemprop="name">WhatsApp Messaging</h3>
+                <span class="repo-cap-count">4 tools</span>
               </div>
-              <p class="repo-cap-desc" itemprop="description">Enviar y recibir mensajes, plantillas y media en WhatsApp. Auto-switch a template cuando se sale la ventana de 24h.</p>
-              <ul class="repo-cap-tools" aria-label="Tools en messaging">
-                <li>sendMessage</li>
-                <li>sendTemplate</li>
-                <li>sendMedia</li>
-                <li>scheduleMessage</li>
-                <li>receiveMessage</li>
-                <li>markAsRead</li>
+              <p class="repo-cap-desc" itemprop="description">Envía texto, plantillas Meta-approved y media. Opt-out enforced, ventana 24h aplicada, queue BullMQ con retry. Idempotente.</p>
+              <ul class="repo-cap-tools" aria-label="Tools en WhatsApp messaging">
+                <li>whatsapp_send_message</li>
+                <li>whatsapp_send_template</li>
+                <li>whatsapp_send_media</li>
+                <li>whatsapp_template_submit</li>
               </ul>
             </article>
 
-            <!-- 2. MEMORY & CONTEXT -->
+            <!-- 2. CUSTOMER & CATALOG -->
             <article class="repo-cap-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/Service">
               <meta itemprop="position" content="2" />
-              <meta itemprop="serviceType" content="Memory & Context" />
+              <meta itemprop="serviceType" content="Customer & Catalog" />
               <div class="repo-cap-head">
-                <span class="repo-cap-icon" aria-hidden="true">🧠</span>
-                <h3 class="repo-cap-title" itemprop="name">Memory &amp; Context</h3>
-                <span class="repo-cap-count">6 tools</span>
+                <span class="repo-cap-icon" aria-hidden="true">🔍</span>
+                <h3 class="repo-cap-title" itemprop="name">Customer &amp; Catalog</h3>
+                <span class="repo-cap-count">3 tools</span>
               </div>
-              <p class="repo-cap-desc" itemprop="description">Memoria semántica persistente por cliente. Búsqueda vectorial (pgvector) sobre todo el historial. Continuidad entre conversaciones.</p>
-              <ul class="repo-cap-tools" aria-label="Tools en memory">
-                <li>getCustomerContext</li>
-                <li>searchBusinessMemory</li>
-                <li>summarizeConversation</li>
-                <li>getCommercialHistory</li>
-                <li>indexMessage</li>
-                <li>exportMemory</li>
+              <p class="repo-cap-desc" itemprop="description">Busca contactos, catálogo de productos (semantic con embeddings o LIKE fallback) e inventario por SKU. Datos reales desde Prisma.</p>
+              <ul class="repo-cap-tools" aria-label="Tools en lookup">
+                <li>customer_lookup</li>
+                <li>product_search</li>
+                <li>inventory_check</li>
               </ul>
             </article>
 
-            <!-- 3. CRM INTELLIGENCE -->
+            <!-- 3. ORDERS -->
             <article class="repo-cap-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/Service">
               <meta itemprop="position" content="3" />
-              <meta itemprop="serviceType" content="CRM Intelligence" />
+              <meta itemprop="serviceType" content="Orders" />
               <div class="repo-cap-head">
-                <span class="repo-cap-icon" aria-hidden="true">📊</span>
-                <h3 class="repo-cap-title" itemprop="name">CRM Intelligence</h3>
-                <span class="repo-cap-count">6 tools</span>
+                <span class="repo-cap-icon" aria-hidden="true">📦</span>
+                <h3 class="repo-cap-title" itemprop="name">Orders</h3>
+                <span class="repo-cap-count">2 tools</span>
               </div>
-              <p class="repo-cap-desc" itemprop="description">CRM auto-generado: lead scoring, customer value, sentiment, relación. Enriquecimiento desde conversaciones crudas.</p>
-              <ul class="repo-cap-tools" aria-label="Tools en CRM">
-                <li>extractLeadInsights</li>
-                <li>identifyCustomerValue</li>
-                <li>getCustomerRelationshipSummary</li>
-                <li>extractPurchaseIntent</li>
-                <li>scoreCustomer</li>
-                <li>tagCustomer</li>
+              <p class="repo-cap-desc" itemprop="description">Crea órdenes en draft (nunca auto-confirma). Confirmación requiere evidencia explícita del cliente o operador. Idempotente.</p>
+              <ul class="repo-cap-tools" aria-label="Tools en orders">
+                <li>order_create_draft</li>
+                <li>order_confirm</li>
               </ul>
             </article>
 
-            <!-- 4. OPERATIONS -->
+            <!-- 4. PAYMENTS & INVOICING -->
             <article class="repo-cap-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/Service">
               <meta itemprop="position" content="4" />
-              <meta itemprop="serviceType" content="Operations" />
-              <div class="repo-cap-head">
-                <span class="repo-cap-icon" aria-hidden="true">⚙</span>
-                <h3 class="repo-cap-title" itemprop="name">Operations</h3>
-                <span class="repo-cap-count">5 tools</span>
-              </div>
-              <p class="repo-cap-desc" itemprop="description">Extracción de entidades operativas: pedidos, compromisos, follow-ups, entregas. Desde texto libre a estructura.</p>
-              <ul class="repo-cap-tools" aria-label="Tools en operations">
-                <li>extractOrdersFromConversation</li>
-                <li>detectPendingCommitments</li>
-                <li>logisticsFollowUp</li>
-                <li>confirmDelivery</li>
-                <li>trackOrderStatus</li>
-              </ul>
-            </article>
-
-            <!-- 5. PAYMENTS -->
-            <article class="repo-cap-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/Service">
-              <meta itemprop="position" content="5" />
-              <meta itemprop="serviceType" content="Payments" />
+              <meta itemprop="serviceType" content="Payments & Invoicing" />
               <div class="repo-cap-head">
                 <span class="repo-cap-icon" aria-hidden="true">💳</span>
-                <h3 class="repo-cap-title" itemprop="name">Payments</h3>
-                <span class="repo-cap-count">6 tools</span>
+                <h3 class="repo-cap-title" itemprop="name">Payments &amp; Invoicing</h3>
+                <span class="repo-cap-count">4 tools</span>
               </div>
-              <p class="repo-cap-desc" itemprop="description">Rails LATAM nativos: SPEI, OXXO, PIX, MercadoPago. CFDI 4.0 vía Facturapi. Conciliación automática.</p>
+              <p class="repo-cap-desc" itemprop="description">Stripe (incl. OXXO Pay vía Stripe MX), Mercado Pago, SPEI con referencia única. CFDI 4.0 vía Facturapi. Webhooks HMAC verificados.</p>
               <ul class="repo-cap-tools" aria-label="Tools en payments">
-                <li>generatePaymentLink</li>
-                <li>generateSpeiInstructions</li>
-                <li>generateInvoice</li>
-                <li>confirmPayment</li>
-                <li>getPaymentStatus</li>
-                <li>refundPayment</li>
+                <li>payment_link_create</li>
+                <li>spei_instructions_generate</li>
+                <li>payment_status_check</li>
+                <li>invoice_create</li>
               </ul>
             </article>
 
-            <!-- 6. HUMAN HANDOFF -->
+            <!-- 5. CONVERSATIONS & MEMORY -->
             <article class="repo-cap-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/Service">
-              <meta itemprop="position" content="6" />
-              <meta itemprop="serviceType" content="Human Handoff" />
+              <meta itemprop="position" content="5" />
+              <meta itemprop="serviceType" content="Conversations & Memory" />
               <div class="repo-cap-head">
-                <span class="repo-cap-icon" aria-hidden="true">🤝</span>
-                <h3 class="repo-cap-title" itemprop="name">Human Handoff</h3>
+                <span class="repo-cap-icon" aria-hidden="true">💬</span>
+                <h3 class="repo-cap-title" itemprop="name">Conversations &amp; Memory</h3>
                 <span class="repo-cap-count">5 tools</span>
               </div>
-              <p class="repo-cap-desc" itemprop="description">Escalación con resumen estructurado. Asignación de owner. Notas internas. Gestión de carga del equipo.</p>
-              <ul class="repo-cap-tools" aria-label="Tools en handoff">
-                <li>escalateToHuman</li>
-                <li>assignConversationOwner</li>
-                <li>getConversationOwner</li>
-                <li>updateConversationOwner</li>
-                <li>addInternalNote</li>
+              <p class="repo-cap-desc" itemprop="description">Resumen estructurado heurístico de conversaciones, búsqueda full-text sobre mensajes, y memoria key-value por contacto con TTL.</p>
+              <ul class="repo-cap-tools" aria-label="Tools en conversations &amp; memory">
+                <li>conversation_summarize</li>
+                <li>conversation_search</li>
+                <li>memory_set</li>
+                <li>memory_get</li>
+                <li>memory_list</li>
+              </ul>
+            </article>
+
+            <!-- 6. HANDOFF & COMPLIANCE -->
+            <article class="repo-cap-card" itemprop="itemListElement" itemscope itemtype="https://schema.org/Service">
+              <meta itemprop="position" content="6" />
+              <meta itemprop="serviceType" content="Handoff & Compliance" />
+              <div class="repo-cap-head">
+                <span class="repo-cap-icon" aria-hidden="true">🤝</span>
+                <h3 class="repo-cap-title" itemprop="name">Handoff &amp; Compliance</h3>
+                <span class="repo-cap-count">2 tools</span>
+              </div>
+              <p class="repo-cap-desc" itemprop="description">Escalación a humano con resumen estructurado (deshabilita al agente). Registro de consentimiento opt-in/opt-out con evidencia auditable (LFPDPPP).</p>
+              <ul class="repo-cap-tools" aria-label="Tools en handoff &amp; compliance">
+                <li>handoff_to_human</li>
+                <li>consent_update</li>
               </ul>
             </article>
           </div>
@@ -706,81 +692,30 @@
                 <h3>Pedido retail con pago</h3>
               </div>
               <ol class="repo-workflow-steps">
-                <li>Cliente pide productos en lenguaje natural</li>
-                <li>Agente extrae pedido estructurado</li>
-                <li>Genera link de pago SPEI / tarjeta</li>
-                <li>Confirma pago y dispara entrega</li>
+                <li>Cliente pide productos por WhatsApp</li>
+                <li>Agente busca cliente + catálogo + inventario</li>
+                <li>Crea orden draft y genera link de pago (Stripe / Mercado Pago / SPEI)</li>
+                <li>Webhook PSP confirma pago → agente confirma orden y notifica al cliente</li>
               </ol>
               <p class="repo-workflow-tools">
-                getCustomerContext · extractOrdersFromConversation · createOrder · generatePaymentLink · confirmPayment · sendMessage
+                customer_lookup · product_search · inventory_check · order_create_draft · payment_link_create · order_confirm · whatsapp_send_message
               </p>
             </article>
 
             <article class="repo-workflow" itemscope itemtype="https://schema.org/HowTo">
-              <meta itemprop="name" content="Sales follow-up across conversations" />
-              <div class="repo-workflow-head">
-                <span class="repo-workflow-icon" aria-hidden="true">💬</span>
-                <h3>Seguimiento de ventas</h3>
-              </div>
-              <ol class="repo-workflow-steps">
-                <li>Detecta cotizaciones pendientes de respuesta</li>
-                <li>Recupera contexto de la conversación previa</li>
-                <li>Re-engancha con mensaje personalizado</li>
-                <li>Escala a humano si el lead se enfría</li>
-              </ol>
-              <p class="repo-workflow-tools">
-                getPendingFollowUps · getCommercialHistory · extractPurchaseIntent · sendMessage · escalateToHuman
-              </p>
-            </article>
-
-            <article class="repo-workflow" itemscope itemtype="https://schema.org/HowTo">
-              <meta itemprop="name" content="Collections with stage-aware escalation" />
+              <meta itemprop="name" content="Stage-aware collections" />
               <div class="repo-workflow-head">
                 <span class="repo-workflow-icon" aria-hidden="true">💰</span>
                 <h3>Cobranza con etapas</h3>
               </div>
               <ol class="repo-workflow-steps">
-                <li>Revisa estado de pago vs. fecha de vencimiento</li>
-                <li>Manda recordatorio con tono escalado</li>
-                <li>Genera instrucciones SPEI o link</li>
-                <li>Si no paga, escala a equipo legal</li>
+                <li>Busca cliente + estado de pagos pendientes</li>
+                <li>Genera instrucciones SPEI con referencia única</li>
+                <li>Manda recordatorio con template Meta-approved</li>
+                <li>Si no responde, escala a humano con contexto</li>
               </ol>
               <p class="repo-workflow-tools">
-                getCommercialHistory · getPaymentStatus · generateSpeiInstructions · sendTemplate · escalateToHuman
-              </p>
-            </article>
-
-            <article class="repo-workflow" itemscope itemtype="https://schema.org/HowTo">
-              <meta itemprop="name" content="Logistics and supplier coordination" />
-              <div class="repo-workflow-head">
-                <span class="repo-workflow-icon" aria-hidden="true">🚚</span>
-                <h3>Coordinación logística</h3>
-              </div>
-              <ol class="repo-workflow-steps">
-                <li>Detecta compromisos pendientes con proveedores</li>
-                <li>Confirma ETA por WhatsApp</li>
-                <li>Registra confirmación de entrega con foto</li>
-                <li>Alerta si un commitment se incumple</li>
-              </ol>
-              <p class="repo-workflow-tools">
-                detectPendingCommitments · logisticsFollowUp · sendMessage · confirmDelivery · addInternalNote
-              </p>
-            </article>
-
-            <article class="repo-workflow" itemscope itemtype="https://schema.org/HowTo">
-              <meta itemprop="name" content="Inbound lead qualification and routing" />
-              <div class="repo-workflow-head">
-                <span class="repo-workflow-icon" aria-hidden="true">🎯</span>
-                <h3>Calificación de leads</h3>
-              </div>
-              <ol class="repo-workflow-steps">
-                <li>Lead nuevo llega por WhatsApp</li>
-                <li>Agente extrae vertical, presupuesto, urgencia</li>
-                <li>Asigna score y tag</li>
-                <li>Rutea al humano correcto o nurture sequence</li>
-              </ol>
-              <p class="repo-workflow-tools">
-                extractLeadInsights · scoreCustomer · tagCustomer · assignConversationOwner · sendMessage
+                customer_lookup · payment_status_check · spei_instructions_generate · whatsapp_send_template · handoff_to_human
               </p>
             </article>
 
@@ -792,12 +727,63 @@
               </div>
               <ol class="repo-workflow-steps">
                 <li>Cliente solicita factura en chat</li>
-                <li>Agente valida RFC contra lista 69-B del SAT</li>
-                <li>Genera CFDI 4.0 vía Facturapi</li>
+                <li>Busca cliente + status del pago referenciado</li>
+                <li>Genera CFDI 4.0 vía Facturapi (RFC de la org)</li>
                 <li>Envía PDF firmado por WhatsApp</li>
               </ol>
               <p class="repo-workflow-tools">
-                getCustomerContext · generateInvoice · sendMedia
+                customer_lookup · payment_status_check · invoice_create · whatsapp_send_media
+              </p>
+            </article>
+
+            <article class="repo-workflow" itemscope itemtype="https://schema.org/HowTo">
+              <meta itemprop="name" content="WhatsApp opt-out compliance" />
+              <div class="repo-workflow-head">
+                <span class="repo-workflow-icon" aria-hidden="true">🛡</span>
+                <h3>Opt-out automático (LFPDPPP)</h3>
+              </div>
+              <ol class="repo-workflow-steps">
+                <li>Inbound message detecta "BAJA" / "STOP" / "DESUSCRIBIR"</li>
+                <li>Agente registra consent event con evidencia auditada</li>
+                <li>Cualquier send futuro a ese contacto queda bloqueado en runtime</li>
+                <li>Audit log preserva la evidencia indefinidamente</li>
+              </ol>
+              <p class="repo-workflow-tools">
+                consent_update
+              </p>
+            </article>
+
+            <article class="repo-workflow repo-workflow-roadmap" itemscope itemtype="https://schema.org/HowTo">
+              <meta itemprop="name" content="Sales follow-up — roadmap" />
+              <div class="repo-workflow-head">
+                <span class="repo-workflow-icon" aria-hidden="true">💬</span>
+                <h3>Seguimiento de ventas <small style="color:var(--color-text-muted);font-weight:400;">(Roadmap)</small></h3>
+              </div>
+              <ol class="repo-workflow-steps">
+                <li>Detecta cotizaciones pendientes de respuesta</li>
+                <li>Recupera contexto de conversaciones previas</li>
+                <li>Re-engancha con mensaje personalizado</li>
+                <li>Escala a humano si el lead se enfría</li>
+              </ol>
+              <p class="repo-workflow-tools">
+                Requiere extract_purchase_intent + get_pending_follow_ups (Q3 2026)
+              </p>
+            </article>
+
+            <article class="repo-workflow repo-workflow-roadmap" itemscope itemtype="https://schema.org/HowTo">
+              <meta itemprop="name" content="Lead qualification — roadmap" />
+              <div class="repo-workflow-head">
+                <span class="repo-workflow-icon" aria-hidden="true">🎯</span>
+                <h3>Calificación de leads <small style="color:var(--color-text-muted);font-weight:400;">(Roadmap)</small></h3>
+              </div>
+              <ol class="repo-workflow-steps">
+                <li>Lead nuevo llega por WhatsApp</li>
+                <li>Agente extrae vertical, presupuesto, urgencia</li>
+                <li>Asigna score y tag</li>
+                <li>Rutea al humano correcto o nurture</li>
+              </ol>
+              <p class="repo-workflow-tools">
+                Requiere extract_lead_insights + score_customer (Q3 2026)
               </p>
             </article>
           </div>
@@ -889,14 +875,14 @@
           <p class="section-lede">Construido para agentes en producción, no para demos. Lo operamos como tú lo operarías — si tuvieras el equipo.</p>
 
           <div class="repo-stats" role="list">
-            <div class="repo-stat"><span class="repo-stat-num">99.95%</span><span class="repo-stat-label">SLA uptime</span></div>
-            <div class="repo-stat"><span class="repo-stat-num">&lt;50ms</span><span class="repo-stat-label">p95 vector</span></div>
-            <div class="repo-stat"><span class="repo-stat-num">90d</span><span class="repo-stat-label">memoria hot</span></div>
-            <div class="repo-stat"><span class="repo-stat-num">730d</span><span class="repo-stat-label">archivada</span></div>
-            <div class="repo-stat"><span class="repo-stat-num">RLS</span><span class="repo-stat-label">multi-tenant</span></div>
-            <div class="repo-stat"><span class="repo-stat-num">OTel</span><span class="repo-stat-label">trace e2e</span></div>
-            <div class="repo-stat"><span class="repo-stat-num">SOC2</span><span class="repo-stat-label">en roadmap</span></div>
-            <div class="repo-stat"><span class="repo-stat-num">∞</span><span class="repo-stat-label">exportable</span></div>
+            <div class="repo-stat"><span class="repo-stat-num">HMAC</span><span class="repo-stat-label">webhooks Meta + Stripe</span></div>
+            <div class="repo-stat"><span class="repo-stat-num">Audit</span><span class="repo-stat-label">tool_calls inmutable</span></div>
+            <div class="repo-stat"><span class="repo-stat-num">24h</span><span class="repo-stat-label">idempotency window</span></div>
+            <div class="repo-stat"><span class="repo-stat-num">Multi</span><span class="repo-stat-label">tenant org-isolation</span></div>
+            <div class="repo-stat"><span class="repo-stat-num">Scoped</span><span class="repo-stat-label">API keys + per-tool scope</span></div>
+            <div class="repo-stat"><span class="repo-stat-num">BullMQ</span><span class="repo-stat-label">queue + retry exp</span></div>
+            <div class="repo-stat"><span class="repo-stat-num">SOC2</span><span class="repo-stat-label">en roadmap (2027)</span></div>
+            <div class="repo-stat"><span class="repo-stat-num">Postgres</span><span class="repo-stat-label">portabilidad JSON</span></div>
           </div>
         </div>
       </section>

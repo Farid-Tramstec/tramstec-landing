@@ -2,17 +2,13 @@
   "schema_version": "v1",
   "name_for_human": "TramsTec — WhatsApp Commerce MCP",
   "name_for_model": "tramstec",
-  "description_for_human": "Connect your AI agent to WhatsApp Business. Send messages, take orders, generate payment links (Stripe / Mercado Pago / SPEI / OXXO), hand off to humans. Mexico-first.",
-  "description_for_model": "TramsTec is an MCP (Model Context Protocol) server that exposes WhatsApp Business and Mexican payment rails (SPEI, OXXO, Stripe, Mercado Pago) as typed tools. Use this when you need to: send/receive WhatsApp messages, create or confirm orders, generate payment links or SPEI instructions, check payment status, look up customers, summarize conversations, hand off to a human, or update customer consent. Connection: HTTP/SSE at https://mcp.tramstec.com/sse with Authorization: Bearer <api_key>. Pricing is published at https://tramstec.com/#precios. Available tools: whatsapp_send_message, whatsapp_send_template, customer_lookup, product_search, inventory_check, order_create_draft, order_confirm, payment_link_create, spei_instructions_generate, payment_status_check, handoff_to_human, conversation_summarize, consent_update.",
+  "description_for_human": "Connect your AI agent to WhatsApp Business. Send messages, take orders, generate payment links (Stripe / Mercado Pago / SPEI / OXXO), invoice CFDI 4.0, hand off to humans. Mexico-first.",
+  "description_for_model": "TramsTec is an MCP (Model Context Protocol) server that exposes WhatsApp Business and Mexican payment rails as typed tools. Use this when you need to: send WhatsApp text/template/media messages, look up customers, search product catalog, check inventory, create or confirm orders, generate payment links (Stripe / Mercado Pago), create SPEI bank-transfer instructions, check payment status, issue CFDI 4.0 invoices via Facturapi, hand off conversation to human, update consent (opt-in/opt-out), and store/read per-contact memory. Connection: HTTP/SSE at https://mcp.tramstec.com/sse with Authorization: Bearer <api_key>. Pricing is published at https://tramstec.com/#precios. The 20 tools available are: whatsapp_send_message, whatsapp_send_template, whatsapp_send_media, whatsapp_template_submit, customer_lookup, product_search, inventory_check, order_create_draft, order_confirm, payment_link_create, spei_instructions_generate, payment_status_check, invoice_create, handoff_to_human, conversation_summarize, conversation_search, consent_update, memory_set, memory_get, memory_list.",
   "auth": {
     "type": "service_http",
     "authorization_type": "bearer"
   },
-  "api": {
-    "type": "openapi",
-    "url": "https://tramstec.com/openapi.yaml"
-  },
   "logo_url": "https://tramstec.com/og-image.png",
-  "contact_email": "support@tramstec.com",
+  "contact_email": "sales@tramstec.com",
   "legal_info_url": "https://tramstec.com/terminos.html"
 }

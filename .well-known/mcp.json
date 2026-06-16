@@ -1,118 +1,142 @@
 {
   "$schema": "https://modelcontextprotocol.io/schemas/mcp-discovery.json",
   "name": "tramstec",
-  "displayName": "TramsTec — WhatsApp Memory & Business Context Infrastructure for LATAM",
-  "version": "0.2.0",
-  "tagline": "Persistent WhatsApp memory for AI agents · LATAM",
-  "description": "MCP-native memory and business-context infrastructure for AI agents operating WhatsApp in Latin America. Six capability categories: messaging, memory, CRM intelligence, operations, payments, human handoff.",
+  "displayName": "TramsTec — WhatsApp infrastructure for AI agents",
+  "version": "0.3.0",
+  "tagline": "WhatsApp execution layer for AI agents · México first",
+  "description": "MCP server that lets AI agents operate WhatsApp businesses in Mexico/LATAM. 20 audited tools covering messaging, customer lookup, orders, payments (Stripe / Mercado Pago / SPEI / OXXO via Stripe MX), CFDI 4.0 invoicing (Facturapi), human handoff, consent, and per-contact key-value memory.",
   "vendor": "TramsTec",
   "homepage": "https://tramstec.com",
   "documentation": "https://tramstec.com/llms.txt",
   "manifest": "https://tramstec.com/mcp-manifest.json",
-  "contact": "support@tramstec.com",
+  "contact": "sales@tramstec.com",
   "transports": [
     { "kind": "http_sse", "url": "https://mcp.tramstec.com/sse", "auth": "bearer" },
-    { "kind": "stdio", "command": "wcm-mcp" },
-    { "kind": "rest", "url": "https://api.tramstec.com/v1/tools/:name", "auth": "bearer" }
+    { "kind": "stdio", "command": "wcm-mcp" }
   ],
   "capability_categories": [
     {
       "id": "messaging",
-      "name": "Messaging",
-      "description": "Send and receive WhatsApp messages, templates, and media — with auto opt-out, 24h window handling, and approved-template fallback.",
-      "tools": ["sendMessage", "sendTemplate", "sendMedia", "scheduleMessage", "receiveMessage", "markAsRead"]
-    },
-    {
-      "id": "memory",
-      "name": "Memory & Context",
-      "description": "Persistent per-customer conversational memory with semantic search via pgvector. Cross-conversation continuity.",
-      "tools": ["getCustomerContext", "searchBusinessMemory", "summarizeConversation", "getCommercialHistory", "indexMessage", "exportMemory"]
+      "name": "WhatsApp Messaging",
+      "description": "Send text, templates, and media to WhatsApp contacts. Opt-out is enforced; 24h-window logic auto-switches to templates when needed. Queued via BullMQ with retry.",
+      "tools": ["whatsapp_send_message", "whatsapp_send_template", "whatsapp_send_media", "whatsapp_template_submit"]
     },
     {
       "id": "crm",
-      "name": "CRM Intelligence",
-      "description": "Automatic CRM enrichment, lead scoring, customer value identification, relationship intelligence — extracted from raw conversations.",
-      "tools": ["extractLeadInsights", "identifyCustomerValue", "getCustomerRelationshipSummary", "extractPurchaseIntent", "scoreCustomer", "tagCustomer"]
+      "name": "Customer & Catalog Lookup",
+      "description": "Look up contacts, search the product catalog (semantic with OPENAI_API_KEY, LIKE fallback), check inventory.",
+      "tools": ["customer_lookup", "product_search", "inventory_check"]
     },
     {
       "id": "operations",
-      "name": "Operations",
-      "description": "Extract structured operational entities from free-form WhatsApp text: orders, commitments, follow-ups, deliveries.",
-      "tools": ["extractOrdersFromConversation", "detectPendingCommitments", "logisticsFollowUp", "confirmDelivery", "trackOrderStatus"]
+      "name": "Order Operations",
+      "description": "Create draft orders, confirm with explicit customer evidence. Never auto-confirms.",
+      "tools": ["order_create_draft", "order_confirm"]
     },
     {
       "id": "payments",
-      "name": "Payments",
-      "description": "LATAM-native payment rails: SPEI, OXXO, PIX, MercadoPago. CFDI 4.0 invoicing via Facturapi. Auto-reconciliation.",
-      "tools": ["generatePaymentLink", "generateSpeiInstructions", "generateInvoice", "confirmPayment", "getPaymentStatus", "refundPayment"]
+      "name": "Payments & Invoicing",
+      "description": "Generate checkout links via Stripe or Mercado Pago (OXXO Pay supported via Stripe MX). SPEI bank transfer with unique reference. CFDI 4.0 invoicing via Facturapi.",
+      "tools": ["payment_link_create", "spei_instructions_generate", "payment_status_check", "invoice_create"]
     },
     {
-      "id": "handoff",
-      "name": "Human Handoff",
-      "description": "Escalate to human operators with structured summaries, assign owners, manage workload across the team.",
-      "tools": ["escalateToHuman", "assignConversationOwner", "getConversationOwner", "updateConversationOwner", "addInternalNote"]
+      "id": "conversations",
+      "name": "Conversation Intelligence",
+      "description": "Heuristic conversation summarization (no LLM call inside) and full-text substring search across messages.",
+      "tools": ["conversation_summarize", "conversation_search"]
+    },
+    {
+      "id": "memory",
+      "name": "Per-contact Memory Store",
+      "description": "Key-value memory store scoped to a contact, with TTL. Not semantic — designed for agent scratchpad and small structured facts.",
+      "tools": ["memory_set", "memory_get", "memory_list"]
+    },
+    {
+      "id": "handoff_compliance",
+      "name": "Human Handoff & Consent",
+      "description": "Escalate conversations to humans with structured reason and urgency. Record opt-in/opt-out events with auditable evidence (LFPDPPP).",
+      "tools": ["handoff_to_human", "consent_update"]
     }
   ],
   "workflows": [
     {
       "id": "retail_order",
       "name": "Retail order capture and payment",
-      "description": "Customer asks for products in WhatsApp → agent extracts structured order → creates payment link → confirms when paid → notifies for delivery.",
-      "tools_used": ["getCustomerContext", "extractOrdersFromConversation", "createOrder", "generatePaymentLink", "confirmPayment", "sendMessage"]
-    },
-    {
-      "id": "sales_followup",
-      "name": "Sales follow-up across multiple conversations",
-      "description": "Agent detects pending quotes, follows up at the right time, remembers what was discussed previously, escalates if customer goes silent.",
-      "tools_used": ["getPendingFollowUps", "getCommercialHistory", "extractPurchaseIntent", "sendMessage", "escalateToHuman"]
+      "description": "Customer asks for products in WhatsApp → agent looks up customer + products → creates draft order → generates payment link (Stripe / Mercado Pago) → confirms when paid via webhook → sends confirmation message.",
+      "tools_used": ["customer_lookup", "product_search", "order_create_draft", "payment_link_create", "order_confirm", "whatsapp_send_message"]
     },
     {
       "id": "collections",
       "name": "Collections with stage-aware escalation",
-      "description": "Agent tracks payment status, sends progressively firmer reminders, generates SPEI instructions, escalates to legal stage if needed.",
-      "tools_used": ["getCommercialHistory", "getPaymentStatus", "generateSpeiInstructions", "sendTemplate", "escalateToHuman"]
-    },
-    {
-      "id": "logistics_coordination",
-      "name": "Logistics and supplier coordination",
-      "description": "Agent coordinates with suppliers via WhatsApp, tracks delivery commitments, confirms ETAs, raises alerts when commitments slip.",
-      "tools_used": ["detectPendingCommitments", "logisticsFollowUp", "sendMessage", "confirmDelivery", "addInternalNote"]
-    },
-    {
-      "id": "lead_qualification",
-      "name": "Inbound lead qualification and routing",
-      "description": "New WhatsApp lead → agent extracts insights (vertical, budget, urgency) → scores → routes to right human team or schedules nurture sequence.",
-      "tools_used": ["extractLeadInsights", "scoreCustomer", "tagCustomer", "assignConversationOwner", "sendMessage"]
+      "description": "Agent checks payment status → sends progressively firmer reminders via WhatsApp template → generates SPEI instructions for transfer → escalates to human collections if needed.",
+      "tools_used": ["customer_lookup", "payment_status_check", "spei_instructions_generate", "whatsapp_send_template", "handoff_to_human"]
     },
     {
       "id": "invoice_workflow_mx",
       "name": "Mexico CFDI invoice on demand",
-      "description": "Customer requests an invoice → agent validates RFC against SAT 69-B list → generates CFDI 4.0 via Facturapi → sends PDF via WhatsApp.",
-      "tools_used": ["getCustomerContext", "generateInvoice", "sendMedia"]
+      "description": "Customer requests an invoice in WhatsApp → agent looks up customer + payment → generates CFDI 4.0 via Facturapi → sends PDF back via WhatsApp media.",
+      "tools_used": ["customer_lookup", "payment_status_check", "invoice_create", "whatsapp_send_media"]
+    },
+    {
+      "id": "opt_out_compliance",
+      "name": "WhatsApp opt-out compliance",
+      "description": "Agent detects opt-out keyword (BAJA / STOP / DESUSCRIBIR) in inbound message → records consent event with evidence → all future sends to this contact are blocked.",
+      "tools_used": ["consent_update"]
     }
   ],
-  "regions": ["MX", "AR", "CO", "CL", "PE", "BR"],
-  "languages": ["es-MX", "es-AR", "es-CO", "es-CL", "pt-BR", "en"],
-  "compliance": ["LFPDPPP", "LGPD-roadmap", "WhatsApp Business Policy", "PCI-DSS-passthrough"],
+  "roadmap_workflows": [
+    {
+      "id": "sales_followup",
+      "name": "Sales follow-up across conversations",
+      "description": "Requires extract_purchase_intent + get_pending_follow_ups tools — in roadmap.",
+      "status": "planned"
+    },
+    {
+      "id": "lead_qualification",
+      "name": "Inbound lead qualification and routing",
+      "description": "Requires extract_lead_insights + score_customer tools — in roadmap.",
+      "status": "planned"
+    },
+    {
+      "id": "logistics_coordination",
+      "name": "Logistics and supplier coordination",
+      "description": "Requires detect_pending_commitments + logistics_follow_up tools — in roadmap.",
+      "status": "planned"
+    }
+  ],
+  "regions": ["MX", "LATAM"],
+  "languages": ["es-MX", "en"],
+  "compliance": [
+    "LFPDPPP (Mexican data protection) — opt-out auto-detection + audit log",
+    "WhatsApp Business Policy — 24h window enforcement, template approval flow",
+    "No payment auto-confirmation — only verified PSP webhooks (Stripe HMAC + Mercado Pago HMAC) or authenticated humans can mark payments paid",
+    "PCI DSS pass-through via Stripe / Mercado Pago — TramsTec never stores card data",
+    "Multi-tenant isolation via application-level org_id assertions on every query"
+  ],
   "audience": [
-    "AI engineers", "AI-native SaaS", "Vertical AI startups",
-    "Agencies", "LATAM SMBs operating on WhatsApp", "Enterprise digital channels teams"
+    "AI engineers building vertical agents on WhatsApp",
+    "AI-native SaaS companies needing a WhatsApp execution layer",
+    "Agencies operating multiple WhatsApp clients in Mexico/LATAM",
+    "Mexican SMBs in retail, services, logistics moving from human-typed replies to agent-with-context"
   ],
   "pricing": {
-    "model": "usage-based",
+    "model": "tiered subscription",
+    "currency": "USD",
     "tiers": [
-      { "name": "Developer", "price_usd": 0, "price_mxn": 0 },
-      { "name": "Builder", "price_usd": 29, "price_mxn": 499 },
-      { "name": "Agency", "price_usd": 129, "price_mxn": 2499 },
-      { "name": "Platform", "price_usd": 499, "price_mxn": 9999 },
-      { "name": "Enterprise", "price_usd": null, "price_mxn": null }
+      { "name": "Developer",  "price_usd": 0,   "notes": "Free. Sandbox for development." },
+      { "name": "Production", "price_usd": 99,  "notes": "Launch real agents on WhatsApp." },
+      { "name": "Platform",   "price_usd": 999, "notes": "Multi-tenant, white-label (API-level), priority support." },
+      { "name": "Enterprise", "price_usd": null,"notes": "Custom. Dedicated infra, SLAs, security review." }
     ]
   },
+  "honest_caveats": [
+    "This discovery file lists ONLY tools that exist in the runtime (verified 2026-06-16). The mcp-manifest.json publishes the same 20 tools with identical names.",
+    "Previous v0.2 of this file listed aspirational tools (extract_* / get_* family) that did not exist in code. Those are now in mcp-manifest.json `roadmap` section."
+  ],
   "indexable_pages": [
     "https://tramstec.com/",
     "https://tramstec.com/en/",
     "https://tramstec.com/llms.txt",
-    "https://tramstec.com/mcp-manifest.json",
-    "https://tramstec.com/.well-known/ai-plugin.json"
+    "https://tramstec.com/mcp-manifest.json"
   ]
 }
