@@ -140,16 +140,36 @@ WhatsApp/Meta and PSP fees pass through at cost. CFDI 4.0 stamping (Facturapi) b
 
 ---
 
-## Roadmap (advertised in earlier marketing — NOT implemented yet)
+## AI-native capabilities (TramsTec's value-add beyond plumbing)
 
-These items appeared in earlier marketing copy and prior versions of this file. They are honestly NOT in the runtime today. We list them here to keep marketing and code synchronized.
+TramsTec is positioned as **"Bring your own LLM"** — the customer's agent (Claude / GPT / Gemini / custom) runs the conversation. But TramsTec adds **AI augmentation layers** embedded inside specific tools (embeddings, transcription, TTS, extraction) that make each tool measurably smarter than a Twilio wrapper. These are TramsTec's moat.
 
-- **pgvector HNSW index + p95 <50ms semantic memory search** (Q3 2026) — pgvector extension is enabled but no HNSW index yet; latency claim cannot be substantiated
-- **AI extraction tools** — `extract_purchase_intent`, `extract_lead_insights`, `extract_orders_from_conversation`, `get_customer_relationship_summary` (Q3 2026)
-- **Per-customer semantic memory store** with semantic search (Q3 2026) — current `memory_*` tools are key-value only
+### Live today
+- **Semantic product search** — `product_search` uses OpenAI `text-embedding-3-small` + pgvector cosine similarity. Falls back to LIKE substring without `OPENAI_API_KEY`. A customer typing "algo dulce para el postre" finds "Tres leches" and "Flan napolitano" even without those words in the product names.
+
+### High-priority roadmap (Q3 2026)
+
+- **Voice notes IN — automatic Whisper transcription** of inbound WhatsApp voice messages. Why this is flagship: Mexicans and LATAM users send **60%+ of their WhatsApp messages as voice notes**. A bot that can't process voice notes is broken for LATAM. The transcription happens automatically before the agent sees the message — the agent reads it as text with `metadata.original_type = "voice"`.
+- **Voice notes OUT — agent responses synthesized as voice** (OpenAI TTS / ElevenLabs). New tool: `whatsapp_send_voice(text)`. Customers expect the bot to reply in the medium they used. Matching the channel norm makes the bot feel human.
+- **`extract_purchase_intent`** — parses free-form WhatsApp text into `{category, priceRange, urgency, confidence}` via a specialized prompt + LLM call (OpenAI or Claude as a micro-extractor, not the conversation agent).
+- **`extract_lead_insights`** — CRM enrichment: score, vertical, inferred budget, urgency, best-channel.
+- **`extract_orders_from_conversation`** — pulls structured `{SKU, qty, amount, address, dates}` from chaotic chat text. No prompt engineering required by the customer's agent.
+- **`customer_relationship_summary`** — LTV, frequency, favorites, churn risk, upsell signals — auto-generated per customer.
+
+### Mid-priority roadmap (Q4 2026)
+- **`conversation_summarize` upgraded to LLM** (currently heuristic).
+- **pgvector HNSW index + p95 <50ms semantic memory search** (extension enabled but no HNSW index yet).
+- **Per-customer semantic memory store** (current `memory_*` tools are key-value only).
+
+### Philosophy
+
+The customer brings the **big LLM** (Claude / GPT / Gemini) for conversation. TramsTec brings **specialized micro-models** (embeddings, transcription, TTS, extraction) embedded inside specific tools — invisible to the agent but making each tool measurably smarter than a Twilio wrapper. Cost per customer for the AI augmentation: typically **< $5/month**.
+
+## Other Roadmap items
+
 - **REST endpoint `/v1/tools/:name`** for non-MCP clients (Q3 2026)
-- **`@tramstec/sdk` TypeScript and Python SDKs** (Q4 2026)
 - **OpenAPI 3 spec at `/openapi.yaml`** (Q3 2026)
+- **`@tramstec/sdk` TypeScript and Python SDKs** (Q4 2026)
 - **Conekta and Openpay payment adapters** (Q4 2026) — current adapters return `config_error`
 - **PIX (Brasil), AFIP-compatible invoicing (Argentina), NFe (Brasil)** (Q1 2027)
 - **Native Shopify, HubSpot, Odoo connectors** (Q1 2027)

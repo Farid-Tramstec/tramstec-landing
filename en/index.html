@@ -39,9 +39,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
-    <link rel="stylesheet" href="../styles.css?v=5" />
-    <link rel="stylesheet" href="../repo.css?v=5" />
-    <link rel="stylesheet" href="../elite.css?v=5" />
+    <link rel="stylesheet" href="../styles.css?v=6" />
+    <link rel="stylesheet" href="../repo.css?v=6" />
+    <link rel="stylesheet" href="../elite.css?v=6" />
 
     <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230f3a3a'/><path d='M8 11h16M16 11v14' stroke='%23e7d8b8' stroke-width='3' stroke-linecap='square' fill='none'/></svg>" />
 
@@ -582,6 +582,67 @@
               <p class="repo-workflow-tools">Requires extract_lead_insights + score_customer (Q3 2026)</p>
             </article>
           </div>
+        </div>
+      </section>
+
+      <!-- AI-NATIVE CAPABILITIES -->
+      <section class="section" id="ai-capabilities" aria-labelledby="ai-title">
+        <div class="container">
+          <div class="section-kicker">AI augmentation</div>
+          <h2 class="section-title" id="ai-title">Not just plumbing. Each tool, smarter.</h2>
+          <p class="section-lede">
+            You bring the main LLM (Claude, OpenAI Agents, LangChain). TramsTec embeds <strong>specialized micro-models</strong> inside specific tools — embeddings, transcription, voice synthesis, extraction — making each one measurably smarter than a generic WhatsApp wrapper. Marginal cost per customer: <strong>less than $5 USD/month</strong>.
+          </p>
+
+          <div class="ai-cap-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--space-5);margin-top:var(--space-6);">
+
+            <article class="ai-cap ai-cap-live" style="padding:var(--space-5);border:1px solid color-mix(in oklab, var(--color-primary) 30%, var(--color-divider));border-radius:var(--radius-md);background:color-mix(in oklab, var(--color-primary) 4%, var(--color-surface-2));">
+              <span style="display:inline-block;padding:2px 8px;border-radius:99px;background:var(--color-primary);color:var(--color-text-inverse);font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:var(--space-3);">Live</span>
+              <h3 style="font-size:var(--text-lg);margin-bottom:var(--space-2);">🔎 Semantic catalog search</h3>
+              <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-3);">Customer types <em>"something sweet for dessert"</em> → finds <strong>Tres leches, Flan napolitano, Cheesecake</strong> even though those products don't contain "sweet" or "dessert" in their names.</p>
+              <p style="color:var(--color-text-faint);font-size:var(--text-xs);font-family:var(--font-mono);">OpenAI text-embedding-3-small + pgvector · tool: <code>product_search</code></p>
+            </article>
+
+            <article class="ai-cap ai-cap-roadmap" style="padding:var(--space-5);border:1px solid color-mix(in oklab, var(--color-accent-warm, #8a6a1f) 30%, var(--color-divider));border-radius:var(--radius-md);background:color-mix(in oklab, var(--color-accent-warm, #8a6a1f) 4%, var(--color-surface-2));">
+              <span style="display:inline-block;padding:2px 8px;border-radius:99px;background:var(--color-accent-warm, #8a6a1f);color:var(--color-text-inverse);font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:var(--space-3);">Q3 2026 · Flagship LATAM</span>
+              <h3 style="font-size:var(--text-lg);margin-bottom:var(--space-2);">🎤 Voice notes IN — auto-transcribed</h3>
+              <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-3);">60%+ of WhatsApp messages in Mexico are <strong>voice notes</strong>. Your agent gets them automatically transcribed via Whisper, with metadata <code>original_type: "voice"</code>.</p>
+              <p style="color:var(--color-text-faint);font-size:var(--text-xs);font-family:var(--font-mono);">OpenAI Whisper · ~$0.001 per voice note · webhook processes before passing to agent</p>
+            </article>
+
+            <article class="ai-cap ai-cap-roadmap" style="padding:var(--space-5);border:1px solid color-mix(in oklab, var(--color-accent-warm, #8a6a1f) 30%, var(--color-divider));border-radius:var(--radius-md);background:color-mix(in oklab, var(--color-accent-warm, #8a6a1f) 4%, var(--color-surface-2));">
+              <span style="display:inline-block;padding:2px 8px;border-radius:99px;background:var(--color-accent-warm, #8a6a1f);color:var(--color-text-inverse);font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:var(--space-3);">Q3 2026 · Flagship LATAM</span>
+              <h3 style="font-size:var(--text-lg);margin-bottom:var(--space-2);">🔊 Voice notes OUT — agent replies in voice</h3>
+              <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-3);">Your agent responds with natural voice notes in Mexican Spanish (or other locales). Customer feels they're being helped by a person, not a bot. Matches the channel norm.</p>
+              <p style="color:var(--color-text-faint);font-size:var(--text-xs);font-family:var(--font-mono);">OpenAI TTS / ElevenLabs · new tool: <code>whatsapp_send_voice</code></p>
+            </article>
+
+            <article class="ai-cap ai-cap-roadmap" style="padding:var(--space-5);border:1px solid color-mix(in oklab, var(--color-accent-warm, #8a6a1f) 30%, var(--color-divider));border-radius:var(--radius-md);background:color-mix(in oklab, var(--color-accent-warm, #8a6a1f) 4%, var(--color-surface-2));">
+              <span style="display:inline-block;padding:2px 8px;border-radius:99px;background:var(--color-accent-warm, #8a6a1f);color:var(--color-text-inverse);font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:var(--space-3);">Q3 2026</span>
+              <h3 style="font-size:var(--text-lg);margin-bottom:var(--space-2);">🎯 Extract purchase intent</h3>
+              <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-3);">Parses free-form WhatsApp text into structure: <code>{category, priceRange, urgency, confidence}</code>. Your agent needs no prompt engineering — just call the tool.</p>
+              <p style="color:var(--color-text-faint);font-size:var(--text-xs);font-family:var(--font-mono);">tools: <code>extract_purchase_intent</code>, <code>extract_lead_insights</code>, <code>extract_orders_from_conversation</code></p>
+            </article>
+
+            <article class="ai-cap ai-cap-roadmap" style="padding:var(--space-5);border:1px solid color-mix(in oklab, var(--color-accent-warm, #8a6a1f) 30%, var(--color-divider));border-radius:var(--radius-md);background:color-mix(in oklab, var(--color-accent-warm, #8a6a1f) 4%, var(--color-surface-2));">
+              <span style="display:inline-block;padding:2px 8px;border-radius:99px;background:var(--color-accent-warm, #8a6a1f);color:var(--color-text-inverse);font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:var(--space-3);">Q3 2026</span>
+              <h3 style="font-size:var(--text-lg);margin-bottom:var(--space-2);">📊 Customer relationship summary</h3>
+              <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-3);">Auto-generated executive summary per customer: LTV, frequency, favorites, churn risk, upsell signals. Real CRM from raw conversations.</p>
+              <p style="color:var(--color-text-faint);font-size:var(--text-xs);font-family:var(--font-mono);">tool: <code>customer_relationship_summary</code></p>
+            </article>
+
+            <article class="ai-cap ai-cap-roadmap" style="padding:var(--space-5);border:1px solid color-mix(in oklab, var(--color-accent-warm, #8a6a1f) 30%, var(--color-divider));border-radius:var(--radius-md);background:color-mix(in oklab, var(--color-accent-warm, #8a6a1f) 4%, var(--color-surface-2));">
+              <span style="display:inline-block;padding:2px 8px;border-radius:99px;background:var(--color-accent-warm, #8a6a1f);color:var(--color-text-inverse);font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:var(--space-3);">Q4 2026</span>
+              <h3 style="font-size:var(--text-lg);margin-bottom:var(--space-2);">📝 LLM conversation summarization</h3>
+              <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-3);">Current <code>conversation_summarize</code> uses heuristics. The LLM version generates executive digests for human handoff, reports, and dashboards.</p>
+              <p style="color:var(--color-text-faint);font-size:var(--text-xs);font-family:var(--font-mono);">upgrade of existing tool · OpenAI / Claude / Mistral configurable</p>
+            </article>
+
+          </div>
+
+          <p class="fineprint" style="margin-top:var(--space-6);">
+            <strong>Philosophy:</strong> You bring the big LLM for conversation. We embed micro-models inside specific tools — invisible to the agent but measurably smarter than a wrapper. Any customer activating these features pays ~$5 USD/mo extra in OpenAI/ElevenLabs costs, on top of the plan price. <em>To accelerate any roadmap item with a paid pilot, contact <a href="mailto:sales@tramstec.com?subject=Roadmap%20acceleration">sales@tramstec.com</a>.</em>
+          </p>
         </div>
       </section>
 

@@ -125,15 +125,31 @@
     "Agencies operating multiple WhatsApp clients in Mexico/LATAM",
     "LATAM businesses (retail, services, logistics) moving from human-typed replies to agent-with-context"
   ],
+  "ai_capabilities": {
+    "intent": "TramsTec is positioned as 'Bring your own LLM' — the customer's agent runs the conversation. But TramsTec adds AI augmentation layers (embeddings, transcription, extraction, synthesis) that make each tool smarter than a passthrough wrapper. These are TramsTec's value-add.",
+    "live_today": [
+      { "name": "Semantic product search (OpenAI text-embedding-3-small + pgvector)", "tool": "product_search", "status": "Live with OPENAI_API_KEY; falls back to LIKE without" }
+    ],
+    "roadmap": [
+      { "name": "Voice notes IN — automatic transcription of WhatsApp voice messages (Whisper)", "target": "Q3 2026", "why_latam": "Mexicans and LATAM users send 60%+ of their WhatsApp messages as voice notes. Transcribing them automatically before the agent receives them is critical for any LATAM-focused conversational AI." },
+      { "name": "Voice notes OUT — agent responses synthesized as voice (OpenAI TTS / ElevenLabs)", "target": "Q3 2026", "why_latam": "Customers expect the bot to respond in their preferred medium. If they sent a voice note, getting a voice note back feels human and matches the channel norm." },
+      { "name": "extract_purchase_intent — parses free-form text into {category, priceRange, urgency, confidence}", "target": "Q3 2026" },
+      { "name": "extract_lead_insights — CRM enrichment (score, vertical, inferred budget, urgency)", "target": "Q3 2026" },
+      { "name": "extract_orders_from_conversation — pulls structured SKU/qty/amount from chat text", "target": "Q3 2026" },
+      { "name": "customer_relationship_summary — LTV, frequency, favorites, churn risk, upsell signals", "target": "Q3 2026" },
+      { "name": "conversation_summarize with LLM (replaces heuristic digest)", "target": "Q4 2026" }
+    ],
+    "philosophy": "The customer brings the big LLM (Claude / GPT / Gemini) for conversation. TramsTec brings specialized micro-models (embeddings, transcription, TTS, extraction) embedded inside specific tools — invisible to the agent but making each tool measurably smarter than a Twilio wrapper."
+  },
   "roadmap": {
-    "intent": "Capabilities advertised on the website that are NOT yet in this manifest will land here as they ship. We publish this list to keep marketing and code honest.",
+    "intent": "Items previously advertised that are NOT yet in this manifest will land here as they ship. We publish this list to keep marketing and code honest.",
     "items": [
+      { "name": "Voice notes IN/OUT (Whisper + TTS) on WhatsApp", "target": "Q3 2026", "priority": "high — flagship LATAM feature" },
+      { "name": "AI extraction tools: extract_purchase_intent, extract_lead_insights, extract_orders_from_conversation, customer_relationship_summary", "target": "Q3 2026", "priority": "high — defines TramsTec moat" },
       { "name": "pgvector HNSW index + p95 <50ms semantic memory search", "target": "Q3 2026" },
-      { "name": "AI extraction tools: extract_purchase_intent, extract_lead_insights, extract_orders_from_conversation", "target": "Q3 2026" },
-      { "name": "customer_relationship_summary (LTV, churn risk, upsell)", "target": "Q3 2026" },
       { "name": "REST endpoint /v1/tools/:name for non-MCP clients", "target": "Q3 2026" },
-      { "name": "@tramstec/sdk TypeScript and Python SDKs", "target": "Q4 2026" },
       { "name": "OpenAPI 3 spec at /openapi.yaml", "target": "Q3 2026" },
+      { "name": "@tramstec/sdk TypeScript and Python SDKs", "target": "Q4 2026" },
       { "name": "Conekta and Openpay payment adapters", "target": "Q4 2026" },
       { "name": "PIX (Brasil), AFIP (Argentina), NFe payment/invoice integrations", "target": "Q1 2027" },
       { "name": "Native Shopify, HubSpot, Odoo connectors", "target": "Q1 2027" },
